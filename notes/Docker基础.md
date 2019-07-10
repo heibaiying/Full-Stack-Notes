@@ -20,6 +20,7 @@ Docker 使用 Go 语言进行开发，基于 Linux 内核的 cgroup，namespace�
 下图体现了 Docker 和传统虚拟化方式的不同之处：传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，再在该系统上运行所需应用进程；而 Docker 容器内的应用进程则是直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟，因此要比传统虚拟机更为轻便。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker与虚拟机.png"/> </div>
+
 ## 二、Docker 架构与核心概念
 
 Docker 使用 client-server 架构， Docker 客户端将命令发送给 Docker 守护进程，后者负责构建，运行和分发 Docker 容器。 Docker客户端和守护程序使用 REST API，通过 UNIX 套接字或网络接口进行通信。核心概念如下：

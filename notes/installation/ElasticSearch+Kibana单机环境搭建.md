@@ -17,7 +17,7 @@
 
 ### 1.1 下载并解压
 
-elastic 所有软件的下载地址均为 ：https://www.elastic.co/cn/downloads/past-releases，下载相同版本的 ElasticSearch 和 Kibana，下载后进行解压：
+Elastic 所有软件的下载地址均为 ：https://www.elastic.co/cn/downloads/past-releases ，下载相同版本的 ElasticSearch 和 Kibana，下载后进行解压：
 
 ```shell
 tar -zxvf elasticsearch-7.2.0-linux-x86_64.tar.gz -C /usr/app/
@@ -73,7 +73,7 @@ root soft nofile 65536
 root hard nofile 65536
 ```
 
-修改配置完成重启 shell 客户端即可生效，想要验证是否生效，可以使用命令 `ulimit -a` 查看输出中的 `open files ` 的值是否为 65536。
+修改配置完成重启 shell 客户端即可生效，想要验证是否生效，可以使用命令 `ulimit -a` 查看输出中的 `open files` 的值是否为 65536。
 
 ### 1.4 启动服务
 

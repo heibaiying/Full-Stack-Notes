@@ -25,6 +25,7 @@ Docker 使用 Go 语言进行开发，基于 Linux 内核的 cgroup，namespace�
 Docker 使用 client-server 架构， Docker 客户端将命令发送给 Docker 守护进程，后者负责构建，运行和分发 Docker 容器。 Docker客户端和守护程序使用 REST API，通过 UNIX 套接字或网络接口进行通信。核心概念如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker架构.png"/> </div>
+
 ### 2.1 镜像
 
 Docker 镜像（Image）是一个特殊的文件系统，包含了程序运行时候所需要的资源和环境。镜像不包含任何动态数据，其内容在构建之后也不会被改变。
@@ -60,13 +61,14 @@ Docker 客户端（docker）是用户与 Docker 交互的主要方式。当你�
 Docker 提供了大量命令用于管理镜像、容器和服务，命令的统一使用格式为：` docker [OPTIONS] COMMAND` ，其中 OPTIONS 代表可选参数。需要注意的是 Docker 命令的执行一般都需要获取 root 权限，这是因为 Docker 的命令行工具 docker 与 docker daemon 是同一个二进制文件，docker daemon 负责接收并执行来自 docker 的命令，它的运行需要 root 权限。所有常用命令及其使用场景如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker常用命令.jpg"/> </div>
-### 2.1 基础命令
+
+### 3.1 基础命令
 
 - **docker version**：用于查看 docker 的版本信息
 - **docker info**：用于查看 docker 的配置信息
 - **docker help**：用于查看帮助信息
 
-### 2.2 镜像相关命令
+### 3.2 镜像相关命令
 
 #### 1. docker search  镜像名
 
@@ -89,7 +91,7 @@ Docker 提供了大量命令用于管理镜像、容器和服务，命令的统�
 
 删除指定版本的镜像，不加`:TAG`则默认删除镜像的最新版本。如果有基于该镜像的容器存在，则该镜像无法直接删除，此时可以使用参数`-f`，代表强制删除。rmi 命令支持批量删除，多个镜像名之间使用空格分隔。如果想要删除所有镜像，则可以使用命令`docker rmi -f $(docker images -qa)`。
 
-## 2.3 容器相关命令
+## 3.3 容器相关命令
 
 #### 1. docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
@@ -237,7 +239,7 @@ CMD ["world"]
 
 ## 五、案例
 
-### 4.1 基于 Centos 镜像部署 Spring Boot 项目
+### 5.1 基于 Centos 镜像部署 Spring Boot 项目
 
 生产环境中的大多数项目通常都部署在 Linux 服务器上，这里我们从基础的 Linux 镜像开始，并将我们的项目（这里以 Spring Boot 项目为例）一起打包构建成为一个完整的可执行的镜像。首先需要创建**Dockerfile**文件，其内容如下：
 
@@ -275,7 +277,8 @@ docker run -it  -p 8080:8080 spring-boot-base-java
 这里为了观察到启动效果，所以使用交互的方式启动，实际部署时可以使用`-d`参数来后台启动，输出如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/dockerfile01.png"/> </div>
-### 4.2 基于 JDK 镜像部署 Spring Boot 项目
+
+### 5.2 基于 JDK 镜像部署 Spring Boot 项目
 
 上面的项目我们是基于最基础的 Centos 镜像开始构建，但由于 Docker Hub 上已经提供了 JDK 的镜像，我们也可以选择从 JDK 镜像开始构建，此时构建过程更加简单。构建步骤和上面的完全一致，只是 Dockerfile 的内容有所不同，如下：
 

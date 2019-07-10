@@ -141,8 +141,7 @@ linux 核心概念、常用命令
 
 #### 7. Docker
 
-+ Docker 简介及基本概念
-+ Docker常用命令
++ Docker 基础
 + kubernetes  简介及集群搭建
 
 #### 8.分布式解决方案

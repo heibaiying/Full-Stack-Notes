@@ -95,7 +95,6 @@ root hard nofile 65536
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/elk-web-ui.png"/> </div>
 
-
 ## 二、Kibana 安装
 
 ### 2.1 修改配置
@@ -119,9 +118,15 @@ chown -R heibaiying:heibaiying /usr/app/kibana-7.2.0-linux-x86_64/
 
 ```shell
 # 切换用户
-su heibaiying
+su - heibaiying
 # 启动服务
 ./kibana
+```
+
+需要说明的是这里 kibana 启动时候没有`-d`这个参数，想要后台启动，则可以使用以下命令：
+
+```shell
+nohup ./kibana  &
 ```
 
 ### 2.3 访问页面

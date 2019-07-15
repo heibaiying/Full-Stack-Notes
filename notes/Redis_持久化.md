@@ -1,4 +1,19 @@
-# Redis 持久化
+# Redis Persistence
+
+<nav>
+<a href="#一数据持久化">一、数据持久化</a><br/>
+<a href="#二RDB-机制">二、RDB 机制</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-手动触发">2.1 手动触发</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-自动触发">2.2 自动触发</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-相关配置">2.3 相关配置</a><br/>
+<a href="#三AOF-机制">三、AOF 机制</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-执行原理">3.1 执行原理</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-同步策略">3.2 同步策略</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-相关配置">3.3 相关配置</a><br/>
+<a href="#四对比分析">四、对比分析</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-优点与缺点">4.1 优点与缺点</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-使用建议">4.2 使用建议</a><br/>
+</nav>
 
 ## 一、数据持久化
 
@@ -57,7 +72,7 @@ AOF 是 Redis 提供的另外一种持久化的方式，它以独立日志的方
 
 ### 3.2 同步策略
 
-Redis 提供了三种同步策略，用于控制 AOF 缓冲区同步数据到磁盘上的行为，由参数`appendfsync `控制：
+Redis 提供了三种同步策略，用于控制 AOF 缓冲区同步数据到磁盘上的行为，由参数`appendfsync`控制：
 
 | 可选配置 | 说明                                                         |
 | -------- | ------------------------------------------------------------ |
@@ -104,6 +119,13 @@ Redis 默认的同步机制为`everysec`，此时能够兼顾性能和保证数�
 ### 4.2 使用建议
 
 按照 Redis 官方的推荐，为保证的数据安全性，可以同时使用这两种持久化机制，在 Redis 官方的长期计划里面，未来可能会将 AOF 和 RDB 统一为单一持久性模型。需要注意的是，在这种情况下，当 Redis 重新启动时，Redis 将使用 AOF 文件重建数据集，因为它可以保证数据的最少丢失。
+
+
+
+## 参考资料
+
+1. 付磊，张益军 . 《Redis 开发与运维》. 机械工业出版社 .  2017-3-1
+2. 官方文档：[Redis Persistence](https://redis.io/topics/persistence)
 
 
 

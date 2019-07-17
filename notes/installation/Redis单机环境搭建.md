@@ -24,7 +24,7 @@ make
 进入`src`目录，执行下面的命令，启动 Redis 服务：
 
 ```shell
-redis-server
+./redis-server
 ```
 
 ### 四、启动客户端

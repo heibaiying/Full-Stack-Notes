@@ -1,10 +1,17 @@
 # MongoDB 单机版本环境搭建
+<nav>
+<a href="#一下载并解压">一、下载并解压</a><br/>
+<a href="#二配置环境变量">二、配置环境变量</a><br/>
+<a href="#三修改配置">三、修改配置</a><br/>
+<a href="#四启动服务">四、启动服务</a><br/>
+<a href="#五连接服务">五、连接服务</a><br/>
+</nav>
 
 ## 一、下载并解压
 
 下载地址为： https://www.mongodb.com/download-center/community ，选择所需版本的 MongoDB 后进行下载：
 
-![mongodb-version-select](D:\Full-Stack-Notes\pictures\mongodb-version-select.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mongodb-version-select.png"/> </div>
 
 这里我下载的版本为 `4.0.10`  , 安装环境为 `RHEL 7.0`，下载后进行解压：
 

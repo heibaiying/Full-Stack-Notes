@@ -1,4 +1,21 @@
 # RabbitMQ 单机环境搭建
+<nav>
+<a href="#一前置条件">一、前置条件</a><br/>
+<a href="#二Erlang-安装">二、Erlang 安装</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-下载并解压">2.1 下载并解压</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-编译和安装">2.2 编译和安装</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23--验证安装结果">2.3  验证安装结果</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-配置环境变量">2.4 配置环境变量</a><br/>
+<a href="#三RabbitMQ-安装">三、RabbitMQ 安装</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-下载并解压">3.1 下载并解压</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-配置环境变量">3.2 配置环境变量</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-启动-RabbitMQ-服务">3.3 启动 RabbitMQ 服务</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-查看服务状态">3.4 查看服务状态</a><br/>
+<a href="#四Web-UI界面">四、Web UI界面</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-启动-Web-UI">4.1 启动 Web UI</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-新增账户">4.2 新增账户</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-使用新账户登录">4.3 使用新账户登录</a><br/>
+</nav>
 
 ## 一、前置条件
 
@@ -138,7 +155,7 @@ rabbitmq-plugins enable rabbitmq_management
 
 访问端口为 `15672`。默认的用户名和密码都是 `guest` 。如果你所用浏览器和 RabbitMQ 服务不在同一台主机上，此时应该无法登录，并出现下面的提示 ：
 
-![RabbitMQ-访问限制](D:\Full-Stack-Notes\pictures\RabbitMQ-访问限制.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/RabbitMQ-访问限制.png"/> </div>
 
 之所以会出现这个提示，是因为出于安全考虑，RabbitMQ 只允许在本机使用默认的`guest`用户名登录。想要在其他主机上登录，可以使用自定义的账户。
 
@@ -166,4 +183,4 @@ rabbitmqctl set_user_tags root administrator
 
 登录后可以查看到RabbitMQ 和 Erlang 的版本号，以及对应的账户信息：
 
-![rabbitmq-管控台](D:\Full-Stack-Notes\pictures\rabbitmq-管控台.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-管控台.png"/> </div>

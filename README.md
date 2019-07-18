@@ -46,11 +46,11 @@ TODO
 
 + redis 简介及基本数据结构
 + redis 管道模式详解
-+ redis AOF 和 RDB 持久化策略原理
-+ redis 哨兵模式
-+ reids 集群模式
++ [Redis AOF 和 RDB 持久化策略原理](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_持久化.md)
++ [Redis 哨兵模式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_哨兵模式.md)
++ [Reids 集群模式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_集群模式.md)
 + 缓存击穿、缓存雪崩的解决方案
-+ redis 管理客户端cachecloud
++ redis 管理客户端 cachecloud
 
 #### 4.MongoDB
 
@@ -63,7 +63,7 @@ TODO
 
 ## 📟 操作系统
 
-linux 核心概念、常用命令
+[Linux 常用 Shell 命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Linux常用Shell命令.md)
 
 
 
@@ -86,7 +86,7 @@ linux 核心概念、常用命令
 #### 2.spring Boot
 
 + spring 自动装配原理
-+ 理解SpringApplication 
++ 理解 SpringApplication 
 + Web MVC REST 
 + WebFlux 核心
 + ......

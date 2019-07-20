@@ -64,3 +64,108 @@ MongoDB 的选举算法会尝试让高优先级的节点优先发起选举，从
 
 ## 三、搭建副本集
 
+这里以搭建一个三节点的副本集为例，使用三台服务器，主机名分别为 hadoop001，hadoop002，hadoop003。
+
+### 3.1 下载并解压
+
+选择所需版本的 MongoDB 进行下载，下载地址为： https://www.mongodb.com/download-center/community 
+
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mongodb-version-select.png"/> </div>
+这里我下载的版本为 `4.0.10`  , 安装环境为 `RHEL 7.0`，下载后进行解压：
+
+```shell
+ tar -zxvf mongodb-linux-x86_64-rhel70-4.0.10.tgz -C /usr/app
+```
+
+### 3.2 配置环境变量
+
+配置环境变量：
+
+```shell
+vi /etc/profile
+```
+
+```shell
+export MONGODB_HOME=/usr/app/mongodb-linux-x86_64-rhel70-4.0.10/
+export  PATH=${MONGODB_HOME}/bin:$PATH
+```
+
+使得配置的环境变量立即生效：
+
+```shell
+source /etc/profile
+```
+
+### 三、修改配置
+
+MongoDB 默认存放数据的目录为 `/var/lib/mongo` ，默认存放日志的目录为 `/var/log/mongodb`，采用 TGZ 安装包进行安装时，程序不会自动创建这两个目录，需要预先手动创建。同时由于 `/var/` 下只能存放临时文件，所以这里我们使用其他目录进行存储，命令如下：
+
+```shell
+mkdir -p /home/mongodb/data
+mkdir -p /home/mongodb/log
+```
+
+修改配置，采用 TGZ 安装包进行安装时，程序不会自动创建配置文件，需要手动创建：
+
+```
+vim /etc/mongod.conf
+```
+
+在配置文件中增加如下配置，这里的配置采用的是 YAML 的格式：
+
+```shell
+processManagement:
+    # 以后台进程的方式启动 
+    fork: true
+systemLog:
+    destination: file
+    path: "/home/mongodb/log/mongod.log"
+    logAppend: true
+storage:
+    dbPath: "/home/mongodb/data"
+net:
+    port: 27017
+    # 如果不修改绑定IP,默认只能在本机访问数据库服务
+    bindIp: 0.0.0.0
+replication:
+    # 处于同一副本集的所有节点需要保证副本集名称一致
+    replSetName: rs0    
+```
+
+> MongoDB 的所有配置项可以参考其官方文档：[Configuration File Options](https://docs.mongodb.com/manual/reference/configuration-options/)
+
+### 四、启动服务
+
+以上配置步骤在三台主机上均相同。之后启动三台主机上的 mongod 服务，命令如下：
+
+```shell
+mongod -f /etc/mongod.conf
+```
+
+### 五、配置副本集
+
+在任意一台主机上使用 mongo shell 连接到本地服务，之后直接使用以下命令配置副本集：
+
+```shell
+rs.initiate( {
+   _id : "rs0",
+   members: [
+      { _id: 0, host: "hadoop001:27017" },
+      { _id: 1, host: "hadoop002:27017" },
+      { _id: 2, host: "hadoop003:27017" }
+   ]
+})
+```
+
+### 六、查看副本集情况
+
+使用 `rs.status()` 命令查看副本集状态，部分输出如下。从输出中可以看到 hadoop001 为 PRIMARY 节点，而 hadoop002 和 hadoop003 均为 SECONDARY 节点，此时代表副本集已经搭建成功。
+
+![mongodb-副本集状态](D:\Full-Stack-Notes\pictures\mongodb-副本集状态.png)
+
+
+
+## 参考资料
+
+- 官方文档：https://docs.mongodb.com/manual/replication/
+- 官方配置说明：https://docs.mongodb.com/manual/reference/configuration-options/

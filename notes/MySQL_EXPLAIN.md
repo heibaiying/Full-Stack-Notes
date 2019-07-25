@@ -74,6 +74,8 @@ mysql> EXPLAIN SELECT first_name,(SELECT sum(salary) FROM salaries WHERE emp_no 
 
 ## 3. table
 
+表示语句执行的目标表，除了正常的表名或表别名外，还会出现以下取值：
+
 - **<union*M*,*N*>**：输出结果中编号为 M 的行与编号为 N 的行的结果集的并集。
 - **<derived*N*>**：输出结果中编号为 N 的行的结果集，使用 derived 修饰表示这是一个派生结果集，如 FROM 子句中的查询。
 - **<subquery*N*>**：输出结果中编号为 N 的行的结果集，使用 subquery 修饰表示这是一个物化子查询。
@@ -95,7 +97,7 @@ mysql> EXPLAIN SELECT * FROM employees WHERE emp_no = 10008;
 +----+-------------+-----------+-------+---------------+---------+---------+-------+------+-------+
 ```
 
-**3. eq_ref**：通常出现在连接查询中，当连接使用完整的索引并且是 PRIMARY KEY 或 UNIQUE NOT NULL 索引时使用它。
+**3. eq_ref**：当连接使用的是完整的索引并且是 PRIMARY KEY 或 UNIQUE NOT NULL INDEX 时使用它。
 
 ```shell
 # 这里员工部门关系表 dept_no 的联合主键为 emp_no + dept_no ，即员工编号+部门标号
@@ -108,7 +110,7 @@ mysql> EXPLAIN SELECT * FROM employees e,dept_emp d WHERE e.emp_no = d.emp_no AN
 +----+-------------+-------+--------+-----------------+---------+---------+--------------------+------+-----------------------+
 ```
 
-**4. ref**：通常出现在连接查询中，如果连接仅使用了前缀索引或用于连接的条件不是 PRIMARY KEY 或 UNIQUE 索引时使用它。
+**4. ref**：当连接使用的是前缀索引或连接条件不是 PRIMARY KEY 或 UNIQUE INDEX 时则使用它。
 
 ```shell
 # 这里仅使用了前缀索引emp_no，所以其类型为 ref , 而不是 eq_ref

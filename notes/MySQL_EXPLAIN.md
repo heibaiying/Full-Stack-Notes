@@ -13,8 +13,12 @@ mysql> EXPLAIN SELECT * FROM employees;
 
 注：本篇文章所有的测试数据来均源于 MySQL 官方提供的 [Employees Sample Database](https://dev.mysql.com/doc/employee/en/)，其数据库结构如下：
 
+
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/employees-schema.png"/> </div>
+
 以下对 EXPLAIN 输出结果中各个字段的含义及其可能的取值范围做详细的介绍：
+
+
 
 ## 1. id
 

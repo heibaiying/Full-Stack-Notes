@@ -77,8 +77,8 @@ mysql> EXPLAIN SELECT first_name,(SELECT sum(salary) FROM salaries WHERE emp_no 
 表示语句执行的目标表，除了正常的表名或表别名外，还会出现以下取值：
 
 - **<union*M*,*N*>**：输出结果中编号为 M 的行与编号为 N 的行的结果集的并集。
-- **<derived*N*>**：输出结果中编号为 N 的行的结果集，使用 derived 修饰表示这是一个派生结果集，如 FROM 子句中的查询。
-- **<subquery*N*>**：输出结果中编号为 N 的行的结果集，使用 subquery 修饰表示这是一个物化子查询。
+- **<derived*N*>**：输出结果中编号为 N 的行的结果集，derived 表示这是一个派生结果集，如 FROM 子句中的查询。
+- **<subquery*N*>**：输出结果中编号为 N 的行的结果集，subquery 表示这是一个物化子查询。
 
 ## 4. type
 

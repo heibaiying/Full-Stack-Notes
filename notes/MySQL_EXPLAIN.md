@@ -246,4 +246,4 @@ mysql> EXPLAIN SELECT first_name,count(first_name) FROM employees GROUP BY first
 
 ## 参考资料
 
-更多参数的说明可以参考 MySQL官方文档：https://dev.mysql.com/doc/refman/8.0/en/explain-output.html
+更多参数的说明可以参考 MySQL 官方文档：https://dev.mysql.com/doc/refman/8.0/en/explain-output.html

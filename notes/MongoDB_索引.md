@@ -79,21 +79,21 @@ db.user.getIndexes()
 
 ```json
 {
-	"v" : 2,
-	"key" : {
-		"_id" : 1
-	},
-	"name" : "_id_",
-	"ns" : "test.user"
+    "v" : 2,
+    "key" : {
+        "_id" : 1
+    },
+    "name" : "_id_",
+    "ns" : "test.user"
 },
 
 {
-	"v" : 2,
-	"key" : {
-		"name" : -1
-	},
-	"name" : "name_-1",
-	"ns" : "test.user"
+    "v" : 2,
+    "key" : {
+        "name" : -1
+    },
+    "name" : "name_-1",
+    "ns" : "test.user"
 }
 ```
 

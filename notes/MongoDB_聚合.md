@@ -339,11 +339,11 @@ db.employees.aggregate([
   "emp_no" : 10001,
   ........
   "emp_title" : [
-	  {
-		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-		"emp_no" : 10001,
-		"title" : "Senior Engineer"
-	  }
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+	  "emp_no" : 10001,
+	  "title" : "Senior Engineer"
+    }
   ]
 },
 
@@ -424,7 +424,7 @@ db.employees.aggregate([
 	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
 	  "emp_no" : 10002,
 	  "title" : "Staff"
-	},
+    },
     {
 	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
 	  "emp_no" : 10003,

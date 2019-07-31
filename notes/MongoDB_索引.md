@@ -1,5 +1,27 @@
 # MongoDB 索引
 
+<nav>
+<a href="#一索引简介">一、索引简介</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-创建索引">1.1 创建索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-查看索引">1.2 查看索引</a><br/>
+<a href="#二索引的类型">二、索引的类型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-单字段索引">2.1 单字段索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-复合索引">2.2 复合索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-多键索引">2.3 多键索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-哈希索引">2.4 哈希索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-地理空间索引">2.5 地理空间索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#26-文本索引">2.6 文本索引</a><br/>
+<a href="#三索引的性质">三、索引的性质</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-唯一索引">3.1 唯一索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-稀疏性">3.2 稀疏性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-部分索引">3.3 部分索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-TTL-索引">3.4 TTL 索引</a><br/>
+<a href="#四删除索引">四、删除索引</a><br/>
+<a href="#五EXPLAIN">五、EXPLAIN</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-输出参数">5.1 输出参数</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-覆盖索引">5.2 覆盖索引</a><br/>
+</nav>
+
 ## 一、索引简介
 
 ### 1.1 创建索引
@@ -90,8 +112,7 @@ db.user.find({}).sort({name:1})
 
 当前大多数数据库都支持双向遍历索引，这和存储结构有关 (如下图)。在 B-Tree 结构的叶子节点上，存储了索引键的值及其对应文档的位置信息，而每个叶子节点间则类似于双向链表，所以如下图既可以从值为 4 的索引遍历到值为 92 的索引，反之亦然。
 
-![b-tree](D:\Full-Stack-Notes\pictures\b-tree.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/b-tree.png"/> </div>
 
 
 ### 2.2 复合索引
@@ -104,7 +125,7 @@ db.user.createIndex( { name: -1,birthday: 1} )
 
 需要注意的是 MongoDB 的复合索引具备前缀索引的特征，即如果你创建了索引 `{ a:1, b: 1, c: 1, d: 1 }`，那么等价于在该集合上，还存在了以下三个索引，这三个隐式索引同样可以用于优化查询和排序操作：
 
-```json
+```shell
 { a: 1 }
 { a: 1, b: 1 }
 { a: 1, b: 1, c: 1 }

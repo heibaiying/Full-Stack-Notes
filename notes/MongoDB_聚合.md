@@ -335,36 +335,36 @@ db.employees.aggregate([
 
 ```text
 {
-	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
-	"emp_no" : 10001,
-	........
-	"emp_title" : [
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-			"emp_no" : 10001,
-			"title" : "Senior Engineer"
-		}
-	]
+  "_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
+  "emp_no" : 10001,
+  ........
+  "emp_title" : [
+	  {
+		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
+		"emp_no" : 10001,
+		"title" : "Senior Engineer"
+	  }
+  ]
 },
 
 .........
 
 {
-	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a4"),
-	"emp_no" : 10004,
-	........
-	"emp_title" : [
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a8"),
-			"emp_no" : 10004,
-			"title" : "Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a9"),
-			"emp_no" : 10004,
-			"title" : "Senior Engineer"
-		}
-	]
+  "_id" : ObjectId("5d3ffaaa8ba16934ccce99a4"),
+  "emp_no" : 10004,
+  ........
+  "emp_title" : [
+	{
+	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+	  "emp_no" : 10004,
+	  "title" : "Engineer"
+	},
+	{
+	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+	  "emp_no" : 10004,
+	  "title" : "Senior Engineer"
+	}
+  ]
 }
 ```
 
@@ -410,69 +410,69 @@ db.employees.aggregate([
 
 ```text
 {
-	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
-	"emp_no" : 10001,
-	.......
-	],
-	"emps_title" : [
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-		"emp_no" : 10001,
-		"title" : "Senior Engineer"
+  "_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
+  "emp_no" : 10001,
+  .......
+  ],
+  "emps_title" : [
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+	  "emp_no" : 10001,
+	  "title" : "Senior Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
+	  "emp_no" : 10002,
+	  "title" : "Staff"
 	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a6"),
-		"emp_no" : 10002,
-		"title" : "Staff"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a7"),
-		"emp_no" : 10003,
-		"title" : "Senior Engineer"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a8"),
-		"emp_no" : 10004,
-		"title" : "Engineer"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a9"),
-		"emp_no" : 10004,
-		"title" : "Senior Engineer"
-	}
-	]
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
+	  "emp_no" : 10003,
+	  "title" : "Senior Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+	  "emp_no" : 10004,
+	  "title" : "Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+	  "emp_no" : 10004,
+	  "title" : "Senior Engineer"
+    }
+  ]
 },
 
 {
-	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a2"),
-	.......
-	"emps_title" : [
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-		"emp_no" : 10001,
-		"title" : "Senior Engineer"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a6"),
-		"emp_no" : 10002,
-		"title" : "Staff"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a7"),
-		"emp_no" : 10003,
-		"title" : "Senior Engineer"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a8"),
-		"emp_no" : 10004,
-		"title" : "Engineer"
-	},
-	{
-		"_id" : ObjectId("5d4011728ba16934ccce99a9"),
-		"emp_no" : 10004,
-		"title" : "Senior Engineer"
-	}
-	]
+  "_id" : ObjectId("5d3ffaaa8ba16934ccce99a2"),
+  .......
+  "emps_title" : [
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+	  "emp_no" : 10001,
+	  "title" : "Senior Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
+	  "emp_no" : 10002,
+	  "title" : "Staff"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
+	  "emp_no" : 10003,
+	  "title" : "Senior Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+	  "emp_no" : 10004,
+	  "title" : "Engineer"
+    },
+    {
+	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+	  "emp_no" : 10004,
+	  "title" : "Senior Engineer"
+    }
+  ]
 },
 
 ..........

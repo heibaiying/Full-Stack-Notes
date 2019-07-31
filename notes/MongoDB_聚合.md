@@ -3,15 +3,15 @@
 <nav>
 <a href="#一聚合简述">一、聚合简述</a><br/>
 <a href="#二聚合管道">二、聚合管道</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-$match">1.1 $match</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-$project">1.2 $project</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-$group">1.3 $group</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-$unwind">1.4 $unwind</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-$sort">1.5 $sort</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#16-$limit">1.6 $limit</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#17-$skip">1.7 $skip</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#18-$lookup">1.8 $lookup</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#19-$out">1.9 $out</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-match">1.1 $match</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-project">1.2 $project</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-group">1.3 $group</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-unwind">1.4 $unwind</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-sort">1.5 $sort</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#16-limit">1.6 $limit</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#17-skip">1.7 $skip</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#18-lookup">1.8 $lookup</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#19-out">1.9 $out</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#110-自动优化">1.10 自动优化</a><br/>
 <a href="#三MapReduce">三、MapReduce</a><br/>
 <a href="#四单用途聚合方法">四、单用途聚合方法</a><br/>
@@ -415,31 +415,31 @@ db.employees.aggregate([
 	.......
 	],
 	"emps_title" : [
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-			"emp_no" : 10001,
-			"title" : "Senior Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a6"),
-			"emp_no" : 10002,
-			"title" : "Staff"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a7"),
-			"emp_no" : 10003,
-			"title" : "Senior Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a8"),
-			"emp_no" : 10004,
-			"title" : "Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a9"),
-			"emp_no" : 10004,
-			"title" : "Senior Engineer"
-		}
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
+		"emp_no" : 10001,
+		"title" : "Senior Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a6"),
+		"emp_no" : 10002,
+		"title" : "Staff"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a7"),
+		"emp_no" : 10003,
+		"title" : "Senior Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a8"),
+		"emp_no" : 10004,
+		"title" : "Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a9"),
+		"emp_no" : 10004,
+		"title" : "Senior Engineer"
+	}
 	]
 },
 
@@ -447,31 +447,31 @@ db.employees.aggregate([
 	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a2"),
 	.......
 	"emps_title" : [
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a5"),
-			"emp_no" : 10001,
-			"title" : "Senior Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a6"),
-			"emp_no" : 10002,
-			"title" : "Staff"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a7"),
-			"emp_no" : 10003,
-			"title" : "Senior Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a8"),
-			"emp_no" : 10004,
-			"title" : "Engineer"
-		},
-		{
-			"_id" : ObjectId("5d4011728ba16934ccce99a9"),
-			"emp_no" : 10004,
-			"title" : "Senior Engineer"
-		}
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a5"),
+		"emp_no" : 10001,
+		"title" : "Senior Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a6"),
+		"emp_no" : 10002,
+		"title" : "Staff"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a7"),
+		"emp_no" : 10003,
+		"title" : "Senior Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a8"),
+		"emp_no" : 10004,
+		"title" : "Engineer"
+	},
+	{
+		"_id" : ObjectId("5d4011728ba16934ccce99a9"),
+		"emp_no" : 10004,
+		"title" : "Senior Engineer"
+	}
 	]
 },
 
@@ -580,12 +580,12 @@ db.employees.mapReduce(
 
 ```text
 {
-	"_id" : "F",
-	"value" : 33
+  "_id" : "F",
+  "value" : 33
 },
 {
-	"_id" : "M",
-	"value" : 39
+  "_id" : "M",
+  "value" : 39
 }
 ```
 

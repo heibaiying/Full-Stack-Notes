@@ -333,7 +333,7 @@ db.employees.aggregate([
 
 输出结果如下，为节省篇幅和突出重点，这里只显示部分内容，下文亦同。从输出中可以看到员工的职位信息都作为内嵌文档插入到指定的 emp_title 字段下，等价于执行了 left outer join 操作。
 
-```shell
+```text
 {
 	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
 	"emp_no" : 10001,
@@ -408,7 +408,7 @@ db.employees.aggregate([
 
 此时输出如下，可以看到每个员工的 emps_title 字段都是相同的，都包含了所有员工的职位信息。因为查询中并没有指定任何字段进行关联，所以这种查询也被称为非相关查询。
 
-```shell
+```text
 {
 	"_id" : ObjectId("5d3ffaaa8ba16934ccce99a1"),
 	"emp_no" : 10001,
@@ -578,7 +578,7 @@ db.employees.mapReduce(
 
 对应的计算结果会被输出到 age_avg 集合中，其内容如下：
 
-```shell
+```text
 {
 	"_id" : "F",
 	"value" : 33

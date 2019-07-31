@@ -171,7 +171,7 @@ db.employees.aggregate(
 }
 ```
 
-如果你想计算所有员工的年龄总和、平均年龄、以及员工总数，则可以将 $group 管道阶段的 _id 字段设置为 null ，语句如下：
+如果你想计算所有员工的年龄总和、平均年龄、以及员工总数，则可以将 $group 管道阶段的 _id 字段设置为 null ，如下：
 
 ```shell
 db.employees.aggregate(

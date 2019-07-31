@@ -414,31 +414,31 @@ db.employees.aggregate([
   "emp_no" : 10001,
   .......
   "emps_title" : [
-    {
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
 	  "emp_no" : 10001,
 	  "title" : "Senior Engineer"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
 	  "emp_no" : 10002,
 	  "title" : "Staff"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
 	  "emp_no" : 10003,
 	  "title" : "Senior Engineer"
-    },
-    {
+ 	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
 	  "emp_no" : 10004,
 	  "title" : "Engineer"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
 	  "emp_no" : 10004,
 	  "title" : "Senior Engineer"
-    }
+	}
   ]
 },
 
@@ -447,31 +447,31 @@ db.employees.aggregate([
   "emp_no" : 10002,
   .......
   "emps_title" : [
-    {
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
 	  "emp_no" : 10001,
 	  "title" : "Senior Engineer"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
 	  "emp_no" : 10002,
 	  "title" : "Staff"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
 	  "emp_no" : 10003,
 	  "title" : "Senior Engineer"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
 	  "emp_no" : 10004,
 	  "title" : "Engineer"
-    },
-    {
+	},
+	{
 	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
 	  "emp_no" : 10004,
 	  "title" : "Senior Engineer"
-    }
+	}
   ]
 },
 

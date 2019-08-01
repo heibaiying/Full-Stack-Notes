@@ -1,5 +1,6 @@
 # RabbitMQ 单机环境搭建
-<nav>
+
+<nav>
 <a href="#一前置条件">一、前置条件</a><br/>
 <a href="#二Erlang-安装">二、Erlang 安装</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-下载并解压">2.1 下载并解压</a><br/>
@@ -105,7 +106,6 @@ source /etc/profile
 wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.15/rabbitmq-server-generic-unix-3.7.15.tar.xz
 # 解压
 tar -Jxf rabbitmq-server-generic-unix-3.7.15.tar.xz
-
 ```
 
 ### 3.2 配置环境变量
@@ -156,7 +156,6 @@ rabbitmq-plugins enable rabbitmq_management
 访问端口为 `15672`。默认的用户名和密码都是 `guest` 。如果你所用浏览器和 RabbitMQ 服务不在同一台主机上，此时应该无法登录，并出现下面的提示 ：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/RabbitMQ-访问限制.png"/> </div>
-
 之所以会出现这个提示，是因为出于安全考虑，RabbitMQ 只允许在本机使用默认的`guest`用户名登录。想要在其他主机上登录，可以使用自定义的账户。
 
 ### 4.2 新增账户

@@ -1,5 +1,18 @@
 # RabbitMQ 基础
 
+<nav>
+<a href="#一消息队列">一、消息队列</a><br/>
+<a href="#二AMQP协议">二、AMQP协议</a><br/>
+<a href="#三RabbitMQ-简介">三、RabbitMQ简介</a><br/>
+<a href="#四模型架构">四、模型架构</a><br/>
+<a href="#五交换器类型">五、交换器类型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-fanout">5.1 fanout</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-direct">5.2 direct</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#53-topic">5.3 topic</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#54-headers">5.4 headers</a><br/>
+<a href="#六死信队列">六、死信队列</a><br/>
+</nav>
+
 ## 一、消息队列
 
 消息队列中间件 (Message Queue Middleware，简称 MQ) 是指利用高效可靠的消息传递机制进行与平台无关的数据交流，它可以在分布式环境下扩展进程间的数据通信，并基于数据通信来进行分布式系统的集成。它主要适用于以下场景：
@@ -41,8 +54,7 @@ RabbitMQ 完全实现了 AMQP 协议，并基于相同的模型架构。RabbitMQ
 
 RabbitMQ 与 AMQP 遵循相同的模型架构，其架构示例图如下：
 
-![rabbitmq-模型架构](D:\Full-Stack-Notes\pictures\rabbitmq-模型架构.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-模型架构.png"/> </div>
 ### 1. Publisher（发布者）
 
 发布者 (或称为生产者) 负责生产消息并将其投递到指定的交换器上。
@@ -101,18 +113,15 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 
 这是最简单的一种交换器模型，此时会把消息路由到与该交换器绑定的所有队列中。如下图，任何发送到 X 交换器上的消息，都会被路由到 Q1 和 Q2 两个队列上。
 
-![rabbit-fanout-exchange](D:\Full-Stack-Notes\pictures\rabbitmq-fanout-exchange.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-fanout-exchange.png"/> </div>
 ### 5.2 direct
 
 把消息路由到 BindingKey 和 RountingKey 完全一样的队列中。如下图，当消息的 RountingKey 为 orange 时，消息会被路由到 Q1 队列；当消息的 RountingKey  为 black 或 green 时，消息会被路由到 Q2 队列。
 
-![rabbit-direct-exchange](D:\Full-Stack-Notes\pictures\rabbitmq-direct-exchange.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-direct-exchange.png"/> </div>
 需要特别说明的是一个交换器绑定多个队列时，它们的 BindingKey 是可以相同的，如下图。此时当消息的 RountingKey 为 black 时，消息会同时被路由到 Q1 和 Q2 队列。
 
-![rabbit-direct-exchange](D:\Full-Stack-Notes\pictures\rabbitmq-direct-exchange-2.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-direct-exchange-2.png"/> </div>
 ### 5.3 topic
 
 将消息路由到 BindingKey 和 RountingKey 相匹配的队列中，匹配规则如下：
@@ -122,8 +131,7 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 
 以下是官方文档中的示例，交换器与队列的绑定情况如图所示，此时的路由情况如下：
 
-![topic-exchange](D:\Full-Stack-Notes\pictures\rabbitmq-topic-exchange.png)
-
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-topic-exchange.png"/> </div>
 + 路由键为 `lazy.orange.elephant` 的消息会发送给所有队列；
 + 路由键为 `quick.orange.fox` 的消息只会发送给 Q1 队列；
 + 路由键为 `lazy.brown.fox` 的消息只会发送给 Q2 队列；
@@ -151,14 +159,17 @@ RabbitMQ 中另外一个比较常见的概念是死信队列。当消息在一�
 我们可以在队列创建的 channel.queueDeclare 方法中设置 x-dead-letter-exchange 参数来为正常队列添加死信交换器，当该队列中存在死信时，死信就会被发送到死信交换器上，进而路由到死信队列上。示例如下：
 
 ```java
-// 创建一个死信交换器
-channel.exchangeDeclare("some.exchange.name", "direct");
+// 创建死信交换器
+channel.exchangeDeclare("exchange.dlx", "direct");
+// 声明死信队列
+channel.queueDeclare(" queue.d1x ", true, false, false, null);
+// 绑定死信交换器和死信队列
+channel.queueBind("queue.dlx ", "exchange.dlx ", "routingkey");
 
 Map<String, Object> args = new HashMap<>();
-args.put("x-dead-letter-exchange", "some.exchange.name");
-
-// 为名为 myqueue 的队列指定死信交换器
-channel.queueDeclare("myqueue", false, false, false, args);
+args.put("x-dead-letter-exchange", "exchange.dlx");
+// 为名为 myqueue 的正常队列指定死信交换器
+channel.queueDeclare("queue.normal", false, false, false, args);
 ```
 
 除此之外，您还可以重新指定死信的路由键，如果没有指定，则默认使用原有的路由键，重新设置的方法如下：

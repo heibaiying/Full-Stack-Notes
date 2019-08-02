@@ -1,9 +1,6 @@
 package com.heibaiying.base;
 
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -30,8 +27,10 @@ public class Producer {
 		String routingKey = "my-key";
 		// 7.需要传递的数据
 		byte[] messageBodyBytes = "Hello RabbiMQ!".getBytes();
-		// 8.将消息发布到指定的交换机上
-		channel.basicPublish(exchangeName, routingKey, null, messageBodyBytes);
+		// 8.将消息发布到指定的交换机上,设置投递模式为2,对应模式名为persistent,代表消息会被持久化存储
+		channel.basicPublish(exchangeName, routingKey,
+			new AMQP.BasicProperties.Builder().deliveryMode(2).build(),
+			messageBodyBytes);
 		// 9.关闭信道
 		channel.close();
 		// 10.关闭连接

@@ -174,9 +174,7 @@ public class Rabbit {
 #### 2.1.1 生产者和消费者
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/RabbitMQ模型架构.png"/> </div></br>
-
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/消息队列运转过程.png"/> </div></br>
-
 #### 2.1.2 队列
 
 **Queue（队列）** 是 RabbitMQ的内部对象，用于**存储消息**。多个消费者可以订阅同一个消息，这时候队列中的消息会被平均分摊（Round-Robin,即轮训）给多个消费者进行处理，而不是每个消费者都收到所有消费并处理。
@@ -196,7 +194,6 @@ public class Rabbit {
 **2. direct**: 把消息路由到那些BindingKey和RountingKey 完全匹配的队列中。
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/direct-exchange.png"/> </div></br>
-
 **官方原文：**
 
 In this setup, we can see the direct exchange X with two queues bound to it. The first queue is bound with binding key orange, and the second has two bindings, one with binding key black and the other one with green.
@@ -213,7 +210,6 @@ In such a setup a message published to the exchange with a routing key orange wi
   - \# (hash) can substitute for zero or more words.
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/topic-exchange.png"/> </div></br>
-
 官网原文对这一模式的说明比较清晰,摘抄如下：
 
 We created three bindings: Q1 is bound with binding key "*.orange.*" and Q2 with "*.*.rabbit" and "lazy.#".
@@ -285,7 +281,7 @@ Connection conn = factory.newConnection();
 ```java
 // 创建一个 type="direct"、持久化的、非自动删除的交换器
 channel.exchangeDeclare(EXCHANGE_NAME,"direct",true,false,null);
-// 创建一个持久化、非排他的、非自动删除的交换器
+// 创建一个持久化、非排他的、非自动删除的队列
 channel.queueDeclare(QUEUE_NAME,true,false,false,null);
 // 将交换器与队列通过路由键绑定
 channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,ROUTING_KEY);
@@ -698,7 +694,6 @@ channel.queueDeclare("myqueue " , false , false , false , args) ;
 利用死信队列来实现：
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/延迟队列.png"/> </div></br>
-
 ### 4.5 优先级队列
 
 **设置队列优先级**：

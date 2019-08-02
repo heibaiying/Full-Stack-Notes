@@ -36,25 +36,21 @@ AMQP (Advanced Message Queuing Protocol) 是一个提供统一消息服务的应
 
 RabbitMQ 完全实现了 AMQP 协议，并基于相同的模型架构。RabbitMQ 在实现 `AMQP 0-9-1` 的基础上还进行了额外拓展，并可以通过插件来支持 `AMQP 1.0`。所以在某种程度上而言， RabbitMQ 就是 AMQP 在 Erlang 语言上的实现。RabbitMQ 基于众多优秀的特性成为了目前最为广泛使用的消息中间件，它的主要特性如下：
 
-- 支持多种消息传递协议，除了 AMQP 外，还可以通过插件支持所有版本的 STOMP 协议和 MQTT 3.1 协议；
-- 拥有丰富的交换器类型，可以满足绝大部分的使用需求；
-- 支持多种部署方式，易于部署；
-
-- 支持跨语言开发，如：Java，.NET，PHP，Python，JavaScript，Ruby，Go；
-
-- 可以通过集群来实现高可用性和高吞吐，还可以通过 Federation 插件来连接跨机房跨区域的不同版本的服务节点；
-
-- 插拔式的身份验证和授权，支持 TLS 和 LDAP；
-
-- 支持持续集成，能够使用各种插件进行灵活地扩展；
-
-- 能够使用多种方式进行监控和管理，如 HTTP API，命令行工具和 UI 界面。
++ 支持多种消息传递协议，除了 AMQP 外，还可以通过插件支持所有版本的 STOMP 协议和 MQTT 3.1 协议；
++ 拥有丰富的交换器类型，可以满足绝大部分的使用需求；
++ 支持多种部署方式，易于部署；
++ 支持跨语言开发，如：Java，.NET，PHP，Python，JavaScript，Ruby，Go；
++ 可以通过集群来实现高可用性和高吞吐，还可以通过 Federation 插件来连接跨机房跨区域的不同版本的服务节点；
++ 插拔式的身份验证和授权，支持 TLS 和 LDAP；
++ 支持持续集成，能够使用各种插件进行灵活地扩展；
++ 能够使用多种方式进行监控和管理，如 HTTP API，命令行工具和 UI 界面。
 
 ## 四、模型架构
 
 RabbitMQ 与 AMQP 遵循相同的模型架构，其架构示例图如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-模型架构.png"/> </div>
+
 ### 1. Publisher（发布者）
 
 发布者 (或称为生产者) 负责生产消息并将其投递到指定的交换器上。
@@ -99,7 +95,7 @@ RabbitMQ 采用类似 NIO (非阻塞式 IO ) 的设计，通过 Channel 来复�
 
 ### 10. Virtual Host（虚拟主机）
 
-RabbitMQ 支持多租户，并通过虚拟主机来实现逻辑分组和资源隔离，一个虚拟主机就是一个小型的 RabbitMQ 服务器，拥有独立的队列、交换器和绑定关系。用户可以按照不同业务场景建立不同的虚拟主机，虚拟主机之间是完全独立的，你无法将 vhost1 上的交换器与 vhost2 上的队列进行绑定，这可以极大的保证业务之间的隔离性和数据安全。默认的虚拟主机名为 `/` 。
+RabbitMQ 通过虚拟主机来实现逻辑分组和资源隔离，一个虚拟主机就是一个小型的 RabbitMQ 服务器，拥有独立的队列、交换器和绑定关系。用户可以按照不同业务场景建立不同的虚拟主机，虚拟主机之间是完全独立的，你无法将 vhost1 上的交换器与 vhost2 上的队列进行绑定，这可以极大的保证业务之间的隔离性和数据安全。默认的虚拟主机名为 `/` 。
 
 ### 11. Broker
 
@@ -114,14 +110,17 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 这是最简单的一种交换器模型，此时会把消息路由到与该交换器绑定的所有队列中。如下图，任何发送到 X 交换器上的消息，都会被路由到 Q1 和 Q2 两个队列上。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-fanout-exchange.png"/> </div>
+
 ### 5.2 direct
 
 把消息路由到 BindingKey 和 RountingKey 完全一样的队列中。如下图，当消息的 RountingKey 为 orange 时，消息会被路由到 Q1 队列；当消息的 RountingKey  为 black 或 green 时，消息会被路由到 Q2 队列。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-direct-exchange.png"/> </div>
+
 需要特别说明的是一个交换器绑定多个队列时，它们的 BindingKey 是可以相同的，如下图。此时当消息的 RountingKey 为 black 时，消息会同时被路由到 Q1 和 Q2 队列。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-direct-exchange-2.png"/> </div>
+
 ### 5.3 topic
 
 将消息路由到 BindingKey 和 RountingKey 相匹配的队列中，匹配规则如下：
@@ -132,6 +131,7 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 以下是官方文档中的示例，交换器与队列的绑定情况如图所示，此时的路由情况如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-topic-exchange.png"/> </div>
+
 + 路由键为 `lazy.orange.elephant` 的消息会发送给所有队列；
 + 路由键为 `quick.orange.fox` 的消息只会发送给 Q1 队列；
 + 路由键为 `lazy.brown.fox` 的消息只会发送给 Q2 队列；

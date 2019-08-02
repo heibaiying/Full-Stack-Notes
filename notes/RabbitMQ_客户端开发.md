@@ -46,7 +46,7 @@ public static final String DEFAULT_HOST = "localhost";
 public static final int    DEFAULT_AMQP_OVER_SSL_PORT = 5671;
 ```
 
-需要注意的是 RabbitMQ 采用类似 NIO (非阻塞式 IO ) 的设计，通过 Channel 来复用 TCP 连接，因此可以基于一个 Connection 来创建多个 Channel 实例，但 Channel 实例不是线程安全的，所以不能在多个线程之间共享一个 Channel 实例，而应该为每个线程单独创建一个 Channel 实例。
+需要注意的是 RabbitMQ 采用类似 NIO (非阻塞式 IO) 的设计，通过 Channel 来复用 TCP 连接，因此可以基于一个 Connection 来创建多个 Channel 实例，但 Channel 实例不是线程安全的，所以不能在多个线程之间共享一个 Channel 实例，而应该为每个线程单独创建一个 Channel 实例。
 
 ### 1.2 声明交换器
 
@@ -66,8 +66,8 @@ Exchange.DeclareOk exchangeDeclare(String exchange,
 + **exchange**： 交换器的名称。
 + **type**：交换器的类型。交换器的常用类型都定义在 `BuiltInExchangeType ` 枚举类中。
 + **durable**：是否进行持久化。持久化可以将交换器的信息存储到磁盘，在服务器重启后不会丢失相关的信息。
-* **autoDelete**：是否自动删除。自动删除的前提是至少有一个队列或者其他交换器与该交换器进行过绑定，之后所有与该交换器绑定的队列或其他交换器都解除绑定关系后，该交换器会被自动删除。通常设置为 false。
-* **internal**：是否内置，如果设置 为true，则表示是内置的交换器，客户端程序无法直接发送消息到这个交换器中，只能通过交换器路由到交换器的方式。
++ **autoDelete**：是否自动删除。自动删除的前提是至少有一个队列或者其他交换器与该交换器进行过绑定，之后所有与该交换器绑定的队列或其他交换器都解除绑定关系后，该交换器会被自动删除。通常设置为 false。
++ **internal**：是否内置，如果设置 为true，则表示是内置的交换器，客户端程序无法直接发送消息到这个交换器中，只能通过交换器路由到交换器的方式。
 + **arguments**：其余可选配置。
 
 ### 1.3 声明队列

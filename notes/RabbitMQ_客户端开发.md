@@ -66,14 +66,10 @@ Exchange.DeclareOk exchangeDeclare(String exchange,
 
 
 + **exchange**： 交换器的名称。
-
 + **type**：交换器的类型。交换器的常用类型都定义在 `BuiltInExchangeType ` 枚举类中。
 + **durable**：是否进行持久化。持久化可以将交换器的信息存储到磁盘，在服务器重启后不会丢失相关的信息。
-
 * **autoDelete**：是否自动删除。自动删除的前提是至少有一个队列或者其他交换器与该交换器进行过绑定，之后所有与该交换器绑定的队列或其他交换器都解除绑定关系后，该交换器会被自动删除。通常设置为 false。
-  
 * **internal**：是否内置，如果设置 为true，则表示是内置的交换器，客户端程序无法直接发送消息到这个交换器中，只能通过交换器路由到交换器的方式。
-
 + **arguments**：其余可选配置。
 
 ### 1.3 声明队列
@@ -125,17 +121,12 @@ void basicPublish(String exchange,
 ```
 
 - **exchange** ：消息投递的目标交换器。
-
 - **routingKey**：路由键。
-
 - **props**：可选属性。所有可选属性配置可以参考官方文档：[publishers](https://www.rabbitmq.com/publishers.html)
-
 - **body**：需要传递的消息内容。
-
-- **mandatory **：交换器负责接收来自生产者的消息，并将将消息路由到一个或者多个队列中，如果路由不到，则返回给生产者或者直接丢弃，这取决于交换器的 mandatory 属性：
+- **mandatory**：交换器负责接收来自生产者的消息，并将将消息路由到一个或者多个队列中，如果路由不到，则返回给生产者或者直接丢弃，这取决于交换器的 mandatory 属性：
 
   + mandatory = true ：如果交换器无法根据自身类型和路由键找到一个符合条件的队列，则会将该消息返回给生产者；
-
   - mandatory = false：如果交换器无法根据自身类型和路由键找到一个符合条件的队列，则会直接丢弃该消息。
 
 - **immediate** ：当 immediate 参数为 true 的情况下，如果消息路由到队列时，发现队列上不存在任何可用的消费者，那么这条消息将不会存入该队列，而是尝试路由到其他符合路由条件的队列上。当所有符合路由条件的队列都没有消费者时 ，该消息会通过 Basic.Return 返回至生产者。 
@@ -144,7 +135,7 @@ void basicPublish(String exchange,
 
 RabbitMQ 的消费模式分两种 : 推 (Push) 模式和拉 (Pull) 模式：
 
-#### 推模式
+#### 1.推模式
 
 推模式采用 basicConsume 方法进行消费，basicConsume  将信道 (Channel) 设置为接收模式，直到订阅取消为止。在接收模式期间，RabbitMQ 会不断地推送消息给消费者。basicConsume  具有多个重载实现，这里选取其中参数较全的进行讲解：
 
@@ -163,7 +154,7 @@ String basicConsume(String queue, boolean autoAck,
 + **arguments**：其他可选配置。
 + **callback**：设置消费者的回调函数，用于处理获取到的消息。
 
-#### 拉模式
+#### 2.拉模式
 
 如果只想从队列获得单条消息而不是持续订阅，可以采用拉模式。它采用 basicGet 方法进行消费，其 API 如下：
 
@@ -287,7 +278,7 @@ public class Consumer {
 
 ### 2.4 消费端确认
 
-在示例代码中，basicConsume 方法关闭了自动确认模式，并使用 basicAck 进行手动的成功确认。basicAck 的方法定义如下：
+在示例代码中，basicConsume 方法关闭了自动确认模式，并使用 basicAck 进行手动的成功确认。basicAck 的定义如下：
 
 ```java
 void basicAck(long deliveryTag, boolean multiple) throws IOException;

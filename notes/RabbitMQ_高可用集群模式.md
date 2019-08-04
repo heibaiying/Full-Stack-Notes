@@ -247,40 +247,40 @@ source /etc/profile
 
 新建配置文件 `haproxy.cfg`，这里我新建的位置为：/etc/haproxy/haproxy.cfg，文件内容如下：
 
-```yml
+```shell
 # 全局配置
 global
     # 日志输出配置、所有日志都记录在本机，通过 local0 进行输出
-	log 127.0.0.1 local0 info
+    log 127.0.0.1 local0 info
     # 最大连接数
-	maxconn 4096
+    maxconn 4096
     # 改变当前的工作目录
-	chroot /usr/app/haproxy-2.0.3
+    chroot /usr/app/haproxy-2.0.3
     # 以指定的 UID 运行 haproxy 进程
-	uid 99
+    uid 99
     # 以指定的 GID 运行 haproxy 进程
-	gid 99
+    gid 99
     # 以守护进行的方式运行
-	daemon
-	# 当前进程的 pid 文件存放位置
-	pidfile /usr/app/haproxy-2.0.3/haproxy.pid
+    daemon
+    # 当前进程的 pid 文件存放位置
+    pidfile /usr/app/haproxy-2.0.3/haproxy.pid
 
 # 默认配置
 defaults
     # 应用全局的日志配置
-	log global
-	# 使用4层代理模式，7层代理模式则为"http"
-	mode tcp
-	# 日志类别
-	option tcplog
+    log global
+    # 使用4层代理模式，7层代理模式则为"http"
+    mode tcp
+    # 日志类别
+    option tcplog
     # 不记录健康检查的日志信息
-	option dontlognull
+    option dontlognull
     # 3次失败则认为服务不可用
-	retries 3
+    retries 3
     # 每个进程可用的最大连接数
-	maxconn 2000
+    maxconn 2000
     # 连接超时
-	timeout connect 5s
+    timeout connect 5s
     # 客户端超时
     timeout client 120s
     # 服务端超时
@@ -288,24 +288,24 @@ defaults
 
 # 绑定配置
 listen rabbitmq_cluster
-	bind :5671
-	# 配置TCP模式
-	mode tcp
-	# 采用加权轮询的机制进行负载均衡
-	balance roundrobin
-	# RabbitMQ 集群节点配置
+    bind :5671
+    # 配置TCP模式
+    mode tcp
+    # 采用加权轮询的机制进行负载均衡
+    balance roundrobin
+    # RabbitMQ 集群节点配置
     server node1 hadoop001:5672 check inter 5000 rise 2 fall 3 weight 1
     server node2 hadoop002:5672 check inter 5000 rise 2 fall 3 weight 1
     server node3 hadoop003:5672 check inter 5000 rise 2 fall 3 weight 1
 
 # 配置监控页面
 listen monitor
-	bind :8100
-	mode http
-	option httplog
-	stats enable
-	stats uri /stats
-	stats refresh 5s
+    bind :8100
+    mode http
+    option httplog
+    stats enable
+    stats uri /stats
+    stats refresh 5s
 ```
 
 负载均衡的主要配置在 `listen rabbitmq_cluster` 下，这里指定负载均衡的方式为加权轮询，同时定义好健康检查机制：

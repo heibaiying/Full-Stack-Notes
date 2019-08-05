@@ -2,7 +2,7 @@
 
 ## 一、下载并解压
 
-这里我采用的是二进制安装包的方式进行安装，安装包的下载地址为：https://dev.mysql.com/downloads/mysql/，按需选择对应的版本后进行下载：
+这里我采用的是二进制安装包的方式进行安装，安装包的下载地址为：https://dev.mysql.com/downloads/mysql/ ，按需选择对应的版本后进行下载：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-version.png"/> </div>
 

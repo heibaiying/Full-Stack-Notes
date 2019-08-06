@@ -1,112 +1,30 @@
-# oracle和mysql 知识点总结和异同对比
-
-## 目录<br/>
-<a href="#一数据库管理">一、数据库管理</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-用户管理">1.1 用户管理</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#111-mysql用户权限管理">1.1.1 mysql用户、权限管理</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#112-oracle-用户角色权限管理">1.1.2 oracle 用户、角色、权限管理</a><br/>
-<a href="#二DQL-语句">二、DQL 语句</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-基础查询">2.1 基础查询</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1常量查询的区别">1.常量查询的区别：</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2字符串拼接">2.字符串拼接</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3判断字段是否为空">3.判断字段是否为空</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4查询非空字段">4.查询非空字段</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-常见函数">2.2 常见函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1字符函数">1.字符函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2数学函数">2.数学函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3日期函数">3.日期函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-oracle-日期函数">1. oracle 日期函数：</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-oracel常用的时间格式掩码">1.1 oracel常用的时间格式掩码</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-Oracle-获取当前年月日">1.2 Oracle 获取当前年、月、日</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-计算两个时间差">1.3 计算两个时间差</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-日期和字符串转换">1.4 日期和字符串转换</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-日期的加减计算">1.5 日期的加减计算</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2mysql日期函数">2.mysql日期函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-mysql-常用日期格式掩码">2.1 mysql 常用日期格式掩码</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-Oracle-获取当前年月日">2.2 Oracle 获取当前年、月、日</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-计算两个时间之差">2.3 计算两个时间之差</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-日期和字符串转换">2.4 日期和字符串转换</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-日期的加减计算">2.5 日期的加减计算</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4流程控制函数">4、流程控制函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-oracle-decode函数">4.1 oracle decode函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-mysql流程控制函数">4.2 mysql流程控制函数</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5分页查询">5.分页查询</a><br/>
-<a href="#三DML语句">三、DML语句</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-插入语句">1. 插入语句</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-mysql-多行插入">1.1 mysql 多行插入</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-oracle-多行插入">1.2 oracle 多行插入</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2多表更新">2.多表更新</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-mysql-多表更新">2.1 mysql 多表更新</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-oracle-多表更新">2.2 oracle 多表更新</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-级联删除">3. 级联删除</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-mysql-级联删除">3.1 mysql 级联删除</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-oracle-级联删除">3.2 oracle 级联删除</a><br/>
-<a href="#四DDL语句">四、DDL语句</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-数据库操作">4.1 数据库操作</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-mysql数据库的创建修改和删除">4.1 mysql数据库的创建、修改和删除</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-oracle-数据库的创建和删除">4.2 oracle 数据库的创建和删除</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-表的管理">4.2 表的管理</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#421-创建表">4.2.1 创建表 </a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-oracle-字段类型">1. oracle 字段类型</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-mysql-字段类型">2. mysql 字段类型</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#422-修改表">4.2.2 修改表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#423-删除表">4.2.3 删除表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#424-复制表">4.2.4 复制表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-约束">4.3 约束</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#431-常见的约束">4.3.1 常见的约束</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#432-创建表时添加约束">4.3.2 创建表时添加约束</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#433-修改表时添加或删除约束">4.3.3 修改表时添加或删除约束</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#434-自增长列mysql">4.3.4 自增长列(mysql)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#435-序列oracle">4.3.5 序列(oracle)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#436-级联操作">4.3.6 级联操作</a><br/>
-<a href="#五TCL语言">五、TCL语言</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-事务">5.1 事务</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#511-事务隔离级别">5.1.1 事务隔离级别</a><br/>
-<a href="#六其他扩展">六、其他扩展</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61-视图">6.1 视图</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62-触发器">6.2 触发器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#63-存储过程">6.3 存储过程</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#631-创建存储过程">6.3.1 创建存储过程</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#632变量">6.3.2变量</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#633-存储过程的查询">6.3.3 存储过程的查询</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#634-存储过程的修改">6.3.4 存储过程的修改</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#635-存储过程的删除">6.3.5 存储过程的删除</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#636-条件语句">6.3.6 条件语句</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1分支结构">1.分支结构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2循环结构">2.循环结构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#64-游标">6.4 游标</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#641-游标简介">6.4.1 游标简介</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#642-游标的特性">6.4.2 游标的特性</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#643-游标的操作">6.4.3 游标的操作</a><br/>
-
-## 正文<br/>
+# Oracle 和 MySQL 异同对比
 
 
 ## 一、数据库管理
 
-### 1.1 用户管理
+### 1.1 MySQL 用户、权限管理
 
-#### 1.1.1 mysql用户、权限管理
-
-**1.创建、修改、删除用户**
+#### 1. 创建、修改、删除用户
 
 ```mysql
 -- 创建用户
 CREATE USER '用户名' IDENTIFIED BY '密码';
 
 -- 重命名
-RENAME USER '用户名' TO '新用户名'；
+RENAME USER '用户名' TO '新用户名';
 
--- 修改用户口令
-    -- 自己的口令
-    SET PASSWORD=Password('新密码')
-    -- 其他用户的口令
-    SET PASSWORD FOR 用户名 = Password('新密码')
+-- 修改自己的密码
+SET PASSWORD=Password('新密码')
+
+-- 其他用户的口令
+SET PASSWORD FOR 用户名 = Password('新密码')
+
 -- 删除用户
-DROP USER '用户名'；
+DROP USER '用户名';
 ```
 
-**2.用户权限管理**
+#### 2. 用户权限管理
 
 ```mysql
 -- 查看用户权限
@@ -119,19 +37,17 @@ GRANT privileges ON [权限范围] TO '用户名'；
 REVOKE privileges ON [权限范围] TO '用户名'；
 ```
 
-**注：修改完权限以后 一定要刷新服务，或者重启服务，刷新服务用：FLUSH PRIVILEGES**
+注：权限修改完成后需要使用 FLUSH PRIVILEGES 命令刷新服务，或者重启服务。
 
+#### 3.权限级别范围
 
-
-**3.权限级别范围**
-
-MySQL grant 权限，分别可以作用在多个层次上。
+MySQL 的权限授予可以作用在多个层次上：
 ```mysql
 -- 1. grant 作用在整个 MySQL 服务器上：
-grant select on . to dba@localhost; -- dba 可以查询 MySQL 中所有数据库中的表。
+grant select on . to dba@localhost; -- dba 可以查询 MySQL 中所有数据库中的表
 grant all on . to dba@localhost; -- dba 可以管理 MySQL 中的所有数据库
 -- 2. grant 作用在单个数据库上：
-grant select on testdb.* to dba@localhost; -- dba 可以查询 testdb 中的表。
+grant select on testdb.* to dba@localhost; -- dba 可以查询 testdb 中的表
 -- 3. grant 作用在单个数据表上：
 grant select, insert, update, delete on testdb.orders to dba@localhost;
 -- 4. grant 作用在表中的列上：
@@ -142,7 +58,7 @@ grant execute on function testdb.fn_add to ’dba’@’localhost’
 
 ```
 
-**4.可以赋予的权限(privileges)列表:**
+**4.可以赋予的权限 (privileges) 列表 :**
 
 - ALTER: 修改表和索引。
 - CREATE: 创建数据库和表。
@@ -162,7 +78,7 @@ grant execute on function testdb.fn_add to ’dba’@’localhost’
 
 
 
-#### 1.1.2 oracle 用户、角色、权限管理
+### 1.2 Oracle 用户、角色、权限管理
 
 **1、创建用户**
 

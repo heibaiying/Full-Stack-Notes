@@ -72,7 +72,7 @@ log-bin = mysql-bin
 log_slave_updates = 1
 ```
 
-创建用于进行复制账号，并为其授予权限：
+登录主节点 MySQL 服务，创建用于进行复制账号，并为其授予权限：
 
 ```shell
 CREATE USER 'repl'@'192.168.0.%' IDENTIFIED WITH mysql_native_password BY '123456'; 
@@ -236,7 +236,44 @@ GTID 复制的优点在于程序可以自动确认开始复制的 GTID 点。但
 
 为防止执行不受支持的语句，建议配置和上文配置一样，开启 enforce-gtid-consistency 属性， 开启后在主库上执行以上不受支持的语句都将抛出异常并提示。
 
+
+
 ## 四、半同步复制
+
+
+
+```shell
+mysql> SHOW STATUS LIKE 'Rpl_semi_sync_master_status';
++-----------------------------+-------+
+| Variable_name               | Value |
++-----------------------------+-------+
+| Rpl_semi_sync_master_status | ON    |
++-----------------------------+-------+
+```
+
+
+
+```shell
+mysql> SHOW STATUS LIKE 'Rpl_semi_sync_slave_status';
++----------------------------+-------+
+| Variable_name              | Value |
++----------------------------+-------+
+| Rpl_semi_sync_slave_status | ON    |
++----------------------------+-------+
+```
+
+
+
+```shell
+mysql> SHOW VARIABLES LIKE 'rpl_semi_sync_master_wait_point';
++---------------------------------+------------+
+| Variable_name                   | Value      |
++---------------------------------+------------+
+| rpl_semi_sync_master_wait_point | AFTER_SYNC |
++---------------------------------+------------+
+```
+
+
 
 
 
@@ -246,18 +283,25 @@ GTID 复制的优点在于程序可以自动确认开始复制的 GTID 点。但
 
 ### 4.1 MMM
 
-1. Monitor 检测到 Master1 连接失败；
-2. Monitor 发送 set_offline 指令到 Master1 的 Agent；
-3. Master1 Agent 如果存活，下线写 VIP，尝试把 Master1 设置为 read_only=1；
-4. Moniotr 发送 set_online 指令到 Master2；
-5. Master2 Agent 接收到指令，执行 `select master_pos_wait()` 等待同步完毕；
-6. Master2 Agent 上线写 VIP，把 Master2 节点设为 read_only=0；
-7. Monitor 发送更改同步对象的指令到各个 Slave 节点的 Agent；
-8. 各个 Slave 节点向新 Master 同步数据；
+MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一套支持双主故障切换以及双主日常管理的第三方软件。它包含两类角色：`writer` 和 `reader `，分别对应读写节点和只读节点。使用 MMM 管理的双主节点在同一时间上只允许一个进行写入操作，当 `writer` 节点出现宕机（假设是 Master1），程序会自动移除该节点上的读写 VIP，然后切换到 Master2 ，并设置 Master2 的 read_only = 0，即关闭只读限制，同时将所有 Slave 节点重新指向  Master2。
 
-简单来说，MMM 就是暴力的将 Master1 切换到 Master2 ，它本生不会尝试去补齐丢失的数据。
+除了管理双主节点，MMM 也负责管理所有 Slave节点，在出现宕机、复制延迟或复制错误，MMM 会移除该节点的 VIP，直至节点恢复正常。MMM 高可用的架构示例图如下：
+
+
+
+
+
+MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补齐丢失的数据，所以会存在数据不一致性的风险。另外 MMM 的发布时间比较早，所以其也不支持 MySQL 最新的基于 GTID 的复制，如果你使用的是基于 GTID 的复制，则只能采用 MHA。
 
 ### 4.2 MHA
+
+MHA (Master High Availability) 是由 Perl 实现的一款高可用程序，相对于 MMM ，它能尽量避免数据不一致的问题。它监控的是一主多从的复制架构，架构如下图所示：
+
+
+
+
+
+在 Master 节点宕机后，其处理流程如下：
 
 1. 尝试从宕机 Master 中保存二进制日志；
 2. 找到含有最新中继日志的 Slave；
@@ -266,31 +310,22 @@ GTID 复制的优点在于程序可以自动确认开始复制的 GTID 点。但
 5. 提升一个 Slave 为 Master ；
 6. 其他 Slave 向该新 Master 同步。
 
-当 Master 宕机后， MHA 会尝试保存宕机 Master 的二进制日志，然后自动判断 MySQL 集群中哪个实例的中继日志是最新的，并将有最新日志的实例的差异日志传到其他实例补齐，从而实现所有实例数据一致。然后把宕机 Master 的二进制日志应用到选定节点，并提升为 Master 。
+按照以上的处理流程，MHA 能够最大程序的避免数据不一致的问题。但如果 Master 所在的服务器也宕机了，那么过程的第一步就会失败。在 MySQL 5.5 后，可以开启半同步复制后来避免这个问题，从而可以保证数据的一致性和几乎无丢失。当然 MHA 集群也存在一下一些缺点：
 
-从切换流程流程可以看到，如果宕机 Master 主机无法 SSH 登录，那么第一步就没办法实现，对于 MySQL5.5 以前的版本，数据还是有丢失的风险。对于 5.5 后的版本，开启**半同步复制**后，真正有助于避免数据丢失，半同步复制保证至少一个 （不是所有）slave 在 master 提交时接收到二进制日志事件。因此，对于可以处理一致性问题的 MHA 可以实现"几乎没有数据丢失"和"从属一致性"。
+- 集群中所有节点之间需要开启 SSH 服务，所以会存在一定的安全影响。
+- 没有实现 Slave 的高可用。
+- 自带的脚本不足，例如虚拟 IP 的配置需要自己通过命令或者其他第三方软件来实现。
+- 需要手动清理中继日志。
 
-### 优点
-
-- 开源，用 Perl 编写
-- 方案成熟，故障切换时，MHA 会做日志补齐操作，尽可能减少数据丢失，保证数据一
-- 部署不需要改变现有架构
-
-### 限制
-
-- 各个节点要打通 SSH 信任，有一定的安全隐患
-- 没有 Slave 的高可用
-- 自带的脚本不足，例如虚IP配置需要自己写命令或者依赖其他软件
-- 需要手动清理中继日志
-
-
+以上就是 MMM 和 MHA 架构的简单介绍，关于其具体搭建步骤，可以以下两篇参考博客： [MySQL集群搭建(3)-MMM高可用架构](https://segmentfault.com/a/1190000017286307) 和  [MySQL集群搭建(5)-MHA高可用架构](https://segmentfault.com/a/1190000017486693)。
 
 
 
 ## 参考资料
 
-+ [MHA高可用架构](https://segmentfault.com/a/1190000017486693)
++ [Chapter 17 Replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html)
++ [GTID Format and Storage](https://dev.mysql.com/doc/refman/8.0/en/replication-gtids-concepts.html)
++ [MySQL半同步复制](https://www.cnblogs.com/ivictor/p/5735580.html)
++ [MySQL集群搭建(3)-MMM高可用架构](https://segmentfault.com/a/1190000017286307)
++ [MySQL集群搭建(5)-MHA高可用架构](https://segmentfault.com/a/1190000017486693)
 
-+ [MMM高可用架构](https://segmentfault.com/a/1190000017286307)
-
-+ 

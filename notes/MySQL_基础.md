@@ -1,5 +1,32 @@
 # MySQL 基础
 
+<nav>
+<a href="#一常见存储引擎">一、常见存储引擎</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-InnoDB">1.1 InnoDB</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-MyISAM">1.2 MyISAM</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-MEMORY">1.3 MEMORY</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-CSV">1.4 CSV</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-ARCHIVE">1.5 ARCHIVE</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#16-MEGRE">1.6 MEGRE</a><br/>
+<a href="#二索引">二、索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21--B+-tree-数据结构">2.1  B+ tree 数据结构</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-B+-tree-索引">2.2 B+ tree 索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-哈希索引">2.3 哈希索引</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-索引的优点">2.4 索引的优点</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-使用策略">2.5 使用策略</a><br/>
+<a href="#三锁">三、锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-共享锁与排它锁">3.1 共享锁与排它锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-意向共享锁与意向排它锁">3.2 意向共享锁与意向排它锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-一致性读">3.3 一致性读</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-锁的算法">3.4 锁的算法</a><br/>
+<a href="#四事务">四、事务</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-ACID-定义">4.1 ACID 定义</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-事务的实现">4.2 事务的实现</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-并发问题">4.3 并发问题</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-隔离级别">4.4 隔离级别</a><br/>
+<a href="#五数据库设计范式">五、数据库设计范式</a><br/>
+</nav>
+
 ## 一、常见存储引擎
 
 ### 1.1 InnoDB
@@ -17,7 +44,7 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它是一种兼具高可靠�
 
 
 
-![innodb-architecture](D:\Full-Stack-Notes\pictures\innodb-architecture.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/innodb-architecture.png"/> </div>
 
 ### 1.2 MyISAM
 
@@ -92,19 +119,19 @@ mysql>  SELECT * FROM total;
 
 **平衡二叉树数据结构**：
 
-![avl-tree](D:\Full-Stack-Notes\pictures\avl-tree.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/avl-tree.png"/> </div>
 
 **红黑树数据结构**：
 
-![red-black-tree](D:\Full-Stack-Notes\pictures\red-black-tree.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/red-black-tree.png"/> </div>
 
 **Btree 数据结构**：
 
-![btree](D:\Full-Stack-Notes\pictures\btree.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/btree.png"/> </div>
 
 **B+ Tree 数据结构**
 
-![B+Trees](D:\Full-Stack-Notes\pictures\B+Trees.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
 
 从上面的图示中我们可以看出 B+ Tree 树具有以下优点：
 
@@ -117,11 +144,11 @@ mysql>  SELECT * FROM total;
 
 对于 InnoDB ，因为主键索引是聚集索引，所以其叶子节点存储的就是实际的数据。而非主键索引存储则是主键的值 ：
 
-![mysql-innodb-索引](D:\Full-Stack-Notes\pictures\mysql-innodb-索引.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-innodb-索引.png"/> </div>
 
 对于 MyISAM，因为主键索引是非聚集索引，所以其叶子节点存储的只是指向数据位置的指针：
 
-![mysql-myisam-索引](D:\Full-Stack-Notes\pictures\mysql-myisam-索引.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-myisam-索引.png"/> </div>
 
 综上所述，B+ tree 普遍适用于范围查找，优化排序和分组等操作。B+ tree 的查找是基于字典序的，因此其适用的具体查询类型如下：
 
@@ -144,7 +171,7 @@ InnoDB 引擎有一个名为 “自适应哈希索引 (adaptive hash index)” �
 + 索引可以帮助服务器避免排序和临时表；
 + 索引可以将随机 IO 转换为顺序 IO。
 
-### 2.5 索引的创建与使用策略
+### 2.5 使用策略
 
 - 在查询时，应该避免在索引列上使用函数或者表达式。
 - 对于多列索引，应该按照使用频率由高到低的顺序建立联合索引。
@@ -225,7 +252,7 @@ SELECT c1 FROM t WHERE c1 BETWEEN 10 and 20 FOR UPDATE;
 
 ## 四、事务
 
-### 4.1 ACID
+### 4.1 ACID 定义
 
 InnoDB 存储引擎完全支持 ACID 模型：
 
@@ -260,25 +287,25 @@ InnoDB 存储引擎完全支持 ACID 模型：
 
 一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
 
-![mysql-修改丢失](D:\Full-Stack-Notes\pictures\mysql-修改丢失.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-修改丢失.png"/> </div>
 
 **2. 脏读**
 
 在不同的事务下，一个事务读取到其他事务未提交的数据：
 
-![mysql-脏读](D:\Full-Stack-Notes\pictures\mysql-脏读.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-脏读.png"/> </div>
 
 **3. 不可重复读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致对同一条数据两次读到的结果不一致：
 
-![mysql-不可重复读](D:\Full-Stack-Notes\pictures\mysql-不可重复读.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-不可重复读.png"/> </div>
 
 **4.幻读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
-![mysql-幻读](D:\Full-Stack-Notes\pictures\mysql-幻读.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-幻读.png"/> </div>
 
 ### 4.4 隔离级别
 
@@ -299,6 +326,14 @@ InnoDB 存储引擎完全支持 ACID 模型：
 | 串行化（SERIALIZABLE）       | 不可能     | 不可能     | 不可能 |
 
 就数据库层面而言，当前任何隔离级别下都不会发生丢失更新的问题，以 InnoDB 存储引擎为例，如果你想要更改表中某行数据，该行数据上必然会加上 X 锁，而对应的表上则会加上 IX 锁，其他任何事务必须等待获取该锁才能进行修改操作。
+
+
+
+## 五、数据库设计范式
+
+
+
+
 
 ## 参考资料
 

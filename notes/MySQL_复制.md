@@ -1,5 +1,23 @@
 # MySQL 复制
 
+<nav>
+<a href="#一日志格式">一、日志格式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-二进制日志格式">1.1 二进制日志格式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-binlog_row_image">1.2 binlog_row_image</a><br/>
+<a href="#二基于二进制日志的复制">二、基于二进制日志的复制</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-复制原理">2.1 复制原理</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-配置步骤">2.2 配置步骤</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-优缺点">2.3 优缺点</a><br/>
+<a href="#三基于-GTID-的复制">三、基于 GTID 的复制</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-GTID-简介">2.1 GTID 简介</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-配置步骤">2.2 配置步骤</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-优缺点">2.3 优缺点</a><br/>
+<a href="#四半同步复制">四、半同步复制</a><br/>
+<a href="#五高可用架构">五、高可用架构</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-MMM">5.1 MMM</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-MHA">5.2 MHA</a><br/>
+</nav>
+
 ## 一、日志格式
 
 ### 1.1 二进制日志格式
@@ -42,7 +60,7 @@ MySQL 的复制原理如下图所示：
 
 如果没有进行任何配置，主库在将变更写入到二进制日志后，就会返回对客户端的响应，因此默认情况下的复制是完全异步进行的，主备之间可能会短暂存在数据不一致的情况。
 
-![mysql-replication](D:\Full-Stack-Notes\pictures\mysql-replication.jpg)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-replication.jpg"/> </div>
 
 
 
@@ -180,7 +198,7 @@ Master_SSL_Verify_Server_Cert: No
 
 ## 三、基于 GTID 的复制
 
-### 2.1 GTID 
+### 2.1 GTID 简介
 
 MySQL 5.6 版本之后提供了一个新的复制模式：基于 GTID 的复制。GTID 全称为 Global Transaction ID，即全局事务 ID。它由每个服务节点的唯一标识和其上的事务 ID 共同组成，格式为： *server_uuid : transaction_id* 。通过 GTID ，可以保证在主库上的每一个事务都能在备库上得到执行，不会存在任何疏漏。 
 
@@ -240,20 +258,65 @@ GTID 复制的优点在于程序可以自动确认开始复制的 GTID 点。但
 
 ## 四、半同步复制
 
+在上面我们介绍过，不论是基于二进制日志的复制还是基于 GTID 的复制，其本质上都是异步复制，假设从节点还没有获取到二进制日志信息时主节点就宕机了，那么就会存在数据不一致的问题。想要解决这个问题可以通过配置半同步复制来实现：进行半同步复制时，主节点会等待至少一个从节点获取到二进制日志后才将事务的执行结果返回给客户端。具体配置步骤如下：
 
+#### 1. 安装插件
+
+MySQL 从 5.5 之后开始以插件的形式支持半同步复制，所以先需要先进行插件的安装，命令如下：
+
+```sql
+-- 主节点上执行
+mysql> INSTALL PLUGIN rpl_semi_sync_master SONAME 'semisync_master.so';
+-- 从节点上执行
+mysql> INSTALL PLUGIN rpl_semi_sync_slave SONAME 'semisync_slave.so';
+```
+
+如果你的复制是基于高可用架构的，即从节点可能会在主节点宕机后成为新的主节点，而原主节点可能在失败恢复后成为从节点，那么为了保证半同步复制仍然有效，此时可以在主从节点上都安装主从插件。安装后使用以下命令查看是否安装成功：
 
 ```shell
+mysql> SELECT PLUGIN_NAME, PLUGIN_STATUS FROM INFORMATION_SCHEMA.PLUGINS WHERE PLUGIN_NAME LIKE '%semi%';
++----------------------+---------------+
+| PLUGIN_NAME          | PLUGIN_STATUS |
++----------------------+---------------+
+| rpl_semi_sync_master | ACTIVE        |
+| rpl_semi_sync_slave  | ACTIVE        |
++----------------------+---------------+
+```
+
+#### 2. 配置半同步复制
+
+半同步复制可以基于日志复制或 GTID 复制开启，只需要在其原有配置上增加以下配置：
+
+```properties
+# 主节点上增加如下配置：
+plugin-load=rpl_semi_sync_master=semisync_master.so
+rpl_semi_sync_master_enabled=1
+
+
+# 从节点上增加如下配置：
+plugin-load=rpl_semi_sync_slave=semisync_slave.so
+rpl_semi_sync_slave_enabled=1
+
+# 和上面提到的一样，如果是高可用架构下，则主从节点都可以增加主从配置：
+plugin-load = "rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so"
+rpl-semi-sync-master-enabled = 1
+rpl-semi-sync-slave-enabled = 1
+```
+
+#### 3. 启动复制
+
+按照二进制日志或 GTID 的方式正常启动复制即可，此时可以使用如下命令查看半同步日志是否正在执行：
+
+```shell
+# 主节点
 mysql> SHOW STATUS LIKE 'Rpl_semi_sync_master_status';
 +-----------------------------+-------+
 | Variable_name               | Value |
 +-----------------------------+-------+
 | Rpl_semi_sync_master_status | ON    |
 +-----------------------------+-------+
-```
 
-
-
-```shell
+# 从节点
 mysql> SHOW STATUS LIKE 'Rpl_semi_sync_slave_status';
 +----------------------------+-------+
 | Variable_name              | Value |
@@ -262,7 +325,16 @@ mysql> SHOW STATUS LIKE 'Rpl_semi_sync_slave_status';
 +----------------------------+-------+
 ```
 
+值为 ON 代表半同步复制配置成功。
 
+#### 4. 可选配置
+
+半同步日志还有以下两个可选配置：一个是 rpl_semi_sync_master_wait_for_slave_count，它表示主节点需要至少等待几个从节点复制完成，默认值为 1，因为等待过多从节点可能会导致长时间的延迟，所以通常使用默认值即可。另一个常用参数是 rpl_semi_sync_master_wait_point ，它主要是用于控制等待的时间点，它有以下两个可选值：
+
+- `AFTER_SYNC`（默认值）：主服务器将每个事务写入其二进制日志，并将二进制日志同步到磁盘后开始进行等待。在收到从节点的确认后，才将事务提交给存储引擎并将结果返回给客户端。
+- `AFTER_COMMIT`：主服务器将每个事务写入其二进制日志并同步到磁盘，然后将事务提交到存储引擎，提交后再进行等待。在收到从节点的确认后，才将结果返回给客户端。
+
+第二种方式是 MySQL 5.7.2 之前默认方式，但这种方式会导致数据的丢失，所以在 5.7.2 版本后就引入了第一种方式作为默认方式，它可以实现无损复制 (lossless replication)，数据基本无丢失，因此 rpl_semi_sync_master_wait_point 参数通常也不用进行修改，采用默认值即可。想要查看当前版本该参数的值，可以使用如下命令：
 
 ```shell
 mysql> SHOW VARIABLES LIKE 'rpl_semi_sync_master_wait_point';
@@ -273,15 +345,13 @@ mysql> SHOW VARIABLES LIKE 'rpl_semi_sync_master_wait_point';
 +---------------------------------+------------+
 ```
 
-
-
-
+虽然半同步复制能够最大程度的避免数据的丢失，但是因为网络通讯会导致额外的等待时间的开销，所以尽量在低延迟的网络环境下使用，如处于同一机房的主机之间。
 
 ## 五、高可用架构
 
 不论是主主复制结构，还是一主多从复制结构，单存依靠复制只能解决数据可靠性的问题，并不能解决系统高可用的问题，想要保证高可用，系统必须能够自动进行故障转移，即在主库宕机时，主动将其它备库升级为主库。常用的有以下两种解决方案：
 
-### 4.1 MMM
+### 5.1 MMM
 
 MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一套支持双主故障切换以及双主日常管理的第三方软件。它包含两类角色：`writer` 和 `reader `，分别对应读写节点和只读节点。使用 MMM 管理的双主节点在同一时间上只允许一个进行写入操作，当 `writer` 节点出现宕机（假设是 Master1），程序会自动移除该节点上的读写 VIP，然后切换到 Master2 ，并设置 Master2 的 read_only = 0，即关闭只读限制，同时将所有 Slave 节点重新指向  Master2。
 
@@ -289,15 +359,11 @@ MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一
 
 
 
-
-
 MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补齐丢失的数据，所以会存在数据不一致性的风险。另外 MMM 的发布时间比较早，所以其也不支持 MySQL 最新的基于 GTID 的复制，如果你使用的是基于 GTID 的复制，则只能采用 MHA。
 
-### 4.2 MHA
+### 5.2 MHA
 
 MHA (Master High Availability) 是由 Perl 实现的一款高可用程序，相对于 MMM ，它能尽量避免数据不一致的问题。它监控的是一主多从的复制架构，架构如下图所示：
-
-
 
 
 

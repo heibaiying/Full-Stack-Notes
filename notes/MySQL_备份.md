@@ -1,5 +1,23 @@
 # 数据备份与恢复
 
+<nav>
+<a href="#一备份简介">一、备份简介</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-备份分类">2.1 备份分类</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-备份工具">2.2 备份工具</a><br/>
+<a href="#二mysqldump">二、mysqldump</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-常用参数">2.1 常用参数</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-全量备份">2.2 全量备份</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-增量备份">2.3 增量备份</a><br/>
+<a href="#三mysqlpump">三、mysqlpump</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-功能优势">3.1 功能优势</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-常用参数">3.2 常用参数</a><br/>
+<a href="#四Xtrabackup">四、Xtrabackup</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-在线安装">4.1 在线安装</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-全量备份">4.2 全量备份</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-增量备份">4.3 增量备份</a><br/>
+<a href="#五二进制日志的备份">五、二进制日志的备份</a><br/>
+</nav>
+
 ## 一、备份简介
 
 ### 2.1 备份分类
@@ -9,7 +27,7 @@
 **物理备份 与 逻辑备份**
 
 + 物理备份：备份的是完整的数据库目录和数据文件。由于其基本都是 IO 复制，并不含任何逻辑转换，因此其备份和恢复速度通常都比较快。
-+ 逻辑备份：通过数据库结构和内容信息来进行备份。因为要执行逻辑转换，因此其速度较慢，并且在以文本格式保存时，其输出文件的大小要远大于物理备份。逻辑备份和还原的粒度可以从服务器级别（所有数据库）精确到具体表，但备份不会包括日志文件、配置文件等与数据库无关的内容。
++ 逻辑备份：通过数据库结构和内容信息来进行备份。因为要执行逻辑转换，因此其速度较慢，并且在以文本格式保存时，其输出文件的大小大于物理备份。逻辑备份的还原的粒度可以从服务器级别（所有数据库）精确到具体表，但备份不会包括日志文件、配置文件等与数据库无关的内容。
 
 **全量备份 与 增量备份**
 
@@ -106,9 +124,13 @@ options 代表可选操作，常用的可选参数如下：
 
   在开始备份前刷新 MySQL 的日志文件。此选项需要 RELOAD 权限。如果此选项与 --all-databases 配合使用，则会在每个数据库开始备份前都刷新一次日志。如果配合 --lock-all-tables，--master-data 或 --single-transaction 使用，则只会在锁定所有表或者开启事务时刷新一次。
 
++ **--master-data[=*value*]**
+
+  可以通过配置此参数来控制生成的备份文件是否包含 CHANGE MASTER 语句，该语句中包含了当前时间点二进制日志的信息。该选项有两个可选值：1 和 2 ，设置为 1 时 CHANGE MASTER 语句正常生成，设置为 2 时以注释的方式生成。--master-data 选项还会自动关闭 --lock-tables 选项，而且如果你没有指定 --single-transaction 选项，那么它还会启用 --lock-all-tables选项，在这种情况下，会在备份开始时短暂内获取全局读锁。
+
 ### 2.2 全量备份
 
-mysqldump 的全量备份与恢复操作比较简单，使用示例如下：
+mysqldump 的全量备份与恢复的操作比较简单，示例如下：
 
 ```shell
 # 备份雇员库
@@ -131,9 +153,44 @@ mysql> source /root/mysqldata/titles_bak.sql;
 
 ### 2.3 增量备份
 
+mysqldump 本身并不能直接进行增量备份，需要通过分析二进制日志的方式来完成。具体示例如下：
+
+#### 1. 基础全备
+
+1.先执行一次全备作为基础，这里以单表备份为例，需要用到上文提到的 `--master-data` 参数，语句如下：
+
+```shell
+mysqldump -uroot -p --master-data=2 --flush-logs employees titles > titles_bak.sql
+```
+
+使用 more 命令查看备份文件，此时可以在文件开头看到 CHANGE MASTER 语句，语句中包含了二进制日志的名称和偏移量信息，具体如下：
+
+```sql
+-- CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=155;
+```
+
+#### 2. 增量恢复
+
+对表内容进行任意修改，然后通过分析二进制日志文件来生成增量备份的脚本文件，示例如下：
+
+```shell
+mysqlbinlog --start-position=155 \
+--database=employees  ${MYSQL_HOME}/data/mysql-bin.000004 > titles_inr_bak_01.sql
+```
+
+需要注意的是，在实际生产环境中，可能在全量备份后与增量备份前的时间间隔里生成了多份二进制文件，此时需要对每一个二进制文件都执行相同的命令：
+
+```shell
+mysqlbinlog --database=employees  ${MYSQL_HOME}/data/mysql-bin.000005 > titles_inr_bak_02.sql
+mysqlbinlog --database=employees  ${MYSQL_HOME}/data/mysql-bin.000006 > titles_inr_bak_03.sql
+.....
+```
+
+之后将全备脚本 ( titles_bak.sql )，以及所有的增备脚本 ( inr_01.sql，inr_02.sql .... ) 通过 source 命令导入即可，这样就完成了全量 + 增量的恢复。
+
 ## 三、mysqlpump
 
-### 3.1 简介
+### 3.1 功能优势
 
 mysqlpump 在 mysqldump 的基础上进行了扩展增强，其主要的优点如下：
 
@@ -185,7 +242,7 @@ mysqlpump 的使用和 mysqldump 基本一致，这里不再进行赘述。以�
 
 ## 四、Xtrabackup
 
-### 4.1 安装
+### 4.1 在线安装
 
 Xtrabackup 可以直接使用 yum 命令进行安装，这里我的 MySQL 为 8.0 ，对应安装的 Xtrabackup 也为 8.0，命令如下：
 
@@ -304,6 +361,16 @@ chown -R mysql:mysql /usr/app/mysql-8.0.17/data
 此时增量备份就已经完成。需要说明的是：按照上面的情况，如果第二次备份之后发生了宕机，那么第二次备份后到宕机前的数据依然没法通过 Xtrabackup 进行恢复，此时就只能采用上面介绍的分析二进制日志的恢复方法。由此可以看出，无论是采用何种备份方式，二进制日志都是非常重要的，因此最好对其进行实时备份。
 
 ## 五、二进制日志的备份
+
+想要备份二进制日志文件，可以通过定时执行 cp 或 scp 等命令来实现，也可以通过 mysqlbinlog 自带的功能来实现远程备份，将远程服务器上的二进制日志文件复制到本机，命令如下：
+
+```shell
+mysqlbinlog --read-from-remote-server --raw --stop-never \
+--host=主机名 --port=3306 \
+--user=用户名 --password=密码  初始复制时的日志文件名
+```
+
+需要注意的是这里的用户必须具有 replication slave 权限，因为上述命令本质上是模拟主从复制架构下，从节点通过 IO 线程不断去获取主节点的二进制日志，从而达到备份的目的。
 
 
 

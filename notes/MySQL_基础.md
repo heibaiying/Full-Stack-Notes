@@ -128,6 +128,7 @@ mysql>  SELECT * FROM total;
 **B+ Tree 数据结构**
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
+
 > 以上图片均通过数据结构可视化网站 [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) 自动生成，感兴趣的小伙伴也可自行尝试。
 
 从上面的图示中我们可以看出 B+ Tree 树具有以下优点：

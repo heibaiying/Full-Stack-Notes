@@ -22,12 +22,12 @@
 
 ### 2. MySQL
 
-+ [MySQL 基础](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_基础.md)
-+ [MySQL 常用备份方式](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_备份.md)
-+ [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_复制.md)
-+ [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_PXC集群.md)
-+ [MyCat 分库分表](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_分库分表.md)
-+ [MySQL 查询性能分析之 Explain](https://github.com/heibaiying/BigData-Notes/blob/master/notes/MySQL_EXPLAIN.md)
++ [MySQL 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_基础.md)
++ [MySQL 常用备份方式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_备份.md)
++ [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_复制.md)
++ [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_PXC集群.md)
++ [MyCat 分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_分库分表.md)
++ [MySQL 查询性能分析之 Explain](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_EXPLAIN.md)
 
 ### 3. Redis
 
@@ -125,7 +125,7 @@
 
 ## Docker
 
-- [Docker 基础](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Docker_基础.md)
+- [Docker 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Docker_基础.md)
 - kubernetes  简介及集群搭建
 
 

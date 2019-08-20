@@ -45,7 +45,6 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它是一种兼具高可靠�
 
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/innodb-architecture.png"/> </div>
-
 ### 1.2 MyISAM
 
 MyISAM 是 MySQL 5.5 之前默认的存储引擎。创建 MyISAM 表时会创建两个同名的文件：
@@ -120,18 +119,17 @@ mysql>  SELECT * FROM total;
 **平衡二叉树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/avl-tree.png"/> </div>
-
 **红黑树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/red-black-tree.png"/> </div>
-
 **Btree 数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/btree.png"/> </div>
-
 **B+ Tree 数据结构**
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
+> 以上图片均通过数据结构可视化网站 [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) 自动生成，感兴趣的小伙伴也可自行尝试。
+
 从上面的图示中我们可以看出 B+ Tree 树具有以下优点：
 
 + B+ Tree 树的所有非叶子节点 (如 003，007)，都会在叶子节点冗余一份，所有叶子节点都按照链表的方式进行组织，这样带来的好处是在范围查询中，只需要通过遍历叶子节点就可以获取到所有的索引信息。
@@ -285,25 +283,21 @@ InnoDB 存储引擎完全支持 ACID 模型：
 一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-修改丢失.png"/> </div>
-
 **2. 脏读**
 
 在不同的事务下，一个事务读取到其他事务未提交的数据：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-脏读.png"/> </div>
-
 **3. 不可重复读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致对同一条数据两次读到的结果不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-不可重复读.png"/> </div>
-
 **4.幻读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-幻读.png"/> </div>
-
 ### 4.4 隔离级别
 
 想要解决以上问题，可以通过设置隔离级别来实现：InnoDB 支持以下四个等级的隔离级别，默认隔离级别为可重复读：
@@ -369,8 +363,6 @@ InnoDB 存储引擎完全支持 ACID 模型：
 5. [MySQL索引背后的数据结构及算法原理](https://blog.codinglabs.org/articles/theory-of-mysql-index.html)
 6. [MYSQL-B+TREE索引原理](https://www.jianshu.com/p/486a514b0ded)
 7. [Innodb中的事务隔离级别和锁的关系](https://tech.meituan.com/2014/08/20/innodb-lock.html)
-
-
 
 
 

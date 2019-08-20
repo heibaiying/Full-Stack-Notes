@@ -356,7 +356,7 @@ MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一
 
 除了管理双主节点，MMM 也负责管理所有 Slave节点，在出现宕机、复制延迟或复制错误，MMM 会移除该节点的 VIP，直至节点恢复正常。MMM 高可用的架构示例图如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MMA架构.png"/> </div>
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MMM架构.png"/> </div>
 
 MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补齐丢失的数据，所以会存在数据不一致性的风险。另外 MMM 的发布时间比较早，所以其也不支持 MySQL 最新的基于 GTID 的复制，如果你使用的是基于 GTID 的复制，则只能采用 MHA。
 

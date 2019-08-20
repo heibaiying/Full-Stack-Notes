@@ -382,7 +382,7 @@ MHA (Master High Availability) 是由 Perl 实现的一款高可用程序，相�
 - 自带的脚本不足，例如虚拟 IP 的配置需要自己通过命令或者其他第三方软件来实现。
 - 需要手动清理中继日志。
 
-以上就是 MMM 和 MHA 架构的简单介绍，关于其具体搭建步骤，可以以下两篇参考博客： [MySQL集群搭建(3)-MMM高可用架构](https://segmentfault.com/a/1190000017286307) 和  [MySQL集群搭建(5)-MHA高可用架构](https://segmentfault.com/a/1190000017486693)。
+以上就是 MMM 和 MHA 架构的简单介绍，关于其具体搭建步骤，可以参考以下两篇博客： [MySQL集群搭建(3)-MMM高可用架构](https://segmentfault.com/a/1190000017286307) 和  [MySQL集群搭建(5)-MHA高可用架构](https://segmentfault.com/a/1190000017486693)。
 
 
 

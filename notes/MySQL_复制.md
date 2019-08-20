@@ -352,7 +352,7 @@ mysql> SHOW VARIABLES LIKE 'rpl_semi_sync_master_wait_point';
 
 ### 5.1 MMM
 
-MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一套支持双主故障切换以及双主日常管理的第三方软件。它包含两类角色：`writer` 和 `reader `，分别对应读写节点和只读节点。使用 MMM 管理的双主节点在同一时间上只允许一个进行写入操作，当 `writer` 节点出现宕机（假设是 Master1），程序会自动移除该节点上的读写 VIP，然后切换到 Master2 ，并设置 Master2 的 read_only = 0，即关闭只读限制，同时将所有 Slave 节点重新指向  Master2。
+MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一套支持双主故障切换以及双主日常管理的第三方软件。它包含两类角色：`writer` 和 `reader`，分别对应读写节点和只读节点。使用 MMM 管理的双主节点在同一时间上只允许一个进行写入操作，当 `writer` 节点出现宕机（假设是 Master1），程序会自动移除该节点上的读写 VIP，然后切换到 Master2 ，并设置 Master2 的 read_only = 0，即关闭只读限制，同时将所有 Slave 节点重新指向  Master2。
 
 除了管理双主节点，MMM 也负责管理所有 Slave节点，在出现宕机、复制延迟或复制错误，MMM 会移除该节点的 VIP，直至节点恢复正常。MMM 高可用的架构示例图如下：
 

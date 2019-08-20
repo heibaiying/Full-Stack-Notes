@@ -45,6 +45,7 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它是一种兼具高可靠�
 
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/innodb-architecture.png"/> </div>
+
 ### 1.2 MyISAM
 
 MyISAM 是 MySQL 5.5 之前默认的存储引擎。创建 MyISAM 表时会创建两个同名的文件：
@@ -52,7 +53,7 @@ MyISAM 是 MySQL 5.5 之前默认的存储引擎。创建 MyISAM 表时会创建
 + 扩展名为  `.MYD`（`MYData`）：用于存储表数据；
 + 扩展名为 `.MYI` （`MYIndex`）： 用于存储表的索引信息。
 
-在 MySQL 8.0  之后，只会创建上述两个同名文件，因为在该版本中表结构的定义存储在 MySQL 数据字典中，但在 MySQL 8.0 之前，还会存在一个扩展名为 `.frm` 的扩展文件，用于存储表结构信息。MyISAM 与 InnoDB 主要的区别其只支持表级锁，不支持行级锁，不支持事务，不支持自动崩溃恢复，但可以使用内置的 mysqlcheck 和 myisamchk 工具来进行检查和修复。
+在 MySQL 8.0  之后，只会创建上述两个同名文件，因为在该版本中表结构的定义存储在 MySQL 数据字典中，但在 MySQL 8.0 之前，还会存在一个扩展名为 `.frm` 的文件，用于存储表结构信息。MyISAM 与 InnoDB 主要的区别其只支持表级锁，不支持行级锁，不支持事务，不支持自动崩溃恢复，但可以使用内置的 mysqlcheck 和 myisamchk 工具来进行检查和修复。
 
 ### 1.3 MEMORY
 
@@ -119,12 +120,15 @@ mysql>  SELECT * FROM total;
 **平衡二叉树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/avl-tree.png"/> </div>
+
 **红黑树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/red-black-tree.png"/> </div>
+
 **Btree 数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/btree.png"/> </div>
+
 **B+ Tree 数据结构**
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
@@ -281,21 +285,25 @@ InnoDB 存储引擎完全支持 ACID 模型：
 一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-修改丢失.png"/> </div>
+
 **2. 脏读**
 
 在不同的事务下，一个事务读取到其他事务未提交的数据：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-脏读.png"/> </div>
+
 **3. 不可重复读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致对同一条数据两次读到的结果不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-不可重复读.png"/> </div>
+
 **4.幻读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-幻读.png"/> </div>
+
 ### 4.4 隔离级别
 
 想要解决以上问题，可以通过设置隔离级别来实现：InnoDB 支持以下四个等级的隔离级别，默认隔离级别为可重复读：
@@ -330,11 +338,11 @@ InnoDB 存储引擎完全支持 ACID 模型：
 
 要求非主键列必须完全依赖于主键列，而不能存在部分依赖。示例如下：
 
-| mechanism_id （组织机构代码） | employee_id （雇员编号） | ename （雇员名称） | cname （组织机构名称） |
-| ----------------------------- | ------------------------ | ------------------ | ---------------------- |
-| 28193182                      | 10001                    | heibaiying         | XXXX公司               |
+| mechanism_id （组织机构代码） | employee_id （雇员编号） | ename （雇员名称） | mname （机构名称） |
+| ----------------------------- | ------------------------ | ------------------ | ----------------|
+| 28193182                      | 10001                    | heibaiying         | XXXX公司         |
 
-以上是一张全市在职人员统计表，主键为：机构编码 + 雇员编号，这里的雇员名称完全依赖于此联合主键，但机构名称就只依赖于机构代码，这就出现了部分依赖，违背了第二范式。此时最好的解决方式就是建立一张组织机构与组织名称的字典表。
+以上是一张全市在职人员统计表，主键为：机构编码 + 雇员编号。表中的雇员名称完全依赖于此联合主键，但机构名称却只依赖于机构编码，这就是部分依赖，因此违背了第二范式。此时常用的解决方式是建立一张组织机构与组织名称的字典表。
 
 #### 第三范式：避免传递依赖
 
@@ -344,7 +352,7 @@ InnoDB 存储引擎完全支持 ACID 模型：
 | ------------------------ | ------------------ | ------------------ | ----------------- |
 | 10001                    | heibaiying         | 06                 | 开发部            |
 
-这里还是一张雇员表，雇员名称和所属的部门编号都依赖于主键 employee_id ，但部门名称却依赖于部门编号，此时就出现了非主键列依赖于其他非主键列，这就违背的第三范式。此时最好的解决方式就是建立一张部门表用于维护部门相关的信息。
+以上是一张雇员表，雇员名称和所属的部门编号都依赖于主键 employee_id ，但部门名称却依赖于部门编号，此时就出现了非主键列依赖于其他非主键列，这就违背的第三范式。此时常用的解决方式是建立一张部门表用于维护部门相关的信息。
 
 #### 反范式设计
 

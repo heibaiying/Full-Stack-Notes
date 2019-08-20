@@ -65,11 +65,11 @@ mysqldump [options] --all-databases
 options 代表可选操作，常用的可选参数如下：
 
 + **--host=host_name， -h host_name**
-
+  
   指定服务器地址。
 
 + **--user=user_name， -u user_name**
-
+  
   指定用户名。
 
 + **--password[=password]， -p[password]**
@@ -201,7 +201,7 @@ mysqlpump 在 mysqldump 的基础上进行了扩展增强，其主要的优点�
 - 能够直接对备份文件进行压缩；
 
 - 备份时能够显示进度指标（估计值）；
-- 备份用户时生成的是 CREATE USER 与 GRANT 语句，而不是像 mysqldump 一样直接备份成数据，可以方便用户按需恢复。
+- 备份用户时生成的是 CREATE USER 与 GRANT 语句，而不是像 mysqldump 一样备份成数据，可以方便用户按需恢复。
 
 ### 3.2 常用参数
 

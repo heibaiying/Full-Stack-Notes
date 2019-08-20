@@ -123,7 +123,7 @@ CHANGE MASTER TO MASTER_HOST='192.168.0.226',\
 START SLAVE;
 ```
 
-查看从节点复制状态，主要参数有 Slave_IO_Running 和 Slave_SQL_Running，其状态都为 Yes 表示用于进行复制的 IO 进程已经开启。Seconds_Behind_Master 参数表示从节点复制的延迟量。此时可以在主库上进行任意更改，并在备库上查看情况。
+查看从节点复制状态，主要参数有 Slave_IO_Running 和 Slave_SQL_Running，其状态都为 Yes 表示用于复制的 IO 进程已经开启。Seconds_Behind_Master 参数表示从节点复制的延迟量。此时可以在主库上进行任意更改，并在备库上查看情况。
 
 ```shell
 mysql> SHOW SLAVE STATUS\G
@@ -356,7 +356,7 @@ MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一
 
 除了管理双主节点，MMM 也负责管理所有 Slave节点，在出现宕机、复制延迟或复制错误，MMM 会移除该节点的 VIP，直至节点恢复正常。MMM 高可用的架构示例图如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MMA架构.jpg"/> </div>
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MMA架构.png"/> </div>
 
 MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补齐丢失的数据，所以会存在数据不一致性的风险。另外 MMM 的发布时间比较早，所以其也不支持 MySQL 最新的基于 GTID 的复制，如果你使用的是基于 GTID 的复制，则只能采用 MHA。
 
@@ -364,7 +364,7 @@ MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补�
 
 MHA (Master High Availability) 是由 Perl 实现的一款高可用程序，相对于 MMM ，它能尽量避免数据不一致的问题。它监控的是一主多从的复制架构，架构如下图所示：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MHA架构.jpg"/> </div>
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-MHA架构.png"/> </div>
 
 在 Master 节点宕机后，其处理流程如下：
 

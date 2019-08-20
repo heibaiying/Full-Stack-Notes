@@ -46,7 +46,7 @@
 
 ## 📟 操作系统
 
-+ [Linux 常用 Shell 命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Linux常用Shell命令.md)
++ [Linux 常用 Shell 命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Linux_常用Shell命令.md)
 
 
 

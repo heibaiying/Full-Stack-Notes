@@ -65,11 +65,8 @@ mysqldump [options] --all-databases
 options 代表可选操作，常用的可选参数如下：
 
 + **--host=host_name， -h host_name**
-
   指定服务器地址。
-
 + **--user=user_name， -u user_name**
-
   指定用户名。
 
 + **--password[=password]， -p[password]**

@@ -45,7 +45,6 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它是一种兼具高可靠�
 
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/innodb-architecture.png"/> </div>
-
 ### 1.2 MyISAM
 
 MyISAM 是 MySQL 5.5 之前默认的存储引擎。创建 MyISAM 表时会创建两个同名的文件：
@@ -120,19 +119,15 @@ mysql>  SELECT * FROM total;
 **平衡二叉树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/avl-tree.png"/> </div>
-
 **红黑树数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/red-black-tree.png"/> </div>
-
 **Btree 数据结构**：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/btree.png"/> </div>
-
 **B+ Tree 数据结构**
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
-
 从上面的图示中我们可以看出 B+ Tree 树具有以下优点：
 
 + B+ Tree 树的所有非叶子节点 (如 003，007)，都会在叶子节点冗余一份，所有叶子节点都按照链表的方式进行组织，这样带来的好处是在范围查询中，只需要通过遍历叶子节点就可以获取到所有的索引信息。
@@ -145,11 +140,9 @@ mysql>  SELECT * FROM total;
 对于 InnoDB ，因为主键索引是聚集索引，所以其叶子节点存储的就是实际的数据。而非主键索引存储则是主键的值 ：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-innodb-索引.png"/> </div>
-
 对于 MyISAM，因为主键索引是非聚集索引，所以其叶子节点存储的只是指向数据位置的指针：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-myisam-索引.png"/> </div>
-
 综上所述，B+ tree 普遍适用于范围查找，优化排序和分组等操作。B+ tree 的查找是基于字典序的，因此其适用的具体查询类型如下：
 
 + **全值匹配**：以索引为条件进行精确查找。如 `emp_no` 字段为索引，查询条件为 `emp_no = 10008`；
@@ -288,25 +281,21 @@ InnoDB 存储引擎完全支持 ACID 模型：
 一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-修改丢失.png"/> </div>
-
 **2. 脏读**
 
 在不同的事务下，一个事务读取到其他事务未提交的数据：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-脏读.png"/> </div>
-
 **3. 不可重复读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致对同一条数据两次读到的结果不一致：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-不可重复读.png"/> </div>
-
 **4.幻读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-幻读.png"/> </div>
-
 ### 4.4 隔离级别
 
 想要解决以上问题，可以通过设置隔离级别来实现：InnoDB 支持以下四个等级的隔离级别，默认隔离级别为可重复读：
@@ -331,7 +320,35 @@ InnoDB 存储引擎完全支持 ACID 模型：
 
 ## 五、数据库设计范式
 
+数据库设计当中常用的三范式如下：
 
+#### 第一范式：属性不可分
+
+要求表中的每一列都是不可再细分的原子项。这是最低的范式要求，通常都能够被满足。
+
+#### 第二范式：属性完全依赖于主键
+
+要求非主键列必须完全依赖于主键列，而不能存在部分依赖。示例如下：
+
+| mechanism_id （组织机构代码） | employee_id （雇员编号） | ename （雇员名称） | cname （组织机构名称） |
+| ----------------------------- | ------------------------ | ------------------ | ---------------------- |
+| 28193182                      | 10001                    | heibaiying         | XXXX公司               |
+
+以上是一张全市在职人员统计表，主键为：机构编码 + 雇员编号，这里的雇员名称完全依赖于此联合主键，但机构名称就只依赖于机构代码，这就出现了部分依赖，违背了第二范式。此时最好的解决方式就是建立一张组织机构与组织名称的字典表。
+
+#### 第三范式：避免传递依赖
+
+非主键列不能依赖于其他非主键列，如果其他非主键列又依赖于主键列，此时就出现了传递依赖。示例如下：
+
+| employee_id （雇员编号） | ename （雇员名称） | dept_no (部门编号) | dname（部门名称） |
+| ------------------------ | ------------------ | ------------------ | ----------------- |
+| 10001                    | heibaiying         | 06                 | 开发部            |
+
+这里还是一张雇员表，雇员名称和所属的部门编号都依赖于主键 employee_id ，但部门名称却依赖于部门编号，此时就出现了非主键列依赖于其他非主键列，这就违背的第三范式。此时最好的解决方式就是建立一张部门表用于维护部门相关的信息。
+
+#### 反范式设计
+
+从上面的例子中我们也可以看出，想要完全遵循三范式设计，可能需要额外增加很多表来进行维护。所以在日常开发中，基于其他因素的综合考量，可能并不会完全遵循范式设计，甚至可能违反范式设计，这就是反范式设计。
 
 
 

@@ -2,7 +2,26 @@
 
 ## 一、PXC 集群
 
-## 二、创建PXC集群
+Percona XtraDB Cluster (简称 PXC) 是 Percona 公司开源的实现 MySQL 高可用的解决方案。它将 Percona Server 和 Percona XtraBackup 与 Galera 库集成，以实现多主同步复制。和 MySQL 传统的异步复制相比，它能够保证数据的强一致性，在任何时刻集群中任意节点上的数据状态都是完全一致的，并且整个架构实现了去中心化，所有节点都是对等的，即允许你在任意节点上进行写入和读取，集群会把数据状态同步至其他所有节点。但目前 PXC 集群只支持 InnoDB 存储引擎，并具有以下限制：
+
++ 添加新节点时，必须从现有节点之一复制完整数据集。如果是 100GB，则复制 100GB。为了减少网络开销，建议在搭建集群前使用备份的方式将所有节点的数据状态调整至一致。
++ 不支持 LOCK TABLES ，在多主设置的情况下也不受支持 UNLOCK TABLES。
++ 不支持锁定功能，如 GET_LOCK()，RELEASE_LOCK() 等。
++ 由于可能在提交时回滚，因此也不支持 XA 事务 (分布式事务) 。
++ 所有表必须具有主键。
++ 由于节点是对等的，所以整个集群的写吞吐量受限于性能最差的节点，如果一个节点变慢，则整个群集都会变慢。因此应该保证所有节点的硬件配置一致，并避免单个节点超负载运行。
++ 允许的最大事务大小由 wsrep_max_ws_rows 和 wsrep_max_ws_size 参数共同定义，因此超大型事务会被拆分为一系列小型事务，如加载大数据集 LOAD DATA INFILELOAD DATA。
++ 由于在集群级别采用乐观锁进行并发控制，所以事务在 COMMIT 阶段仍然有被中止的可能。如两个事务在不同的集群节点上提交对相同的行的写入，此时只有其中一个可以成功提交，另一个将被中止。
+
+
+
+![pxc-cluster](D:\Full-Stack-Notes\pictures\pxc-cluster.png)
+
+虽然 PXC 集群存在以上限制，但就目前而言，它仍然是解决数据一致性和高可用性的最好方案，其搭建步骤如下：
+
+## 二、集群搭建
+
+为保证集群高可用，群集最少要有 3 个节点，这里以搭建一个 3 节点的集群为例，具体如下：
 
 ### 2.1 准备安装
 
@@ -54,7 +73,7 @@ sudo yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
 sudo yum install Percona-XtraDB-Cluster-57
 ```
 
-安装完成后，通过以下命令启动数据库服务：
+使用以上命令安装完成后，会同时安装好 Percona Server 数据库，它基于 MySQL 社区版进行了扩展增强，并完全兼容原有版本，使用方式也完全一致，启动命令如下：
 
 ```shell
 sudo systemctl start mysql
@@ -141,7 +160,7 @@ wsrep_node_address=192.168.0.228
 sudo systemctl start mysql@bootstrap.service
 ```
 
-在将其他节点添加到群集之前，需要登录当前节点，来为 SST 创建用户并提供权限，命令如下：
+在将其他节点添加到群集之前，需要登录当前节点，来为 SST 操作创建用户并提供权限，命令如下：
 
 ```shell
 # 创建用户
@@ -178,4 +197,10 @@ systemctl stop mysql@bootstrap.service
 service stop mysql
 ```
 
-由于所有节点都是对等的，所以下线第一个节点和下线其他节点在效果上都是相同的。
+由于所有节点都是对等的，所以下线第一个节点和下线其他节点在效果上都是相同的，以上就是关于 PXC 集群搭建的全部内容。
+
+
+
+## 参考资料
+
+[Percona XtraDB Cluster 5.7 Documentation](https://www.percona.com/doc/percona-xtradb-cluster/LATEST/index.html)

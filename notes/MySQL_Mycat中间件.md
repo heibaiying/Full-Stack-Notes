@@ -1,5 +1,18 @@
 # Mycat 基础
 
+<nav>
+<a href="#一Mycat-简介">一、Mycat 简介</a><br/>
+<a href="#二Mycat-核心概念">二、Mycat 核心概念</a><br/>
+<a href="#三Mycat-安装">三、Mycat 安装</a><br/>
+<a href="#四Mycat-基本配置">四、Mycat 基本配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-serverxml">4.1 server.xml</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-schemaxml">4.2 schema.xml</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-rulexml">4.3 rule.xml</a><br/>
+<a href="#五Mycat-读写分离">五、Mycat 读写分离</a><br/>
+<a href="#六Mycat-分库分表">六、Mycat 分库分表</a><br/>
+<a href="#七Mycat-与-MySQL-80">七、Mycat 与 MySQL 8.0</a><br/>
+</nav>
+
 ## 一、Mycat 简介
 
 Mycat 是一个开源的数据库中间件，可以解决分布式数据库环境下的大多数问题，如读写分离、分库分表等，除此之外，它还具备以下特性：
@@ -18,11 +31,11 @@ Mycat 是一个开源的数据库中间件，可以解决分布式数据库环�
 
 在引入 Mycat 后，所有的客户端请求需要经过中间件进行转发上，此时客户端直接面向的是 Mycat 上的逻辑库或逻辑表：
 
-#### 逻辑库
+### 逻辑库
 
 在 Mycat 的配置文件中进行定义，它对应一个或者多个实际的数据库或数据库集群。
 
-#### 逻辑表
+### 逻辑表
 
 可以对应一张实际的表，也可以表示为多个分片表的集合。按其特性可以分为以下四类：
 
@@ -31,7 +44,7 @@ Mycat 是一个开源的数据库中间件，可以解决分布式数据库环�
 + **ER 表**：基于实体关系模型进行分片的表，如订单表和订单明细表通常都是大表，此时可以按照订单号进行 ER 分片，从而保证同一单号的订单记录和明细记录都处于同一分片上，进而避免跨分片查询。
 + **全局表**。同样也是用于解决跨分片查询的问题。假设在查询订单明细时需要查询产品所属分类 （如家电产品、生活用品），产品类别表通常是小表，此时可以声明为全局表，之后 Mycat 会将其拷贝到所有分片上，从而避免跨分片查询。
 
-#### 分片节点
+### 分片节点
 
 将表按照分片键进行分片后，一个表中的所有数据就会被分发到不同的数据库上，这些数据库节点就称为分片节点。
 
@@ -182,9 +195,60 @@ Mycat 内置支持十几种分片算法，如 取模分片，枚举分片，范�
 
 ## 五、Mycat 读写分离
 
+Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeHost 和 readHost 就可以实现，示例如下：
 
+```xml
+<dataHost name="localhost1" maxCon="1000" minCon="10" balance="1"
+          writeType="0" dbType="mysql" dbDriver="native">
+    <heartbeat>select user()</heartbeat>
+    <!-- 可以配置多个writeHost -->
+    <writeHost host="Master" url="hostname1:3306" user="root"
+               password="123456">
+        <!-- 可以配置多个readHost-->
+        <readHost host="Slave" url="hostname2:3306" user="root"
+                  password="123456" />
+    </writeHost>
+</dataHost>
+```
+
+但是需要注意的是如上的配置还是会存在单点问题，因为只有一个 writeHost ，Mycat 支持配置多个 writeHost，示例如下：
+
+```xml
+<writeHost host="Master" url="hostname1:3306" user="root"
+           password="123456">
+    <!-- 可以配置多个readHost-->
+    <readHost host="Slave1" url="hostname2:3306" user="root"
+              password="123456" />
+    <readHost host="Slave2" url="hostname3:3306" user="root"
+              password="123456" />
+</writeHost>
+<writeHost host="Slave3" url="hostname4:3306" user="root" password="123456" />
+```
+
+以上是 Mycat 官方指南中给出的配置，即在一主三从的复制架构下，可以选择其中一个 Slave 为备用的写入节点，此时当 Master 节点宕机后，会继续在该备用节点执行写入操作。这个配置和架构存在以下两个问题：
+
++ 第一 Mycat 并不能让 Slave 1 和 Slave 2 自动将自己的复制主节点变更为 Slave 3，这个过程仍需要你自己来实现。
++ 第二你很难确定哪个节点该作为备用的主节点，在上面的配置中我们设置 Slave 3 为备用节点，但在主节点宕机后，可能 Slave 1 和 Slave 2 的复制偏移量都要大于 Slave 3，显然它们更适合成为新的主节点。 
+
+基于以上两个原因，如果想要实现高可用，并不建议配置多个 writeHost ，而是配置一个 writeHost ，但其指向的是虚拟的读  IP 地址，此时复制架构由 MMM 或者 MHA 架构来实现，并由它们来提供虚拟机的读 IP。
 
 ## 六、Mycat 分库分表
+
+综合以上全部内容，这里给出一个分库分表的示例，其架构如下：
+
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-mycat-分库分表实战.png"/> </div>
+
+如上图所示，这里模拟的是一个电商数据库，并对其执行分库分表操作：
+
+- 将用户相关表，订单相关表，商品相关表分表拆分到单独的数据库中；
+- 将订单表和订单明细表进行横向分表，拆分到不同的数据库中。同时为了避免订单表关联订单明细表时出现跨分片查询的情况，需要将其配置为 ER 表；
+- 由于地址表，在查询用户信息（如家庭地址），订单信息（收货地址），商品信息（商品产地）的时候都需要用到，所以会将其声明为全局表，它会存在于以上所有分片上，从而避免跨分片查询。
+
+为节省篇幅，以上所有测试表和测试库的建立语句单独整理至：[ec_shop.sql](https://github.com/heibaiying/Full-Stack-Notes/blob/master/resources/ec_shop.sql) 。分库分表的具体操作如下：
+
+### 6.1 server.xml
+
+这里新增一个 Mycat 用户，并定义其管理的逻辑数据库为 ec_shop，另外使用 fakeMySQLVersion 来定义你所需要模拟的 MySQL 数据库的版本。如果没有特殊需求， Mycat 自带的 server.xml 中的其他配置可不做更改。
 
 ```xml
 <system>
@@ -200,7 +264,9 @@ Mycat 内置支持十几种分片算法，如 取模分片，枚举分片，范�
 </user>
 ```
 
+### 6.2 schema.xml
 
+这里使用 childTable 来将订单表和订单明细表定义为 ER 表，避免跨分片查询。并将地址表 area_info 使用 `type="global"` 声明为全局，同样也是为了避免跨分片查询。
 
 ```xml
 <?xml version="1.0"?>
@@ -250,7 +316,9 @@ Mycat 内置支持十几种分片算法，如 取模分片，枚举分片，范�
 </mycat:schema>
 ```
 
+### 6.3 rule.xml
 
+定义订单表所使用的分片规则，这里使用取模算法作为示例：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -273,14 +341,41 @@ Mycat 内置支持十几种分片算法，如 取模分片，枚举分片，范�
 
 ## 七、Mycat 与 MySQL 8.0
 
+这里我后端使用的数据库是 MySQL 8.0.17 ，相比于使用 MySQL  5.6 或 5.7 来整合 Mycat ，多了一些注意事项，主要如下：
+
+### 7.1 密码错误
+
+即便你在 server.xml 中正确的配置了用户名和密码，但在使用 mysql shell 连接 Mycat 时，还是会抛出密码错误的异常：
+
 ```shell
+Access denied for user 'xxx', because password is error
+```
+
+这是由于从 MySQL 8.0.4 开始使用 caching_sha2_password 作为认证的插件，而之前版本的插件为 mysql_native_password，我在测试中使用的 Mycat 版本为 1.6.7，它并不支持 caching_sha2_password 。因此在登录时候需要通过 `--default_auth` 来指定使用原有的认证插件。
+
+```shell
+# 1.6.7 版本 Mycat 默认的连接端口号为 8066
 mysql -uheibaiying -p -h127.0.0.1 -P8066 --default_auth=mysql_native_password
 ```
+
+### 7.2 数据库连接失败
+
+Mycat 和 MySQL 都正常启动，但是在 Mycat 上执行 SQL 语句失败，提示无效的数据库。此时可以查看 Mycat  logs 目录下的 mycat.log 文件，通常会出现下面所示的异常：
+
+```shell
+(io.mycat.backend.mysql.nio.MySQLConnectionAuthenticator.handle(MySQLConnectionAuthenticator.java:91)
+- can't connect to mysql server ,errmsg:Client does not support authentication protocol requested by
+server; consider upgrading MySQL client MySQLConnection
+```
+
+这和上面是同样的原因，都是因为认证插件而导致的问题。此时需要修改账户所使用的认证插件：
 
 ```sql
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'xxxx';
 FLUSH PRIVILEGES;
 ```
+
+修改后可以使用如下命令进行查看：
 
 ```sql
 mysql> SELECT Host,User,plugin FROM mysql.user;
@@ -296,11 +391,13 @@ mysql> SELECT Host,User,plugin FROM mysql.user;
 +---------------+------------------+-----------------------+
 ```
 
+之后再重启 Mycat 服务就可以正常连接。
+
 
 
 ## 参考资料
 
-[Mycat 官方指南](http://www.mycat.io/document/mycat-definitive-guide.pdf)
+Mycat 官方指南：http://www.mycat.io/document/mycat-definitive-guide.pdf
 
 
 

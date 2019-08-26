@@ -105,9 +105,9 @@
 
 ### 2. 消息中间件：RabbitMQ
 
-- [RabbitMQ 基础](https://github.com/heibaiying/BigData-Notes/blob/master/notes/RabbitMQ_基础.md)
-- [RabbitMQ 客户端开发](https://github.com/heibaiying/BigData-Notes/blob/master/notes/RabbitMQ_客客户端开发.md)
-- [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](https://github.com/heibaiying/BigData-Notes/blob/master/notes/RabbitMQ_高可用集群架构.md)
+- [RabbitMQ 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_基础.md)
+- [RabbitMQ 客户端开发](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_客客户端开发.md)
+- [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_高可用集群架构.md)
 
 ### 3.负载均衡中间件 Nginx
 

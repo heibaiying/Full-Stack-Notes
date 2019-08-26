@@ -22,7 +22,7 @@
 
 ### 2. MySQL
 
-+ [MySQL 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_基础.md)
++ [MySQL 核心概念](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_基础.md)
 + [MySQL 常用备份方式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_备份.md)
 + [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_复制.md)
 + [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_PXC集群.md)
@@ -105,7 +105,7 @@
 
 ### 2. 消息中间件：RabbitMQ
 
-- [RabbitMQ 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_基础.md)
+- [RabbitMQ 核心概念](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_基础.md)
 - [RabbitMQ 客户端开发](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_客户端开发.md)
 - [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_高可用集群架构.md)
 

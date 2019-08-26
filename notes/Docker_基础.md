@@ -20,11 +20,13 @@ Docker 使用 Go 语言进行开发，基于 Linux 内核的 cgroup，namespace�
 下图体现了 Docker 和传统虚拟化方式的不同之处：传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，再在该系统上运行所需应用进程；而 Docker 容器内的应用进程则是直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟，因此要比传统虚拟机更为轻便。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker与虚拟机.png"/> </div>
+
 ## 二、Docker 架构与核心概念
 
 Docker 使用 client-server 架构， Docker 客户端将命令发送给 Docker 守护进程，后者负责构建，运行和分发 Docker 容器。 Docker客户端和守护程序使用 REST API，通过 UNIX 套接字或网络接口进行通信。核心概念如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker架构.png"/> </div>
+
 ### 2.1 镜像
 
 Docker 镜像（Image）是一个特殊的文件系统，包含了程序运行时候所需要的资源和环境。镜像不包含任何动态数据，其内容在构建之后也不会被改变。
@@ -60,6 +62,7 @@ Docker 客户端（docker）是用户与 Docker 交互的主要方式。当你�
 Docker 提供了大量命令用于管理镜像、容器和服务，命令的统一使用格式为：` docker [OPTIONS] COMMAND` ，其中 OPTIONS 代表可选参数。需要注意的是 Docker 命令的执行一般都需要获取 root 权限，这是因为 Docker 的命令行工具 docker 与 docker daemon 是同一个二进制文件，docker daemon 负责接收并执行来自 docker 的命令，它的运行需要 root 权限。所有常用命令及其使用场景如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/docker常用命令.jpg"/> </div>
+
 ### 3.1 基础命令
 
 - **docker version**：用于查看 docker 的版本信息
@@ -275,6 +278,7 @@ docker run -it  -p 8080:8080 spring-boot-base-java
 这里为了观察到启动效果，所以使用交互的方式启动，实际部署时可以使用`-d`参数来后台启动，输出如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/dockerfile01.png"/> </div>
+
 ### 5.2 基于 JDK 镜像部署 Spring Boot 项目
 
 上面的项目我们是基于最基础的 Centos 镜像开始构建，但由于 Docker Hub 上已经提供了 JDK 的镜像，我们也可以选择从 JDK 镜像开始构建，此时构建过程更加简单。构建步骤和上面的完全一致，只是 Dockerfile 的内容有所不同，如下：

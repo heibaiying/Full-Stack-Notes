@@ -3,7 +3,6 @@
 - Java 基础
 - GOF 23 种设计模式 ( Java 语言实现 )
 - 深入理解 Java 虚拟机
-- 无锁并行计算框架 Disruptor
 - 网络编程原理
 - Netty 编程模式
 

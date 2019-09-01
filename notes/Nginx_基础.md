@@ -1,22 +1,23 @@
 # Nginx 基础
 
 <nav>
-<a href="#一Nginx-简介">一、Nginx 简介</a><br/>
+<a href="#一Nginx-简介">一、Nginx简介</a><br/>
 <a href="#二基本命令">二、基本命令</a><br/>
 <a href="#三配置格式">三、配置格式</a><br/>
 <a href="#四部署静态网站">四、部署静态网站</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-增加配置">4.1 增加配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-检查配置">3.2 检查配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-重载配置">3.3 重载配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-检查配置">4.2 检查配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-重载配置">4.3 重载配置</a><br/>
 <a href="#五实现负载均衡">五、实现负载均衡</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-部署后台服务">4.1 部署后台服务</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-负载均衡配置">4.2 负载均衡配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-负载均衡策略">4.3 负载均衡策略</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-部署后台服务">5.1 部署后台服务</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-负载均衡配置">5.2 负载均衡配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#53-负载均衡策略">5.3 负载均衡策略</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-声明备用服务">4.4 声明备用服务</a><br/>
 <a href="#六实现动静分离">六、实现动静分离</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-动静分离配置">5.1 动静分离配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-常见配置异常">5.2 常见配置异常</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61-动静分离配置">6.1 动静分离配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62-常见配置异常">6.2 常见配置异常</a><br/>
 </nav>
+
 
 ## 一、Nginx 简介
 
@@ -40,8 +41,6 @@ Nginx 能够同时支持正向代理和反向代理，这两种代理模式的�
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/nginx-plus.png"/> </div>
 
-
-
 ## 二、基本命令
 
 Nginx Shell 的基本使用格式如下：
@@ -62,7 +61,7 @@ nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
 
 ## 三、配置格式
 
-### 2.1 基本配置格式
+### 3.1 基本配置格式
 
 Nginx 的配置由全局配置和局部配置（指令块）共同组成，所有的指令块都遵循相同的配置格式：
 
@@ -79,7 +78,7 @@ Nginx 的配置由全局配置和局部配置（指令块）共同组成，所�
 + 支持使用 $ 符号来引用变量；
 + 部分指令的参数支持使用正则表达式。
 
-### 2.2 时间和空间单位
+### 3.2 时间和空间单位
 
 Nginx  的配置文件支持以下空间和时间单位：
 
@@ -87,14 +86,15 @@ Nginx  的配置文件支持以下空间和时间单位：
 
 + **空间单位**：支持 ms (毫秒) ，s (秒) ，m (分钟) ，h (小时) ，d (天)，w (星期)，M (月，30天)，y (年，365天) 等常用单位，并支持组合使用，如 `1h 30m` (1小时 30分)，`1y 6M`（1年零6个月）。
 
-### 2.3 官方配置模板
+### 3.3 官方配置模板
 
 在安装 Nginx 后，在安装目录的 conf 目录下会有一个官方的配置样例 nginx.conf ，其内容如下：
 
 ```properties
-#使用这个参数来配置worker进程的用户和组，如果没有指定组，则默认为指定用户所处的组，默认值为nobody
+# 使用这个参数来配置worker进程的用户和组，如果没有指定组，则默认为指定用户所处的组，默认值为nobody
 user  nobody;
-# 指定用于处理客户端连接的worker进程的数量，通常设置为CPU的核心数。如果是为IO密集型操作进行负载，可以设置为核心数的1.5 ~ 2倍
+# 指定用于处理客户端连接的worker进程的数量，通常设置为CPU的核心数。
+# 如果是为IO密集型操作进行负载，可以设置为核心数的1.5 ~ 2倍
 worker_processes  1;
 
 # 指定日志的位置和日志级别，日志级别按照由低到高的顺序如下：[debug|info|notice|warn|error|crit]
@@ -210,11 +210,11 @@ http {
 }
 ```
 
-## 三、部署静态网站
+## 四、部署静态网站
 
 Nginx 通常用作 HTTP 服务器来部署静态资源，其具体的操作步骤如下：
 
-### 3.1 增加配置
+### 4.1 增加配置
 
 修改 nginx.conf ，并在 http 指令块中增加如下配置：
 
@@ -250,7 +250,7 @@ Nginx 通常用作 HTTP 服务器来部署静态资源，其具体的操作步�
 </html>
 ```
 
-### 3.2 检查配置
+### 4.2 检查配置
 
 使用 `-t` 参数来检查配置，出现 successful 则代表配置正确：
 
@@ -260,7 +260,7 @@ nginx: the configuration file /usr/app/nginx-1.16.1/conf/nginx.conf syntax is ok
 nginx: configuration file /usr/app/nginx-1.16.1/conf/nginx.conf test is successful
 ```
 
-### 3.3 重载配置
+### 4.3 重载配置
 
 启动 Nginx ，如果 Nginx 已经启动，可以使用如下命令重载配置：
 
@@ -272,9 +272,9 @@ nginx -s reload
 
 
 
-## 四、实现负载均衡
+## 五、实现负载均衡
 
-### 4.1 部署后台服务
+### 5.1 部署后台服务
 
 这里我使用 Docker 来部署两个 Tomcat，之后将测试项目 WAR 包分别拷贝到 `/usr/webapps001` 和  `/usr/webapps002`  两个挂载的容器卷下，程序会自动解压并运行，两个项目的端口号分别为 8080 和 8090：
 
@@ -288,7 +288,7 @@ run -d  -it  --privileged=true -v /usr/webapps02:/usr/local/tomcat/webapps \
 -p 8090:8080 --name tomcat8090  96c4e536d0eb
 ```
 
-### 4.2 负载均衡配置
+### 5.2 负载均衡配置
 
 修改 nginx.conf ，并在 http 指令块中增加如下配置：
 
@@ -309,7 +309,7 @@ server {
 
 重载配置后，打开浏览器，通过 9020 端口访问项目，此时 Nginx 会以轮询的方式将请求分发到 8080 和 8090 端口上。在测试负载均衡策略的时候，最好将浏览器的缓存功能关闭，避免造成影响。
 
-### 4.3 负载均衡策略
+### 5.3 负载均衡策略
 
 在上面的配置中，我们没有配置任何负载均衡策略，默认采用的是轮询策略，除此之外，Nginx 还支持以下负载均衡策略：
 
@@ -365,9 +365,9 @@ server backup1.example.com:8080   backup;
 
 
 
-## 五、实现动静分离
+## 六、实现动静分离
 
-### 5.1 动静分离配置
+### 6.1 动静分离配置
 
 Nginx 能够支持高并发的访问，并具有静态资源缓存等特性，因此相比于 Tomcat 等动态资源应用服务器，其更加适合于部署静态资源。想要实现动静分离，只需要在 server 指令块中通过正则表达式来划分静态资源，并指定其存放位置，示例如下：
 
@@ -385,7 +385,7 @@ server {
 }
 ```
 
-### 5.2 常见配置异常
+### 6.2 常见配置异常
 
 #### 1. No such file or directory
 

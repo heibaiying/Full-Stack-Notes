@@ -4,16 +4,16 @@
 <a href="#一Nginx-简介">一、Nginx 简介</a><br/>
 <a href="#二基本命令">二、基本命令</a><br/>
 <a href="#三配置格式">三、配置格式</a><br/>
-<a href="#三部署静态网站">三、部署静态网站</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-增加配置">3.1 增加配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-检查配置">3.2 检查配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-重载配置">3.3 重载配置</a><br/>
-<a href="#四实现负载均衡">四、实现负载均衡</a><br/>
+<a href="#四部署静态网站">四、部署静态网站</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-增加配置">4.1 增加配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-检查配置">3.2 检查配置</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-重载配置">3.3 重载配置</a><br/>
+<a href="#五实现负载均衡">五、实现负载均衡</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-部署后台服务">4.1 部署后台服务</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-负载均衡配置">4.2 负载均衡配置</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-负载均衡策略">4.3 负载均衡策略</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-声明备用服务">4.4 声明备用服务</a><br/>
-<a href="#五实现动静分离">五、实现动静分离</a><br/>
+<a href="#六实现动静分离">六、实现动静分离</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-动静分离配置">5.1 动静分离配置</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-常见配置异常">5.2 常见配置异常</a><br/>
 </nav>
@@ -38,7 +38,7 @@ Nginx 能够同时支持正向代理和反向代理，这两种代理模式的�
 + 正向代理发生在客户端，是客户端主动发起的代理。如我们不能直接访问某个服务器，但可以间接通过中间的代理服务器去进行访问，然后将访问结果再返回给我们。
 + 反向代理发生在服务端，客户端并不知道发生了代理，示例如下。用户只知道将请求发送给 Nginx，但是并不知道请求被转发了，也不知道被转发给了哪一台应用服务器。实际上对于用户来说，他也没必要知道，因为请求结果都是相同的。
 
-![nginx-plus](D:\Full-Stack-Notes\pictures\nginx-plus.png)
+<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/nginx-plus.png"/> </div>
 
 
 
@@ -279,11 +279,13 @@ nginx -s reload
 这里我使用 Docker 来部署两个 Tomcat，之后将测试项目 WAR 包分别拷贝到 `/usr/webapps001` 和  `/usr/webapps002`  两个挂载的容器卷下，程序会自动解压并运行，两个项目的端口号分别为 8080 和 8090：
 
 ```shell
-run -d  -it --privileged=true -v /usr/webapps01:/usr/local/tomcat/webapps  -p 8080:8080 --name tomcat8080  96c4e536d0eb
+run -d  -it --privileged=true -v /usr/webapps01:/usr/local/tomcat/webapps \
+-p 8080:8080 --name tomcat8080  96c4e536d0eb
 ```
 
 ```shell
-run -d  -it  --privileged=true -v /usr/webapps02:/usr/local/tomcat/webapps  -p 8090:8080 --name tomcat8090  96c4e536d0eb
+run -d  -it  --privileged=true -v /usr/webapps02:/usr/local/tomcat/webapps \
+-p 8090:8080 --name tomcat8090  96c4e536d0eb
 ```
 
 ### 4.2 负载均衡配置
@@ -390,7 +392,10 @@ server {
 第一个常见的问题是找不到静态资源，此时可以查看 logs 目录下的 error.log 日志，通常输出如下：
 
 ```shell
-2019/09/01 17:12:43 [error] 12402#0: *163 open() "/usr/resources/spring-boot-tomcat/css/show.css" failed (2: No such file or directory), client: 192.168.0.106, server: , request: "GET /spring-boot-tomcat/css/show.css HTTP/1.1", host: "192.168.0.226:9020", referrer: "http://192.168.0.226:9020/spring-boot-tomcat/index"
+2019/09/01 17:12:43 [error] 12402#0: *163 open() "/usr/resources/spring-boot-tomcat/css/show.css"
+failed (2: No such file or directory), client: 192.168.0.106, server: , 
+request: "GET /spring-boot-tomcat/css/show.css HTTP/1.1", host: "192.168.0.226:9020",
+referrer: "http://192.168.0.226:9020/spring-boot-tomcat/index"
 ```
 
 出现这个问题，是因为 Nginx 要求静态资源的请求路径必须和原有请求路径完全相同，这里我的项目在 Tomcat 中解压后的项目名为 pring-boot-tomcat，以 show.css 文件为例，其正确的存储路径应该为：
@@ -406,7 +411,10 @@ server {
 路径正确后，另外一个常见的问题是权限不足，错误日志如下。此时需要保证配置文件中的 user 用户必须具有静态资源所处目录的访问权限，或者在创建静态资源目录时，直接使用 user 配置的用户来创建：
 
 ```shell
-2019/09/01 17:15:14 [error] 12402#0: *170 open() "/usr/resources/spring-boot-tomcat/css/show.css" failed (13: Permission denied), client: 192.168.0.106, server: , request: "GET /spring-boot-tomcat/css/show.css HTTP/1.1", host: "192.168.0.226:9020", referrer: "http://192.168.0.226:9020/spring-boot-tomcat/index"
+2019/09/01 17:15:14 [error] 12402#0: *170 open() "/usr/resources/spring-boot-tomcat/css/show.css" 
+failed (13: Permission denied), client: 192.168.0.106, server: ,
+request: "GET /spring-boot-tomcat/css/show.css HTTP/1.1", host: "192.168.0.226:9020", 
+referrer: "http://192.168.0.226:9020/spring-boot-tomcat/index"
 ```
 
 

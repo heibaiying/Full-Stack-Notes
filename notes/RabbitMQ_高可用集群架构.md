@@ -143,6 +143,7 @@ rabbitmqctl set_cluster_name my_rabbitmq_cluster
 除了可以使用命令行外，还可以使用打开任意节点的 UI 界面进行查看，情况如下：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-集群模式.png"/> </div>
+
 ### 2.5 配置镜像队列
 
 #### 1. 开启镜像队列
@@ -508,6 +509,7 @@ systemctl start  keepalived
 此时只有 hadoop001 上是存在虚拟 IP 的，而 hadoop002 上是没有的。
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-keepalived-vip2.png"/> </div>
+
 ### 4.6 验证故障转移
 
 这里我们验证一下故障转移，因为按照我们上面的检测脚本，如果 HAProxy 已经停止且无法重启时 KeepAlived 服务就会停止，这里我们直接使用以下命令停止 Keepalived 服务：

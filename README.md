@@ -1,7 +1,7 @@
 # :coffee: JAVA
 
 - Java 基础
-- GOF 23 种设计模式 ( Java 语言实现 )
+- GOF 23 种设计模式
 - 深入理解 Java 虚拟机
 - 网络编程原理
 - Netty 编程模式
@@ -10,8 +10,11 @@
 
 ## 💻 前端基础
 
-- JavaScript 核心概念 —— 原型与原型链，作用域与闭包，异步与单线程
+- JavaScript 基础
+- 原型与原型链，作用域与闭包，异步与单线程
 - ECMAScript 6.0 基础
+- WebPack 基础
+- Vue 核心概念
 
 
 
@@ -23,7 +26,7 @@
 + [MySQL 备份详解](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_备份.md)
 + [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_复制.md)
 + [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_PXC集群.md)
-+ [MyCat 分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_分库分表.md)
++ [MyCat 分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_Mycat中间件.md)
 + [MySQL 查询性能分析之 Explain](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_EXPLAIN.md)
 
 ### Redis
@@ -46,9 +49,7 @@
 ## 📟 操作系统
 
 + [Linux 常用 Shell 命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Linux_常用Shell命令.md)
-
-- [Docker 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Docker_基础.md)
-- Kubernetes  简介及集群搭建
++ [Docker 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Docker_基础.md)
 
 
 
@@ -56,8 +57,6 @@
 
 ### Spring
 
-+ AOP
-+ IOC
 + Spring事务机制、事务的传播与监控
 
 ### Spring Cloud
@@ -75,8 +74,8 @@
 
 + 全局 ID 生成方案
 + 分布式 Session 解决方案
-+ 分布式事务解决方案实战
 + 分布式锁解决方案
++ 分布式事务解决方案实战
 
 
 
@@ -106,14 +105,7 @@
 
 ### Nginx
 
-- Nginx 反向代理及负载均衡服务配置实战
-- 利用 keeplived+Nginx 实现 Nginx 高可用方案
-- Nginx 动静分离实战
-
-### Dubbo
-
-- Dubbo 管理中心及监控平台安装部署
-- Dubbo 负载均衡和服务降级
+- [Nginx 基础之静态网站部署，负载均衡，动静分离](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Nginx_基础.md)
 
 
 

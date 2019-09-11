@@ -26,7 +26,7 @@
 + [MySQL 备份详解](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_备份.md)
 + [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_复制.md)
 + [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_PXC集群.md)
-+ [MyCat 分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_Mycat中间件.md)
++ [MyCat 读写分离与分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_Mycat中间件.md)
 + [MySQL 查询性能分析之 Explain](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_EXPLAIN.md)
 
 ### Redis

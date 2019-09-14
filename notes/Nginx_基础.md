@@ -113,21 +113,21 @@ events {
 
 
 http {
-	# 使用include来引用外部文件
+    # 使用include来引用外部文件
     include       mime.types;
     # 指定默认MIME类型
     default_type  application/octet-stream;
 
-	# 定义日志的输出格式，使用$来进行变量引用
+    # 定义日志的输出格式，使用$来进行变量引用
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
     #                  '$status $body_bytes_sent "$http_referer" '
     #                  '"$http_user_agent" "$http_x_forwarded_for"';
 
-	# 定义访问日志的存放位置
+    # 定义访问日志的存放位置
     access_log  logs/access.log  main;
 
 
-	# 是否开启系统调用方法sendfile(),开启后可以直接在内核空间完成文件的发送，即零拷贝
+    # 是否开启系统调用方法sendfile(),开启后可以直接在内核空间完成文件的发送，即零拷贝
     sendfile        on;
     # 是否开启Socket选项,它只有在sendfile启用后才会生效
     tcp_nopush     on;
@@ -138,18 +138,18 @@ http {
     # 开启文件压缩
    	gzip  on;
 
-	# 配置nginx服务器(虚拟主机)
+    # 配置nginx服务器(虚拟主机)
     server {
     	# 监听端口
         listen       80;
         server_name  localhost;
 
-		# 默认字符集
+        # 默认字符集
         charset koi8-r;
-		# 配置当前虚拟主机的访问日志的存放位置
+        # 配置当前虚拟主机的访问日志的存放位置
         access_log  logs/host.access.log  main;
 		
-		# 虚拟主机对应的映射目录
+        # 虚拟主机对应的映射目录
         location / {
             root   html;
             index  index.html index.htm;
@@ -187,17 +187,17 @@ http {
         listen       443 ssl;
         server_name  localhost;
 		
-		# 指定数字证书
+        # 指定数字证书
         ssl_certificate      cert.pem;
         # 指定密匙
         ssl_certificate_key  cert.key;
 
-		# 设置存储session的缓存类型和大小
+        # 设置存储session的缓存类型和大小
         ssl_session_cache    shared:SSL:1m;
         # session缓存时间
         ssl_session_timeout  5m;
 
-		# 返回客户端支持的密码列表
+        # 返回客户端支持的密码列表
         ssl_ciphers  HIGH:!aNULL:!MD5;
         # 指定在使用SSLv3和TLS协议时，服务器密码应优先于客户端密码
         ssl_prefer_server_ciphers  on;
@@ -220,7 +220,7 @@ Nginx 通常用作 HTTP 服务器来部署静态资源，其具体的操作步�
 
 ```properties
  server {
- 	# 监听端口号
+    # 监听端口号
     listen 9010;
     # 如果有域名的话，可以在这里进行配置
     server_name _;      

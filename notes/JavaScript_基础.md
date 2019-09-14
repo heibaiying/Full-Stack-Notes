@@ -87,7 +87,7 @@ alert(stringValue.substr(3, 7));		// "lo worl"
 
 // 当第一个参数为负值时
 alert(stringValue.slice(-3)); 			// "rld"			按照规则等价于： slice(8)
-alert(stringValue.substring(-3));			// "hello world"	按照规则等价于： substring(0)
+alert(stringValue.substring(-3));		// "hello world"	按照规则等价于： substring(0)
 alert(stringValue.substr(-3));			// "rld" 			按照规则等价于： substr(8)
 
 // 当第二个参数为负值时
@@ -236,9 +236,9 @@ var colors = ["red", "blue", "green"];
 ```javascript
 var colors = ["red", "blue", "green"]; 
 
-colors.length = 2;		// ["red", "blue"]
+colors.length = 2;			// ["red", "blue"]
 colors[colors.length] = "green";		// ["red", "blue", "green"]
-colors[10] = "black";		// ["red", "blue", "green", empty × 7, "black"]
+colors[10] = "black";			// ["red", "blue", "green", empty × 7, "black"]
 ```
 
 数组的其他常用方法如下：
@@ -269,8 +269,8 @@ ECMAScript 的数组提供了类似栈的特性，能够实现后进先出：
 var colors = ["red", "blue", "green"];
 
 colors.push("black");	// ["red", "blue", "green", "black"]
-colors.pop()			// "black"
-colors					// ["red", "blue", "green"]
+colors.pop()	// "black"
+colors	// ["red", "blue", "green"]
 ```
 
 **4. 队列方法**
@@ -278,9 +278,9 @@ colors					// ["red", "blue", "green"]
 CMAScript 的数组提供了类似栈的特性，能够实现先进先出：
 
 ```javascript
-colors.push("black","yellow");		// ["red", "blue", "green", "black", "yellow"]
-colors.shift()		// "red"
-colors		// ["blue", "green", "black", "yellow"]
+colors.push("black","yellow");       // ["red", "blue", "green", "black", "yellow"]
+colors.shift()                       // "red"
+colors                               // ["blue", "green", "black", "yellow"]
 ```
 
 **5. 重排序方法**
@@ -330,11 +330,11 @@ splice() 用于删除并在删除位置新增数据项，它接收任意个参�
 ```javascript
 var colors = ["red", "green", "blue", "yellow"];
 
-colors.splice(1,2)					// 返回删除的数据项：["green", "blue"]
-colors								// ["red", "yellow"]
+colors.splice(1,2)                  // 返回删除的数据项：["green", "blue"]
+colors                              // ["red", "yellow"]
 
-colors.splice(1,0,"black","green")	// []
-colors								// ["red", "black", "green", "yellow"]
+colors.splice(1,0,"black","green")  // []
+colors                              // ["red", "black", "green", "yellow"]
 ```
 
 **7. 位置方法**

@@ -87,7 +87,7 @@ alert(stringValue.substr(3, 7));		// "lo worl"
 
 // 当第一个参数为负值时
 alert(stringValue.slice(-3)); 			// "rld"			按照规则等价于： slice(8)
-alert(stringValue.substring(-3));		// "hello world"	按照规则等价于： substring(0)
+alert(stringValue.substring(-3));		// "hello world"		按照规则等价于： substring(0)
 alert(stringValue.substr(-3));			// "rld" 			按照规则等价于： substr(8)
 
 // 当第二个参数为负值时
@@ -237,7 +237,7 @@ var colors = ["red", "blue", "green"];
 var colors = ["red", "blue", "green"]; 
 
 colors.length = 2;			// ["red", "blue"]
-colors[colors.length] = "green";		// ["red", "blue", "green"]
+colors[colors.length] = "green";	// ["red", "blue", "green"]
 colors[10] = "black";			// ["red", "blue", "green", empty × 7, "black"]
 ```
 
@@ -269,8 +269,8 @@ ECMAScript 的数组提供了类似栈的特性，能够实现后进先出：
 var colors = ["red", "blue", "green"];
 
 colors.push("black");	// ["red", "blue", "green", "black"]
-colors.pop()	// "black"
-colors	// ["red", "blue", "green"]
+colors.pop()		// "black"
+colors			// ["red", "blue", "green"]
 ```
 
 **4. 队列方法**

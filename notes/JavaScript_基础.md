@@ -92,7 +92,7 @@ alert(stringValue.substr(-3));			// "rld"          按照规则等价于： subs
 
 // 当第二个参数为负值时
 alert(stringValue.slice(3, -4));		// "lo w"         按照规则等价于： slice(3,7)
-alert(stringValue.substring(3, -4));		// "hel"      按照规则等价于： substring(3,0)
+alert(stringValue.substring(3, -4));		// "hel"          按照规则等价于： substring(3,0)
 alert(stringValue.substr(3, -4)); 		// ""（空字符串）  按照规则等价于： substr(3,0)
 ```
 

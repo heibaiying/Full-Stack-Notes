@@ -54,7 +54,7 @@ lang = lang + "Script";
 ```javascript
 var a = null;
 a.toString()	// Uncaught TypeError: Cannot read property 'toString' of null
-String(a)		// "null"
+String(a)	// "null"
 ```
 
 **3. 常用的字符串操作**
@@ -87,12 +87,12 @@ alert(stringValue.substr(3, 7));		// "lo worl"
 
 // 当第一个参数为负值时
 alert(stringValue.slice(-3)); 			// "rld"			按照规则等价于： slice(8)
-alert(stringValue.substring(-3));		// "hello world"	按照规则等价于： substring(0)
+alert(stringValue.substring(-3));			// "hello world"	按照规则等价于： substring(0)
 alert(stringValue.substr(-3));			// "rld" 			按照规则等价于： substr(8)
 
 // 当第二个参数为负值时
 alert(stringValue.slice(3, -4));		// "lo w"			按照规则等价于： slice(3,7)
-alert(stringValue.substring(3, -4));	// "hel"			按照规则等价于： substring(3,0)
+alert(stringValue.substring(3, -4));		// "hel"			按照规则等价于： substring(3,0)
 alert(stringValue.substr(3, -4)); 		// ""（空字符串）		按照规则等价于： substr(3,0)
 ```
 
@@ -236,9 +236,9 @@ var colors = ["red", "blue", "green"];
 ```javascript
 var colors = ["red", "blue", "green"]; 
 
-colors.length = 2;						// ["red", "blue"]
-colors[colors.length] = "green";   		// ["red", "blue", "green"]
-colors[10] = "black";					// ["red", "blue", "green", empty × 7, "black"]
+colors.length = 2;		// ["red", "blue"]
+colors[colors.length] = "green";		// ["red", "blue", "green"]
+colors[10] = "black";		// ["red", "blue", "green", empty × 7, "black"]
 ```
 
 数组的其他常用方法如下：
@@ -279,8 +279,8 @@ CMAScript 的数组提供了类似栈的特性，能够实现先进先出：
 
 ```javascript
 colors.push("black","yellow");		// ["red", "blue", "green", "black", "yellow"]
-colors.shift()						// "red"
-colors								// ["blue", "green", "black", "yellow"]
+colors.shift()		// "red"
+colors		// ["blue", "green", "black", "yellow"]
 ```
 
 **5. 重排序方法**
@@ -346,8 +346,8 @@ var colors = ["red", "green", "blue", "yellow", "green", "blue"];
 
 colors.indexOf("green");			// 1
 colors.indexOf("green", 3);			// 4
-colors.lastIndexOf("green");		// 4
-colors.lastIndexOf("green", 3);		// 1
+colors.lastIndexOf("green");			// 4
+colors.lastIndexOf("green", 3);			// 1
 ```
 
 **8. 迭代方法**

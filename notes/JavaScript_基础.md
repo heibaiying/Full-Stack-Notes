@@ -31,13 +31,13 @@
 JavaScript 是一种专为与网页交互而设计的脚本语言，由以下三个部分组成：
 
 - **ECMAScript**：由 ECMA-262 定义，提供核心语言功能；
-- **文档对象模型 ( DOM )**：提供访问和操作网页内容的方法和接口；
-- **浏览器对象模型 ( BOM )**：提供与浏览器交互的方法和接口。 
+- **文档对象模型 (DOM)**：提供访问和操作网页内容的方法和接口；
+- **浏览器对象模型 (BOM)**：提供与浏览器交互的方法和接口。 
 
 ECMAScript  提供了语言的核心功能，它定义了以下七种数据类型：
 
 - 六种基本数据类型：`Undefined`，`Null`，`Boolean`，`Number`，`String`，`Symbol` ( ES 6新增 )；
-- 一种引用类型：统称为 Object 类型；具体又细分为 `Object`，`Array`，`Date`，`RegExp`，`Function` 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
+- 一种引用数据类型：统称为 Object 类型；具体又细分为 `Object`，`Array`，`Date`，`RegExp`，`Function` 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
 
 ## 二、基本类型
 
@@ -187,7 +187,7 @@ Number.prototype.toFixed = function(len){
 
 **1. 字符串表示**
 
-ECMAScript 支持使用双引号 ( " ) 或单引号 ( ' ) 来表示字符串，并且 ECMAScript 中的字符串是不可变的，也就是说，字符串一旦创建，它们的值就不能改变。要改变某个变量保存的字符串，首先要销毁原来的字符串，然后再用另一个包含新值的字符串填充该变量，示例如下：
+ECMAScript 支持使用双引号 ` " ` 或单引号 ` ' ` 来表示字符串，并且 ECMAScript 中的字符串是不可变的，也就是说，字符串一旦创建，它们的值就不能改变。要改变某个变量保存的字符串，首先要销毁原来的字符串，然后再用另一个包含新值的字符串填充该变量，示例如下：
 
 ```javascript
 var lang = "Java";
@@ -199,8 +199,8 @@ lang = lang + "Script";
 
 要把一个值转换为一个字符串有两种方式：
 
-+ 调用对象的 toString() 方法：大多数对象都具有这个方法，但需要注意的是 null 和 undefined 没有；
-+ 使用转型函数 String() ：使用该转型函数时，如果传入的值有 toString() 方法，则调用该方法并返回相应的结果；如果传入的值是 null，则返回 "null" ；如果传入值是 undefined，则返回 "undefined" 。 示例如下：
++ 使用对象方法 **toString()** ：大多数对象都具有这个方法，但需要注意的是 null 和 undefined 没有；
++ 使用转型函数 **String()** ：使用该转型函数时，如果传入的值有 toString() 方法，则调用该方法并返回相应的结果；如果传入的值是 null，则返回 "null" ；如果传入值是 undefined，则返回 "undefined" 。 示例如下：
 
 ```javascript
 var a = null;
@@ -217,7 +217,7 @@ String(a)	// "null"
 + **indexOf() \ lastIndexOf()** ：均接收两个参数，分别代表待查找的字符串和查找的开始位置；
 + **trim()** ：用于去除字符串前后的空格。
 
-在给 slice，substring，substr 等方法传入正数参数时，其行为比较好预期，但传递参数是负数时，其具体的行为表现如下：
+slice，substring，substr 等方法在传入正数参数时，其行为比较好预期，但传递参数是负数时，其具体的行为表现如下:
 
 + **slice()** ：会将传入的负值与字符串的长度相加；
 + **substring()** ：方法会把所有负值参数都转换为 0 ；
@@ -249,7 +249,7 @@ alert(stringValue.substr(3, -4)); 		// ""（空字符串）  按照规则等价�
 
 ### 2.3 基本类型检测
 
-JavaScript 是一种弱类型的语言，在声明变量时候可以不必指明其具体类型，而是由程序进行推断。如果想要知道变量具体属于哪一个基础类型，可以使用 typeof 关键字，它的返回情况如下：
+JavaScript 是一种弱类型的语言，在声明变量时候可以不必指明其具体类型，而是由程序进行推断。如果想要知道变量具体属于哪一个基础类型，可以使用 **typeof** 关键字，它的返回情况如下：
 
 - **undefined**：如果对应的值未定义；
 - **boolean**：如果对应的值是布尔值；
@@ -371,7 +371,7 @@ values	// [1, 2, 3, 4, 5]
 
 **6. 操作方法**
 
-concat() 用于拼接并返回新的数组：
+**concat()** 用于拼接并返回新的数组：
 
 ```javascript
 var colors = ["red", "green", "blue"];
@@ -381,7 +381,7 @@ colors		// ["red", "green", "blue"]
 colors2		// ["red", "green", "blue", "yellow", "black", "brown"]
 ```
 
-slice() 用于截取数组并返回新的数组，它接收两个参数，分别代表截取的开始位置和结束位置，它是一个前开后闭的区间：
+**slice()** 用于截取数组并返回新的数组，它接收两个参数，分别代表截取的开始位置和结束位置，它是一个前开后闭的区间：
 
 ```javascript
 var colors = ["red", "green", "blue", "yellow", "purple"];
@@ -390,7 +390,7 @@ var colors2 = colors.slice(1);		// ["green", "blue", "yellow", "purple"]
 var colors3 = colors.slice(0,2);	// ["red", "green"]
 ```
 
-splice() 用于删除并在删除位置新增数据项，它接收任意个参数，其中第一个参数为删除的开始位置，第二个参数为删除多少个数据项，之后可以接任意个参数，用于表示待插入的数据项：
+**splice()** 用于删除并在删除位置新增数据项，它接收任意个参数，其中第一个参数为删除的开始位置，第二个参数为删除多少个数据项，之后可以接任意个参数，用于表示待插入的数据项：
 
 ```javascript
 var colors = ["red", "green", "blue", "yellow"];
@@ -404,7 +404,7 @@ colors                              // ["red", "black", "green", "yellow"]
 
 **7. 位置方法**
 
-indexOf() 和 lastIndexOf() 用于查找指定元素的 Index ，它们都接收两个参数：待查找项和查找的起点位置：
+**indexOf()** 和 **lastIndexOf()** 用于查找指定元素的 Index ，它们都接收两个参数：待查找项和查找的起点位置：
 
 ```shell
 var colors = ["red", "green", "blue", "yellow", "green", "blue"];
@@ -455,7 +455,7 @@ numbers.map(function (value, index, array) {
 
 **9. 归并方法**
 
-ECMAScript 5 提供了两个归并数组的方法： reduce() 和 reduceRight() 。 它们都接收四个参数：前一个值、当前值、当前项的索引 和 数组本身，使用示例如下： 
+ECMAScript 5 提供了两个归并数组的方法： **reduce()** 和 **reduceRight()** 。 它们都接收四个参数：前一个值、当前值、当前项的索引 和 数组本身，使用示例如下： 
 
 ```javascript
 var values = [1, 2, 3, 4, 5];
@@ -489,9 +489,9 @@ Date.now()
 
 **1. 格式转换**
 
-- toLocaleString() ：按照浏览器所在时区返回相应的日期格式；
-- toString() ：返回日期时间数据和的时区数据；
-- valueOf() ：返回日期的时间戳格式。
+- **toLocaleString()** ：按照浏览器所在时区返回相应的日期格式；
+- **toString()** ：返回日期时间数据和的时区数据；
+- **valueOf()** ：返回日期的时间戳格式。
 
 ```javascript
 var date = new Date(2018, 7, 8, 8, 30, 20);
@@ -501,7 +501,7 @@ console.log(date.toString());			// Wed Aug 08 2018 08:30:20 GMT+0800 (GMT+08:00)
 console.log(date.valueOf());			// 1533688220000
 ```
 
-由于 valueOf() 返回的是日期的时间戳格式，所以对于 date 对象，可以直接使用比较运算符来比较其大小：
+由于 **valueOf()** 返回的是日期的时间戳格式，所以对于 date 对象，可以直接使用比较运算符来比较其大小：
 
 ```javascript
 var date01 = new Date(2018, 7, 8, 8, 30, 20);
@@ -548,7 +548,7 @@ function test(first, second) {
 
 **2. 改变函数作用域**
 
-在 ECMAScript 5 中，每个函数都包含两个非继承而来的方法：apply() 和 call() ，它们都用于在特定的作用域中调用函数。简单来说，可以用这两个方法来改变函数的实际调用对象，从而改变 this 的值，因为 this 总是指向当前函数的实际调用对象：
+在 ECMAScript 5 中，每个函数都包含两个非继承而来的方法：**apply()** 和 **call()** ，它们都用于在特定的作用域中调用函数。简单来说，可以用这两个方法来改变函数的实际调用对象，从而改变 this 的值，因为 this 总是指向当前函数的实际调用对象：
 
 ```javascript
 window.color = "red";
@@ -563,7 +563,7 @@ sayColor.call(window);   // red
 sayColor.call(o);        // blue   此时this指向的是函数调用对象，即 o
 ```
 
-apply() 和 call() 的第一个参数都是指代函数的调用对象，它们的区别主要在于第二个参数：apply() 支持使用数组或 arguments 给调用函数传值，而 call()  给调用函数传值时，必须逐个列举：
+**apply()** 和 **call()** 的第一个参数都是指代函数的调用对象，它们的区别主要在于第二个参数：**apply()** 支持使用数组或 arguments 给调用函数传值，而 **call()** 给调用函数传值时，必须逐个列举：
 
 ```javascript
 function sum(num1, num2) {
@@ -589,7 +589,7 @@ callSum3(10, 10);
 
 **3. 绑定函数作用域**
 
-如果想要将函数绑定在某个特定的作用域上，可以使用 bind() 函数：
+如果想要将函数绑定在某个特定的作用域上，可以使用 **bind()** 函数：
 
 ```javascript
 window.color = "red";
@@ -604,7 +604,7 @@ objectSayColor();  // blue 此时即便是在全局作用域中调用这个函�
 
 ### 3.5 引用类型检测
 
-想要检测某个对象是否属于某个引用类型，可以使用 instanceof 关键字：
+想要检测某个对象是否属于某个引用类型，可以使用 **instanceof** 关键字：
 
 ```shell
 var date = new Date();
@@ -786,7 +786,7 @@ console.log(student.age);    // 输出 12
 
 ### 6.3  读取属性
 
-想要获取一个对象的数据属性和访问器属性，可以使用 Object.getOwnPropertyDescriptor() 方法，类似于其他语言中的反射机制。这个方法接收两个参数：属性所在的对象和要读取属性名称。沿用上面的例子，示例如下：
+想要获取一个对象的数据属性和访问器属性，可以使用 **Object.getOwnPropertyDescriptor()** 方法，类似于其他语言中的反射机制。这个方法接收两个参数：属性所在的对象和要读取属性名称。沿用上面的例子，示例如下：
 
 ```javascript
 var descriptor = Object.getOwnPropertyDescriptor(student, "age");

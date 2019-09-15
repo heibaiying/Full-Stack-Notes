@@ -1,5 +1,6 @@
 # JavaScript 基础
-<nav>
+
+<nav>
 <a href="#一概念简介">一、概念简介</a><br/>
 <a href="#二基本类型">二、基本类型</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-数值类型">2.1 数值类型</a><br/>
@@ -35,8 +36,8 @@ JavaScript 是一种专为与网页交互而设计的脚本语言，由以下三
 
 ECMAScript  提供了语言的核心功能，它定义了以下七种数据类型：
 
-- 六种基本数据类型：Undefined，Null，Boolean，Number，String，Symbol ( ES 6 新增 )；
-- 一种引用类型：统称为 Object 类型；具体又细分为  Object，Array，Date，RegExp，Function 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
+- 六种基本数据类型：`Undefined`，`Null`，`Boolean`，`Number`，`String`，`Symbol` ( ES 6新增 )；
+- 一种引用类型：统称为 Object 类型；具体又细分为 `Object`，`Array`，`Date`，`RegExp`，`Function` 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
 
 ## 二、基本类型
 
@@ -85,7 +86,7 @@ ECMAScript 支持使用科学计数法来表达数值：
 8e2    // 800
 ```
 
-**4. parseInt() \ parseFloat() **
+**4. parseInt() \ parseFloat()**
 
 parseInt 可以用于解析字符串并返回整数，parseFloat 用于解析字符串并返回浮点数：
 
@@ -99,7 +100,7 @@ parseFloat("12.2");     // 12.2
 parseInt("blue");       // NaN  NaN用于表示一个本来要返回数值的操作却未返回数值的情况
 ```
 
-**5. toFixed() **
+**5. toFixed()**
 
  toFixed 用于保留指定位数的小数，但需要注意的是其四舍五入的行为是不确定的：
 
@@ -837,7 +838,7 @@ console.log(person1.sayAge===person2.sayAge);     // false
 ## 参考资料
 
 1. 尼古拉斯·泽卡斯 . JavaScript高级程序设计（第3版）. 人民邮电出版社 . 2012-3-29
-2. [js中小数四舍五入和浮点数的研究](http://caibaojian.com/js-tofixed.html)
+2. [JS中小数四舍五入和浮点数的研究](http://caibaojian.com/js-tofixed.html)
 
 
 

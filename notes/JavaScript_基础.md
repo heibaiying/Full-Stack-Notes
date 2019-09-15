@@ -36,8 +36,8 @@ JavaScript 是一种专为与网页交互而设计的脚本语言，由以下三
 
 ECMAScript  提供了语言的核心功能，它定义了以下七种数据类型：
 
-- 六种基本数据类型：`Undefined`，`Null`，`Boolean`，`Number`，`String`，`Symbol` ( ES 6新增 )；
-- 一种引用数据类型：统称为 Object 类型；具体又细分为 `Object`，`Array`，`Date`，`RegExp`，`Function` 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
+- **六种基本数据类型**：`Undefined`，`Null`，`Boolean`，`Number`，`String`，`Symbol` ( ES 6新增 )；
+- **一种引用数据类型**：统称为 Object 类型；具体又细分为 `Object`，`Array`，`Date`，`RegExp`，`Function` 等类型。另外和 Java 语言类似，对于布尔，数值，字符串等基本类型，分别存在其对应的包装类型 Boolean，Number，String，但通常我们并不会使用到这些包装类型，只需要使用其基本类型即可。
 
 ## 二、基本类型
 
@@ -47,9 +47,9 @@ ECMAScript  提供了语言的核心功能，它定义了以下七种数据类�
 
 ECMAScript 中的 Number 支持以下三种常用进制：
 
-+ 十进制：正常数值就是十进制；
-+ 八进制：八进制字面值的第一位必须是零（0），然后是八进制数字序列（0～7）；
-+ 十六进制：十六进制字面值的前两位必须是 0x，后跟任意的十六进制数字（0～9 及 A～F）。 
++ **十进制**：正常数值就是十进制；
++ **八进制**：八进制字面值的第一位必须是零（0），然后是八进制数字序列（0～7）；
++ **十六进制**：十六进制字面值的前两位必须是 0x，后跟任意的十六进制数字（0～9 及 A～F）。 
 
 ```javascript
 console.log(56);     // 56
@@ -340,7 +340,7 @@ colors			// ["red", "blue", "green"]
 
 **4. 队列方法**
 
-CMAScript 的数组提供了类似栈的特性，能够实现先进先出：
+ECMAScript 的数组提供了类似栈的特性，能够实现先进先出：
 
 ```javascript
 colors.push("black","yellow");       // ["red", "blue", "green", "black", "yellow"]
@@ -746,11 +746,8 @@ for (var key in person) {
 访问器属性也有以下 4 个描述其行为的特性：
 
 + **Configurable**：表示能否对属性进行删除，修改等配置操作；对于直接在对象上定义的属性， 该值默认为 true。
-
 + **Enumerable**：表示该属性能否通过 for-in 循环返回；对于直接在对象上定义的属性， 该值默认为 true。
-
 + **Get**：在读取属性时调用的函数。默认值为 undefined。
-
 + **Set**：在写入属性时调用的函数。默认值为 undefined。 
 
 ```javascript

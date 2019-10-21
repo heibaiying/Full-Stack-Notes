@@ -29,6 +29,8 @@ tar -zxvf kibana-7.2.0-linux-x86_64.tar.gz -C /usr/app/
 修改安装目录下的 `config/elasticsearch.yml` 文件，修改内容如下：
 
 ```shell
+# 当前节点的名称
+node.name: node-1
 # 修改绑定地址，默认为本机地址，此时只能在本机访问ElasticSearch服务，想要所有主机都能访问，则修改为0.0.0.0
 network.host: 0.0.0.0
 http.port: 9200
@@ -86,7 +88,8 @@ root hard nofile 65536
 需要特别注意的是，处于安全的考虑，Elasticsearch 不允许使用 root 账户启动服务，所以启动时需要切换到其他用户。同时启动用户必须拥有 Elasticsearch 目录的访问权限，可以先使用`chown`命令授权后再使用`su`命令切换到对应用户，示例如下： 
 
 ```shell
- chown -R heibaiying:heibaiying /usr/app/elasticsearch-7.2.0/
+useradd heibaiying
+chown -R heibaiying:heibaiying /usr/app/elasticsearch-7.2.0/
 ```
 
 ### 1.5 启动验证

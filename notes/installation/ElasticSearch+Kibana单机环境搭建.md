@@ -11,6 +11,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-修改配置">2.1 修改配置</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-启动服务">2.2 启动服务</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-访问页面">2.3 访问页面</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-界面汉化">2.4 界面汉化</a><br/>
 </nav>
 
 ## 一、ElasticSearch 安装
@@ -137,3 +138,11 @@ nohup ./kibana  &
 kibana Web UI 的访问端口号为`5601`，出现以下页面则代表启动成功：
 
 <div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/kibana-web-ui.png"/> </div>
+
+### 2.4 界面汉化
+
+kibana 7.0 的界面支持中文显示，可以在 `conf/kibana.yml` 中增加如下选项来进行配置：
+
+```shell
+i18n.locale: "zh-CN"
+```

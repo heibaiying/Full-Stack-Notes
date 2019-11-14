@@ -236,7 +236,7 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 
 综合以上全部内容，这里给出一个分库分表的示例，其架构如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-mycat-分库分表实战.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-mycat-分库分表实战.png"/> </div>
 
 如上图所示，这里模拟的是一个电商数据库，并对其执行分库分表操作：
 

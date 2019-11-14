@@ -22,34 +22,34 @@
 
 ### MySQL
 
-+ [MySQL 核心概念](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_基础.md)
-+ [MySQL 备份详解](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_备份.md)
-+ [MySQL 二进制日志复制、GTID 复制与半同步复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_复制.md)
-+ [MySQL 高可用架构之 PXC 集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_PXC集群.md)
-+ [MyCat 读写分离与分库分表](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_Mycat中间件.md)
-+ [MySQL 查询性能分析之 Explain](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MySQL_EXPLAIN.md)
++ [MySQL 核心概念](notes/MySQL_基础.md)
++ [MySQL 备份详解](notes/MySQL_备份.md)
++ [MySQL 二进制日志复制、GTID 复制与半同步复制](notes/MySQL_复制.md)
++ [MySQL 高可用架构之 PXC 集群](notes/MySQL_PXC集群.md)
++ [MyCat 读写分离与分库分表](notes/MySQL_Mycat中间件.md)
++ [MySQL 查询性能分析之 Explain](notes/MySQL_EXPLAIN.md)
 
 ### Redis
 
-+ [Redis 基本数据类型和常用命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_数据类型和常用命令.md)
-+ [Redis AOF 和 RDB 持久化策略原理](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_持久化.md)
-+ [Redis 哨兵模式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_哨兵模式.md)
-+ [Reids 集群模式](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Redis_集群模式.md)
++ [Redis 基本数据类型和常用命令](notes/Redis_数据类型和常用命令.md)
++ [Redis AOF 和 RDB 持久化策略原理](notes/Redis_持久化.md)
++ [Redis 哨兵模式](notes/Redis_哨兵模式.md)
++ [Reids 集群模式](notes/Redis_集群模式.md)
 
 ### MongoDB
 
-+ [MongoDB 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MongoDB_基础.md)
-+ [MongoDB 索引](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MongoDB_索引.md)
-+ [MongoDB 聚合](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MongoDB_聚合.md)
-+ [MongoDB 复制](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MongoDB_复制.md)
-+ [MongoDB 分片](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/MongoDB_分片.md)
++ [MongoDB 基础](notes/MongoDB_基础.md)
++ [MongoDB 索引](notes/MongoDB_索引.md)
++ [MongoDB 聚合](notes/MongoDB_聚合.md)
++ [MongoDB 复制](notes/MongoDB_复制.md)
++ [MongoDB 分片](notes/MongoDB_分片.md)
 
 
 
 ## 📟 操作系统
 
-+ [Linux 常用 Shell 命令](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Linux_常用Shell命令.md)
-+ [Docker 基础](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Docker_基础.md)
++ [Linux 常用 Shell 命令](notes/Linux_常用Shell命令.md)
++ [Docker 基础](notes/Docker_基础.md)
 
 
 
@@ -91,9 +91,9 @@
 
 ### RabbitMQ
 
-- [RabbitMQ 核心概念](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_基础.md)
-- [RabbitMQ 客户端开发](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_客户端开发.md)
-- [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/RabbitMQ_高可用集群架构.md)
+- [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
+- [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
+- [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
 
 ### ZooKeeper 
 
@@ -105,7 +105,7 @@
 
 ### Nginx
 
-- [Nginx 基础之静态网站部署，负载均衡，动静分离](https://github.com/heibaiying/Full-Stack-Notes/blob/master/notes/Nginx_基础.md)
+- [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
 
 
 

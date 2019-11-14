@@ -44,7 +44,7 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它是一种兼具高可靠�
 
 
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/innodb-architecture.png"/> </div>
+<div align="center"> <img src="../pictures/innodb-architecture.png"/> </div>
 
 ### 1.2 MyISAM
 
@@ -119,19 +119,19 @@ mysql>  SELECT * FROM total;
 
 **平衡二叉树数据结构**：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/avl-tree.png"/> </div>
+<div align="center"> <img src="../pictures/avl-tree.png"/> </div>
 
 **红黑树数据结构**：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/red-black-tree.png"/> </div>
+<div align="center"> <img src="../pictures/red-black-tree.png"/> </div>
 
 **Btree 数据结构**：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/btree.png"/> </div>
+<div align="center"> <img src="../pictures/btree.png"/> </div>
 
 **B+ Tree 数据结构**
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/B+Trees.png"/> </div>
+<div align="center"> <img src="../pictures/B+Trees.png"/> </div>
 
 > 以上图片均通过数据结构可视化网站 [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) 自动生成，感兴趣的小伙伴也可自行尝试。
 
@@ -146,10 +146,10 @@ mysql>  SELECT * FROM total;
 
 对于 InnoDB ，因为主键索引是聚集索引，所以其叶子节点存储的就是实际的数据。而非主键索引存储则是主键的值 ：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-innodb-索引.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-innodb-索引.png"/> </div>
 对于 MyISAM，因为主键索引是非聚集索引，所以其叶子节点存储的只是指向数据位置的指针：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-myisam-索引.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-myisam-索引.png"/> </div>
 综上所述，B+ tree 普遍适用于范围查找，优化排序和分组等操作。B+ tree 的查找是基于字典序的，因此其适用的具体查询类型如下：
 
 + **全值匹配**：以索引为条件进行精确查找。如 `emp_no` 字段为索引，查询条件为 `emp_no = 10008`；
@@ -287,25 +287,25 @@ InnoDB 存储引擎完全支持 ACID 模型：
 
 一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-修改丢失.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-修改丢失.png"/> </div>
 
 **2. 脏读**
 
 在不同的事务下，一个事务读取到其他事务未提交的数据：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-脏读.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-脏读.png"/> </div>
 
 **3. 不可重复读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致对同一条数据两次读到的结果不一致：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-不可重复读.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-不可重复读.png"/> </div>
 
 **4.幻读**
 
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/mysql-幻读.png"/> </div>
+<div align="center"> <img src="../pictures/mysql-幻读.png"/> </div>
 
 ### 4.4 隔离级别
 

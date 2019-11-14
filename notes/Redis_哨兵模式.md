@@ -26,7 +26,7 @@
 - 在从节点启动时候加入 `--slaveof {masterHost} {masterPort}` 参数；
 - 直接在从节点上执行 `slaveof {masterHost} {masterPort}` 命令。 
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/redis主从复制.png"/> </div>
+<div align="center"> <img src="../pictures/redis主从复制.png"/> </div>
 主从节点复制关系建立后，可以使用 `info replication` 命令查看相关的复制状态。需要注意的是每个从节点只能有一个主节点，但主节点可以同时拥有多个从节点，复制行为是单向的，只能由主节点复制到从节点，因此从节点默认都是只读模式，即 `slave-read-only` 的值默认为`yes`。
 
 ### 1.2 断开复制关系
@@ -51,7 +51,7 @@ slaveof{newMasterIp} {newMasterPort}
 
 哨兵模式的主要作用在于它能够自动完成故障发现和故障转移，并通知客户端，从而实现高可用。哨兵模式通常由一组 Sentinel 节点和一组（或多组）主从复制节点组成，架构如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/redis哨兵模式.png"/> </div>
+<div align="center"> <img src="../pictures/redis哨兵模式.png"/> </div>
 
 ### 2.1 架构说明
 
@@ -180,15 +180,15 @@ redis-sentinel sentinel-26381.conf
 
 使用 `ps -ef | grep redis` 命令查看进程，此时输出应该如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/redis-sentinel-ps-ef.png"/> </div>
+<div align="center"> <img src="../pictures/redis-sentinel-ps-ef.png"/> </div>
 
 可以使用 `info replication` 命令查看 Redis 复制集的状态，此时输出如下。可以看到 6379 节点为 master 节点，并且有两个从节点，分别为 slave0 和 slave1，对应的端口为 6380 和 6381。
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/redis-info-replication.png"/> </div>
+<div align="center"> <img src="../pictures/redis-info-replication.png"/> </div>
 
 可以使用 `info Sentinel`  命令查看任意 Sentinel 节点的状态，从最后一句输出可以看到 Sentinel 节点已经感知到 6379 的 master 节点，并且也知道它有两个 slaves 节点；同时 Sentinel 节点彼此之间也感知到，共有 3 个 Sentinel 节点。
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/redis-sentinel-infomation.png"/> </div>
+<div align="center"> <img src="../pictures/redis-sentinel-infomation.png"/> </div>
 
 
 ## 参考资料

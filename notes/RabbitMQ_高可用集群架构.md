@@ -35,7 +35,7 @@
 
 
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-集群架构.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-集群架构.png"/> </div>
 这里对上面的集群架构做一下解释说明：
 
 首先一个基本的 RabbitMQ 集群不是高可用的，虽然集群共享队列，但在默认情况下，消息只会被路由到某一个节点的符合条件的队列上，并不会同步到其他节点的相同队列上。假设消息路由到 node1 的 my-queue 队列上，但是 node1 突然宕机了，那么消息就会丢失，想要解决这个问题，需要开启队列镜像，将集群中的队列彼此之间进行镜像，此时消息就会被拷贝到处于同一个镜像分组中的所有队列上。
@@ -142,7 +142,7 @@ rabbitmqctl set_cluster_name my_rabbitmq_cluster
 
 除了可以使用命令行外，还可以使用打开任意节点的 UI 界面进行查看，情况如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-集群模式.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-集群模式.png"/> </div>
 
 ### 2.5 配置镜像队列
 
@@ -174,7 +174,7 @@ rabbitmqctl set_policy ha-all "^ha\." '{"ha-mode":"all"}'
 
 配置完成后，可以通过 Web UI 界面查看任意队列的镜像状态，情况如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-镜像复制策略.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-镜像复制策略.png"/> </div>
 
 
 ### 2.6 节点下线
@@ -324,7 +324,7 @@ haproxy -f /etc/haproxy/haproxy.cfg
 
 启动后可以在监控页面进行查看，端口为设置的 8100，完整地址为：http://hadoop001:8100/stats，页面情况如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-haproxy.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-haproxy.png"/> </div>
 所有节点都为绿色，代表节点健康。此时证明 HAProxy 搭建成功，并已经对 RabbitMQ 集群进行监控。
 
 
@@ -505,10 +505,10 @@ systemctl start  keepalived
 
 启动后此时 hadoop001 为主节点，可以在 hadoop001 上使用 `ip a` 命令查看到虚拟 IP 的情况：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-keepalived-vip.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-keepalived-vip.png"/> </div>
 此时只有 hadoop001 上是存在虚拟 IP 的，而 hadoop002 上是没有的。
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-keepalived-vip2.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-keepalived-vip2.png"/> </div>
 
 ### 4.6 验证故障转移
 
@@ -520,7 +520,7 @@ systemctl stop keepalived
 
 此时再次使用 `ip a` 分别查看，可以发现 hadoop001 上的 VIP 已经漂移到 hadoop002 上，情况如下：
 
-<div align="center"> <img src="https://github.com/heibaiying/Full-Stack-Notes/blob/master/pictures/rabbitmq-keepalived-vip3.png"/> </div>
+<div align="center"> <img src="../pictures/rabbitmq-keepalived-vip3.png"/> </div>
 
 
 此时对外服务的 VIP 依然可用，代表已经成功地进行了故障转移。至此集群已经搭建成功，任何需要发送或者接受消息的客户端服务只需要连接到该 VIP 即可，示例如下：

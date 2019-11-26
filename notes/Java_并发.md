@@ -453,48 +453,6 @@ ReentrantLock 即支持公平锁也支持非公平锁，公平锁在调度时候
 private static ReentrantLock fairLock = new ReentrantLock(true);
 ```
 
-ReentrantLock 锁通常可以配合 `condition` 来使用，从而实现有条件的等待，示例如下：
-
-```java
-public class AwaitAndSignal {
-
-    private static ReentrantLock lock = new ReentrantLock();
-    private static Condition condition = lock.newCondition();
-
-    static class IncreaseTask implements Runnable {
-        @Override
-        public void run() {
-            try {
-                lock.lock();
-                String threadName = Thread.currentThread().getName();
-                System.out.println(threadName + "等待通知...");
-                condition.await();
-                System.out.println(threadName + "获得锁");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                lock.unlock();
-            }
-        }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Thread thread1 = new Thread(new IncreaseTask());
-        thread1.start();
-        Thread.sleep(2000);
-        // 必须要再次获取该重入锁，否则会抛出IllegalMonitorStateException异常
-        lock.lock();
-        condition.signal();
-        lock.unlock();
-    }
-}
-
-// 输出
-Thread-0等待通知...
-// 睡眠2秒...    
-Thread-0获得锁
-```
-
 ### 6.3  读写锁
 
 由于锁的排它性，导致多个线程无法以安全的方式并发地读取共享变量，这不利于提高系统的并发能力，因此产生了读写锁：
@@ -599,7 +557,154 @@ public class ReadWriteLock {
 
 ### 7.1 等待与通知
 
+为了支持多线程之间的协作，JDK 中提供了两个非常重要的方法：`wait()` 和 `notify()` ，这两个方法定义在 `Object` 类中，这意味着任何 Java 对象都可以调用者两个方法。如果一个线程调用了 `object.wait()` 方法，那么它就会进入该对象的等待队列中，这个队列中可能包含了多个线程，此时代表多个线程都在等待同一个对象；当 `object.notify()` 方法被调用时，它就会从这个等待队列中**随机**唤醒一个线程。
+
+需要特别注意的是在调用这两个方法时，它们都必须位于对应对象的 synchronzied 语句中，因为这两个对象在调用前都需要获得对应对象的监视器，过程如下：
+
+TODO
+
+使用示例如下：
+
+```java
+public class J3_WaitAndNotify {
+
+    private static final Object object = new Object();
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            synchronized (object) {
+                try {
+                    System.out.println("对象object等待");
+                    object.wait();
+                    System.out.println("线程1后续操作");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            synchronized (object) {
+                System.out.println("线程2开始操作");
+                System.out.println("对象object唤醒");
+                object.notify();
+            }
+        }).start();
+    }
+}
+
+// 输出
+对象object等待
+线程2开始操作
+对象object唤醒
+线程1后续操作
+```
+
+`notify()` 表示随机唤醒任意一个等待线程，如果想要唤醒所有等待线程，则可以使用 `notifyAll()` 方法：
+
+```java
+public class J5_NotifyAll {
+
+    private static final Object object = new Object();
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            synchronized (object) {
+                try {
+                    System.out.println("对象object在线程1等待");
+                    object.wait();
+                    System.out.println("线程1后续操作");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            synchronized (object) {
+                try {
+                    System.out.println("对象object在线程2等待");
+                    object.wait();
+                    System.out.println("线程2后续操作");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            synchronized (object) {
+                System.out.println("线程3开始操作");
+                System.out.println("对象object唤醒");
+                object.notifyAll();
+            }
+        }).start();
+    }
+}
+
+// 输出
+对象object在线程1等待
+对象object在线程2等待
+线程3开始操作
+对象object唤醒
+线程2后续操作
+线程1后续操作
+```
+
+在上面的示例中，由于有两个线程处于等待状态，所以 `notifyAll()` 的效果等价于调用 `notify()` 两次：
+
+```java
+object.notify();
+object.notify();
+```
+
 ### 7.2 条件变量
+
+综上所述可以使用 `wait()` 和 `notify()` 配合内部锁 synchronized 来实现线程间的等待与唤醒，如果你使用的是显示锁而不是内部锁，此时可以使用 Condition 来实现同样的等待唤醒效果。Condition 接口中定义了如下方法：
+
++ await()：
++ awaitUninterruptibly()：
+
+使用示例如下：
+
+```java
+public class AwaitAndSignal {
+
+    private static ReentrantLock lock = new ReentrantLock();
+    private static Condition condition = lock.newCondition();
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            try {
+                lock.lock();
+                String threadName = Thread.currentThread().getName();
+                System.out.println(threadName + "线程等待通知...");
+                condition.await();
+                System.out.println(threadName + "线程后续操作");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread1 = new Thread(new IncreaseTask());
+        thread1.start();
+        Thread.sleep(1000);
+        System.out.println("主线程开始操作");
+        lock.lock();
+        System.out.println("主线程唤醒");
+        condition.signal();
+        lock.unlock();
+    }
+}
+
+// 输出：
+Thread-0线程等待通知...
+主线程开始操作
+主线程唤醒
+Thread-0线程后续操作
+```
 
 ### 7.3 CountDownLatch
 

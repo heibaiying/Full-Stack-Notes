@@ -17,9 +17,9 @@ public class AwaitAndSignal {
 			try {
 				lock.lock();
 				String threadName = Thread.currentThread().getName();
-				System.out.println(threadName + "等待通知...");
+				System.out.println(threadName + "线程等待通知...");
 				condition.await();
-				System.out.println(threadName + "获得锁");
+				System.out.println(threadName + "线程后续操作");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} finally {
@@ -31,9 +31,10 @@ public class AwaitAndSignal {
 	public static void main(String[] args) throws InterruptedException {
 		Thread thread1 = new Thread(new IncreaseTask());
 		thread1.start();
-		Thread.sleep(2000);
-		// 必须要再次获取该重入锁，否则会抛出IllegalMonitorStateException异常
+		Thread.sleep(1000);
+		System.out.println("主线程开始操作");
 		lock.lock();
+		System.out.println("主线程唤醒");
 		condition.signal();
 		lock.unlock();
 	}

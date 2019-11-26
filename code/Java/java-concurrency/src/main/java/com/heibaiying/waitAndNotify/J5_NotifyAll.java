@@ -36,7 +36,6 @@ public class J5_NotifyAll {
 				System.out.println("对象object唤醒");
 				// 如果是object.notify()则是随机唤醒任意一个等待
 				object.notifyAll();
-
 			}
 		}).start();
 	}

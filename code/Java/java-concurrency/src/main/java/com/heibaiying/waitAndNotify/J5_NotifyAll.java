@@ -32,10 +32,11 @@ public class J5_NotifyAll {
 		}).start();
 		new Thread(() -> {
 			synchronized (object) {
+				System.out.println("线程3开始操作");
 				System.out.println("对象object唤醒");
 				// 如果是object.notify()则是随机唤醒任意一个等待
 				object.notifyAll();
-				System.out.println("线程3后续操作");
+
 			}
 		}).start();
 	}

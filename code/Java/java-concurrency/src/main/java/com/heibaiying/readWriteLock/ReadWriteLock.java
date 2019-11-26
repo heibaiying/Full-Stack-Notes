@@ -70,7 +70,7 @@ public class ReadWriteLock {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		// 耗时2秒，写锁是互斥的，但读锁是并行的
+		// 写锁是排它的，但读锁是共享的，耗时3秒左右
 		for (int j = 0; j < 2; j++) {
 			Thread thread = new Thread(new Write(writeLock, String.valueOf(j)));
 			thread.start();
@@ -81,7 +81,7 @@ public class ReadWriteLock {
 		}
 
 
-		// 使用重入锁时，读锁彼此之间也是互斥的
+		// 使用重入锁时耗时20秒左右
 		for (int j = 0; j < 2; j++) {
 			Thread thread = new Thread(new Write(reentrantLock, String.valueOf(j)));
 			thread.start();

@@ -231,7 +231,383 @@ int c = a + b;
 
 
 
-## 六、线程同步机制
+## 六、锁机制
+
+### 6.1  内部锁
+
+Java 平台中的任何一个对象都有着唯一一个与之相关联的锁，这种锁被称为监视器或内部锁，内部锁是一种非公平的排它锁，它能够保障原子性、可见性和有序性。内部锁通过 `synchronized` 关键字来实现，可以用于修饰方法以及代码块， 被修饰的方法称为同步方法，被修饰的代码块称为同步代码块。示例如下：
+
+线程不安全的示例：
+
+```java
+public class J1_ThreadUnsafe {
+
+    private static int i = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        IncreaseTask task = new IncreaseTask();
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+        thread1.start();
+        thread2.start();
+        // 等待线程结束再打印返回值
+        thread1.join();
+        thread2.join();
+        System.out.println(i);
+    }
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            for (int j = 0; j < 100000; j++) {
+                inc();
+            }
+        }
+
+        private void inc() {
+            i++;
+        }
+    }
+}
+```
+
+使用 synchronized 修饰 `inr()` 方法来保证线程安全：
+
+```java
+public class J2_SynchronizedSafe {
+
+    private static int i = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        // 两个线程调用的是同一个IncreaseTask实例，此时是线程安全的
+        IncreaseTask task = new IncreaseTask();
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+        thread1.start();
+        thread2.start();
+        //等待结束后 才打印返回值
+        thread1.join();
+        thread2.join();
+        //并打印返回值
+        System.out.println(i);
+    }
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            for (int j = 0; j < 100000; j++) {
+                inc();
+            }
+        }
+
+        private synchronized void inc() {
+            i++;
+        }
+    }
+}
+```
+
+通常我们把被修饰的方法体和代码块称为临界区，需要注意的是必须保证多线程锁住的是同一个临界区，否则依然是线程不安全的。如果将上面的创建线程的方法修改为如下所示，此时 synchronized 锁住的是不同对象的  `inc()` 方法，所以仍然是线程不安全的：
+
+```java
+Thread thread1 = new Thread(new IncreaseTask());
+Thread thread2 = new Thread(new IncreaseTask());
+```
+
+synchronized 除了可以修饰方法外，还可以用于修饰代码块，此时可以使用 this 关键字作为句柄，但仍然需要保证两个线程调用的是同一个 IncreaseTask 实例，示例如下：
+
+```java
+public class J3_SynchronizedSafe {
+
+    private static int i = 0;
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            for (int j = 0; j < 100000; j++) {
+                // 锁住的是同一个对象，此时也是线程安全的
+                synchronized (this) {
+                    i++;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        IncreaseTask task = new IncreaseTask();
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+        System.out.println(i);
+    }
+}
+```
+
+如果想要调用不同的 `IncreaseTask()` 实例，又想保证线程安全，此时可以使用同一个对象作为 synchronized 关键字的句柄，为避免竞态，作为句柄的对象通常使用 `private final` 关键字进行修饰，示例如下：
+
+```java
+public class J4_SynchronizedSafe {
+
+    private static final String s = "";
+
+    private static int i = 0;
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            for (int j = 0; j < 100000; j++) {
+                // 虽然调用的是不同的 IncreaseTask() 示例，但锁住的仍然是同一个对象，此时也是线程安全的
+                synchronized (s) {
+                    i++;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread1 = new Thread(new IncreaseTask());
+        Thread thread2 = new Thread(new IncreaseTask());
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+        System.out.println(i);
+    }
+}
+```
+
+### 6.2  显示锁
+
+显示锁是 `java.util.concurrent.locks.Lock` 接口的示例，该接口对显示锁进行了抽象，定义了如下方法：
+
++  **lock()**：获取锁；
++ **lockInterruptibly()**：如果当前线程未被中断，则获取锁；
++ **tryLock()**：仅在调用时锁为空闲状态才获取该锁；
++ **tryLock(long time, TimeUnit unit)**：如果锁在给定的等待时间内存在空闲，并且当前线程未被中断，则获取锁；
++ **unlock()**：释放锁；
++ **newCondition()**：返回绑定到此 Lock 实例的新的 Condition 实例。
+
+`java.util.concurrent.locks.ReentrantLock` 类是 `Lock` 接口的默认实现，它是一种可重入锁，示例如下：
+
+```java
+/**
+ * 利用ReentrantLock实现线程安全
+ */
+public class J1_ThreadSafe {
+
+    private static ReentrantLock reentrantLock = new ReentrantLock();
+    private static Integer i = 0;
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            for (int j = 0; j < 100000; j++) {
+                try {
+                    reentrantLock.lock();
+                    i++;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    reentrantLock.unlock();
+                }
+            }
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(new IncreaseTask());
+            Thread thread2 = new Thread(new IncreaseTask());
+            thread1.start();
+            thread2.start();
+            thread1.join();
+            thread2.join();
+            System.out.println(i);
+        }
+    }
+}
+```
+
+ReentrantLock 是一种可重入的锁， 它能够对共享资源进行重复加锁，即持有该锁的线程再次获取该锁时不会被阻塞，但解锁次数与加锁次数必须要保持一致，此时才能完全解锁：
+
+```java
+try {
+    reentrantLock.lock();
+    reentrantLock.lock();
+    reentrantLock.lock();
+    i++;
+} catch (Exception e) {
+    e.printStackTrace();
+} finally {
+    reentrantLock.unlock();
+    reentrantLock.unlock();
+    reentrantLock.unlock();
+}
+```
+
+ReentrantLock 即支持公平锁也支持非公平锁，公平锁在调度时候往往需要频繁切换上下文来保证在等待时间上的公平性，所以默认的 ReentrantLock 锁是非公平的，如果想要使用公平锁，可以在创建时进行指定：
+
+```java
+// 参数为true,代表使用公平锁
+private static ReentrantLock fairLock = new ReentrantLock(true);
+```
+
+ReentrantLock 锁通常可以配合 `condition` 来使用，从而实现有条件的等待，示例如下：
+
+```java
+public class AwaitAndSignal {
+
+    private static ReentrantLock lock = new ReentrantLock();
+    private static Condition condition = lock.newCondition();
+
+    static class IncreaseTask implements Runnable {
+        @Override
+        public void run() {
+            try {
+                lock.lock();
+                String threadName = Thread.currentThread().getName();
+                System.out.println(threadName + "等待通知...");
+                condition.await();
+                System.out.println(threadName + "获得锁");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread1 = new Thread(new IncreaseTask());
+        thread1.start();
+        Thread.sleep(2000);
+        // 必须要再次获取该重入锁，否则会抛出IllegalMonitorStateException异常
+        lock.lock();
+        condition.signal();
+        lock.unlock();
+    }
+}
+
+// 输出
+Thread-0等待通知...
+// 睡眠2秒...    
+Thread-0获得锁
+```
+
+### 6.3  读写锁
+
+由于锁的排它性，导致多个线程无法以安全的方式并发地读取共享变量，这不利于提高系统的并发能力，因此产生了读写锁：
+
++ **读锁**：读锁是共享的，可以被多个线程所持有，即一个线程持有读锁时并不妨碍其他线程获得相应锁的读锁；
++ **写锁**：写锁是独占的，一个线程持有写锁时，其他线程无法获取相应锁的写锁或读锁。
+
+基于读写锁的特性，其非常适合于读多写少的场景，示例如下：
+
+```java
+public class ReadWriteLock {
+
+    // 可重入锁
+    private static ReentrantLock reentrantLock = new ReentrantLock();
+    // 读写锁
+    private static ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    // 读锁
+    private static ReentrantReadWriteLock.ReadLock readLock = readWriteLock.readLock();
+    // 写锁
+    private static ReentrantReadWriteLock.WriteLock writeLock = readWriteLock.writeLock();
+
+    // 待赋值的变量
+    private static String i = "";
+
+    //写方法
+    static class Write implements Runnable {
+
+        private Lock lock;
+        private String value;
+
+        Write(Lock lock, String value) {
+            this.lock = lock;
+            this.value = value;
+        }
+
+        @Override
+        public void run() {
+            try {
+                lock.lock();
+                Thread.sleep(1000);
+                i = value;
+                System.out.println(Thread.currentThread().getName() + "写入值" + i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    //读方法
+    static class Read implements Runnable {
+
+        private Lock lock;
+
+        Read(Lock lock) {
+            this.lock = lock;
+        }
+
+        @Override
+        public void run() {
+            try {
+                lock.lock();
+                Thread.sleep(1000);
+                System.out.println(Thread.currentThread().getName() + "读取到值" + i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // 写锁是排它的，但读锁是共享的，耗时3秒左右
+        for (int j = 0; j < 2; j++) {
+            Thread thread = new Thread(new Write(writeLock, String.valueOf(j)));
+            thread.start();
+        }
+        for (int j = 0; j < 18; j++) {
+            Thread thread = new Thread(new Read(readLock));
+            thread.start();
+        }
+
+
+        // 使用重入锁时耗时20秒左右
+        for (int j = 0; j < 2; j++) {
+            Thread thread = new Thread(new Write(reentrantLock, String.valueOf(j)));
+            thread.start();
+        }
+        for (int j = 0; j < 18; j++) {
+            Thread thread = new Thread(new Read(reentrantLock));
+            thread.start();
+        }
+    }
+}
+```
+
+## 七、线程间的协作
+
+### 7.1 等待与通知
+
+### 7.2 条件变量
+
+### 7.3 CountDownLatch
+
+### 7.4 CyclicBarrier
+
+### 7.5 Semaphore
+
+
 
 
 

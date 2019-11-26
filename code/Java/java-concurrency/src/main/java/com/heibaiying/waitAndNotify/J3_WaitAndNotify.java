@@ -21,9 +21,9 @@ public class J3_WaitAndNotify {
 		}).start();
 		new Thread(() -> {
 			synchronized (object) {
+				System.out.println("线程2开始操作");
 				System.out.println("对象object唤醒");
 				object.notify();
-				System.out.println("线程2后续操作");
 			}
 		}).start();
 	}

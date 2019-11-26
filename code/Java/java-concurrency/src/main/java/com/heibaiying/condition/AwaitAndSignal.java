@@ -32,6 +32,7 @@ public class AwaitAndSignal {
 		Thread thread1 = new Thread(new IncreaseTask());
 		thread1.start();
 		Thread.sleep(2000);
+		// 必须要再次获取该重入锁，否则会抛出IllegalMonitorStateException异常
 		lock.lock();
 		condition.signal();
 		lock.unlock();

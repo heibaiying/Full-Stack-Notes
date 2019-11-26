@@ -8,8 +8,9 @@ public class J1_ThreadUnsafe {
 	private static int i = 0;
 
 	public static void main(String[] args) throws InterruptedException {
-		Thread thread1 = new Thread(new IncreaseTask());
-		Thread thread2 = new Thread(new IncreaseTask());
+		IncreaseTask task = new IncreaseTask();
+		Thread thread1 = new Thread(task);
+		Thread thread2 = new Thread(task);
 		thread1.start();
 		thread2.start();
 		// 等待线程结束再打印返回值

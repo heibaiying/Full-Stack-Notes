@@ -33,12 +33,13 @@ public class J2_ScheduledTask {
 	}
 
 	public static void main(String[] args) {
+		// 为避免相互间的影响，以下各种场景最好分别测试：
 		ScheduledExecutorService pool = Executors.newScheduledThreadPool(10);
 		// 只执行一次
 		pool.schedule(new Task("schedule"), 2, TimeUnit.SECONDS);
-		// 指定2秒为固定周期执行，如果项目执行耗时5秒，则项目结束后立马执行下一次任务，所以输出的时间间隔为5秒
+		// 指定2秒为固定周期执行，因为项目执行耗时5秒，此时项目结束会立马执行下一次任务，所以输出的时间间隔为5秒
 		pool.scheduleAtFixedRate(new Task("FixedRate"), 0, 2, TimeUnit.SECONDS);
-		// 总是在上一次项目结束后间隔指定周期执行，所以项目耗时5秒，还需要间隔2秒执行，所以输出的时间间隔为7秒
+		// 总是在上一次项目结束后间隔指定周期执行，因为项目耗时5秒，还需要间隔2秒执行，所以输出的时间间隔为7秒
 		pool.scheduleWithFixedDelay(new Task("WithFixedDelay"), 0, 2, TimeUnit.SECONDS);
 		// pool.shutdown();
 	}

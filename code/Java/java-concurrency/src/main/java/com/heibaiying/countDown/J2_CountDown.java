@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class J2_CountDown {
 
 	private static int number = 100;
+	// 指定计数器的初始值
 	private static CountDownLatch latch = new CountDownLatch(number);
 	private static AtomicInteger integer = new AtomicInteger(0);
 
@@ -19,7 +20,7 @@ public class J2_CountDown {
 				// 假设这是一个耗时的任务
 				Thread.sleep(3000);
 				integer.incrementAndGet();
-				// 计数减一
+				// 计数器减1
 				latch.countDown();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -33,8 +34,8 @@ public class J2_CountDown {
 		for (int i = 0; i < number; i++) {
 			executorService.submit(task);
 		}
+		// 等待计数器为0时唤醒所有等待的线程
 		latch.await();
-		// 会等待所有任务执行完成再输出
 		System.out.println("integer：" + integer);
 		executorService.shutdown();
 	}

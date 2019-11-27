@@ -4,6 +4,7 @@ import java.util.concurrent.Semaphore;
 
 public class J1_Semaphore {
 
+	// 限制并发访问的线程的数量为5
 	private static Semaphore semaphore = new Semaphore(5);
 
 	static class IncreaseTask implements Runnable {

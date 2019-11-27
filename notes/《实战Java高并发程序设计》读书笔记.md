@@ -60,8 +60,7 @@
 
 + `Thread.interrupt() `是一个实例方法，它通知目标线程被中断，也就是设置中断标志位；
 + `Thread.isInterrupted()`也是实例方法，判断当前线程是否有被中断（通过检查中断标志位）；
-
-- `Thread.interrupted()`是静态方法：用来判断当前线程的中断状态，但同时会清除当前线程的中断标志位状态。
++ `Thread.interrupted()`是静态方法：用来判断当前线程的中断状态，同时会清除当前线程中断标志位的状态。
 
 ```java
 // Thread 类
@@ -1180,7 +1179,6 @@ public class Test {
 ### 3.2 线程池
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/Executors.png"/> </div></br>
-
 #### 3.2.1 JDK对线程池的支持
 
 **newFixedThreadPool()方法**：该方法返回一个固定线程数量的线程池。该线程池中的线程数量始终不变。当有一个新的任务提交时，线程池中若有空闲的线程，则立即执行。若没有，则新的任务会被暂时存在一个任务队列中，待有线程空闲时，便处理在任务队列中的任务。
@@ -1189,7 +1187,7 @@ public class Test {
 
 **newCachedThreadPool()方法**：根据实际情况动态调整线程数量。
 
-**newSingleThreadScheduledExecutor()方法**：该方法返回一个ScheduledExecutorService对象，线程池大小为1。SeheduledExectorService接口在ExecutorService接口之上扩展了在给定时间执行某任务的功能，如在某个固定的延时之后执行，或者周期性执行某个任务。
+**newSingleThreadScheduledExecutor()方法**：该方法返回一个ScheduledExecutorService对象，线程池大小为 1。SeheduledExectorService接口在ExecutorService接口之上扩展了在给定时间执行某任务的功能，如在某个固定的延时之后执行，或者周期性执行某个任务。
 
 **newScheduledThreadPool()方法**：该方法也返回一个ScheduledExecutorService对象，但该线程池可以指定线程数量。
 
@@ -1401,9 +1399,7 @@ public class Test {
 
 ##### 3.合理优化线程池的数量
 
-<div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/合理线程池数量.png"/> </div></br>
-
-
+<div align="center"> <img src="../pictures/合理线程池数量.png"/> </div></br>
 
 #### 3.2.3 Fork/Join 框架
 
@@ -1631,7 +1627,6 @@ CAS的全称是Compare And Swap 即比较交换，其算法核心思想如下
 如果V值等于E值，则将V的值设为N。若V值和E值不同，则说明已经有其他线程做了更新，则当前线程什么都不做。通俗的理解就是CAS操作需要我们提供一个期望值，当期望值与当前线程的变量值相同时，说明还没线程修改该值，当前线程可以进行修改，也就是执行CAS操作，但如果期望值与当前线程不符，则说明该值已被其他线程修改，此时不执行更新操作，但可以选择重新读取该变量再尝试再次修改该变量，也可以放弃操作。
 
 <div align="center"> <img src="https://github.com/heibaiying/LearningNotes/blob/master/pictures/原子包.png"/> </div></br>
-
 ```java
 // 原子类
 public class Test {

@@ -1111,7 +1111,7 @@ public class J2_ScheduledTask {
     public static void main(String[] args) {
         // 为避免相互间的影响，以下各种场景最好分别测试：
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(10);
-        // 只执行一次
+        // 任务只会被执行一次
         pool.schedule(new Task("schedule"), 2, TimeUnit.SECONDS);
         // 指定2秒为固定周期执行，因为项目执行耗时5秒，此时项目结束会立马执行下一次任务，所以输出的时间间隔为5秒
         pool.scheduleAtFixedRate(new Task("FixedRate"), 0, 2, TimeUnit.SECONDS);
@@ -1123,9 +1123,13 @@ public class J2_ScheduledTask {
 }
 ```
 
-### 8.3  
+### 8.3  线程池内部实现
 
 ## 九、并发容器
+
+## 十、无锁并行
+
+## 十一、Future
 
 
 

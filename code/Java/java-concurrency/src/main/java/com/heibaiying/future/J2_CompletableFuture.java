@@ -26,15 +26,16 @@ public class J2_CompletableFuture {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
+		int intermediateResult;
 		CompletableFuture<Integer> future = new CompletableFuture<>();
-		System.out.println("主线程开始计算");
+		// 启动子线程
 		new Thread(new Compute(future)).start();
-		int i = 0;
-		for (int j = 0; j < 100; j++) {
-			i = i + j;
-		}
+		System.out.println("启动主线程");
 		Thread.sleep(2000);
 		System.out.println("主线程计算完成");
-		future.complete(i);
+		// 假设主线程计算结果为 100
+		intermediateResult = 100;
+		// 传递主线程的计算结果给子线程
+		future.complete(intermediateResult);
 	}
 }

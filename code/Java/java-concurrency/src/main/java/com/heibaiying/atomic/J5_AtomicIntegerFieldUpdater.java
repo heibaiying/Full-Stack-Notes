@@ -31,6 +31,7 @@ public class J5_AtomicIntegerFieldUpdater {
 		CountDownLatch latch = new CountDownLatch(number);
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		Candidate candidate = new Candidate("候选人", 0);
+		// 使用字段更新型来保证其线程安全
 		AtomicIntegerFieldUpdater<Candidate> fieldUpdater = AtomicIntegerFieldUpdater.newUpdater(Candidate.class, "score");
 		for (int i = 0; i < number; i++) {
 			executorService.execute(new Task(latch, candidate, fieldUpdater));

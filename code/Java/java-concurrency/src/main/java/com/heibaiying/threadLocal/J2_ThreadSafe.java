@@ -23,9 +23,11 @@ public class J2_ThreadSafe {
 		@Override
 		public void run() {
 			try {
+				// 如果当前线程中不存在该值，则创建一个
 				if (threadLocal.get() == null) {
 					threadLocal.set(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 				}
+				// 使用线程私有的SimpleDateFormat
 				Date parse = threadLocal.get().parse("2018-08-08 08:08:08");
 				System.out.println(parse);
 				atomicInteger.incrementAndGet();

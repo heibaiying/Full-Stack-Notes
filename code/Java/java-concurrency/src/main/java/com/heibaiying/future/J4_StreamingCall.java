@@ -38,6 +38,6 @@ public class J4_StreamingCall {
 			.thenApply(J4_StreamingCall::multi)
 			.thenAccept(J4_StreamingCall::accept)   //值在这一步被消费掉了
 			.thenAccept(x -> System.out.println("运算结果:" + x));
-		future.get(); //惰性求值，如果缺少这一步，不会有任何输出
+		future.get(); //类似于流式计算的惰性求值，如果缺少这一步，不会有任何输出
 	}
 }

@@ -1,5 +1,4 @@
-package com.heibaiying.creational.SimpleFactory;
-
+package com.heibaiying.creational.factory_method;
 
 public class HuaweiPhone extends Phone {
 	public void call(String phoneNum) {

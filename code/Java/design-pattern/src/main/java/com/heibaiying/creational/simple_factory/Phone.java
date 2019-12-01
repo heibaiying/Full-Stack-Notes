@@ -1,8 +1,5 @@
-package com.heibaiying.creational.SimpleFactory;
+package com.heibaiying.creational.simple_factory;
 
-/**
- * 手机
- */
 public abstract class Phone {
 	public abstract void call(String phoneNum);
 }

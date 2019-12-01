@@ -1,5 +1,4 @@
-package com.heibaiying.creational.SimpleFactory;
-
+package com.heibaiying.creational.simple_factory;
 
 public class PhoneFactory {
 

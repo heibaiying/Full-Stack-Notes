@@ -1,7 +1,6 @@
-package com.heibaiying.creational.SimpleFactory;
+package com.heibaiying.creational.simple_factory;
 
-
-public class Test {
+public class ZTest {
 	public static void main(String[] args) {
 		PhoneFactory phoneFactory = new PhoneFactory();
 		phoneFactory.getPhone("xiaomi").call("123");

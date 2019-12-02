@@ -14,15 +14,10 @@ public class PhoneFactory {
 	public Phone getPhone(Class<? extends Phone> phoneClass) {
 		try {
 			return (Phone) Class.forName(phoneClass.getName()).newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 
 }

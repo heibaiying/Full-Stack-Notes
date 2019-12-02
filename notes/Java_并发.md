@@ -957,7 +957,7 @@ public class J5_AtomicIntegerFieldUpdater {
 
 需要特别注意的是在调用这两个方法时，它们都必须位于对应对象的 synchronzied 语句中，因为这两个方法在调用前都需要获得对应对象的监视器（内部锁），过程如下：
 
-TODO
+![object-wait-notify-process](D:\Full-Stack-Notes\pictures\object-wait-notify-process.png)
 
 使用示例如下：
 

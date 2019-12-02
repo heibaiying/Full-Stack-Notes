@@ -10,6 +10,7 @@ public class ReflectionDamage {
 		Constructor<HungrySingleton> constructor = HungrySingleton.class.getDeclaredConstructor();
 		constructor.setAccessible(true);
 		HungrySingleton hungrySingleton = constructor.newInstance();
-		System.out.println(hungrySingleton);
+		HungrySingleton instance = HungrySingleton.getInstance();
+		System.out.println(hungrySingleton == instance);
 	}
 }

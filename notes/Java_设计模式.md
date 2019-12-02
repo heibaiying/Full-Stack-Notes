@@ -32,6 +32,8 @@
 
 **总结**：开闭原则是总纲，它告诉我们要对扩展开放，对修改关闭；里氏替换原则告诉我们不要破坏继承体系；依赖倒置原则告诉我们要面向接口编程；单一职责原则告诉我们实现类要职责单一；接口隔离原则告诉我们在设计接口的时候要精简单一；迪米特法则告诉我们要降低耦合度；合成复用原则告诉我们要优先使用组合或者聚合关系复用，少用继承关系复用。
 
+
+
 # 创建型
 
 ## 1. 单例模式
@@ -66,18 +68,18 @@ public class HungrySingleton implements Serializable {
 ```java
 public class StaticInnerClassHungrySingleton {
 
-	private static class InnerClass {
-		private static StaticInnerClassHungrySingleton instance = new StaticInnerClassHungrySingleton();
-	}
+    private static class InnerClass {
+        private static StaticInnerClassHungrySingleton instance = new StaticInnerClassHungrySingleton();
+    }
 
-     // 获取单例对象
-	public static StaticInnerClassHungrySingleton getInstance() {
-		return InnerClass.instance;
-	}
-    
     // 确保构造器私有
-	private StaticInnerClassHungrySingleton() {
-	}
+    private StaticInnerClassHungrySingleton() {}
+
+    // 获取单例对象
+    public static StaticInnerClassHungrySingleton getInstance() {
+        return InnerClass.instance;
+    }
+
 }
 ```
 
@@ -85,7 +87,7 @@ public class StaticInnerClassHungrySingleton {
 
 ### 1.2 懒汉式单例
 
-懒汉式单例的思想在于在需要使用单例对象时再进行创建，如果对象存在则直接返回，如果对象不存在则创建后返回，示例如下：
+懒汉式单例的思想在于在需要使用单例对象时才进行创建，如果对象存在则直接返回，如果对象不存在则创建后返回，示例如下：
 
 ```java
 public class LazySingletonUnsafe {
@@ -134,6 +136,7 @@ public class DoubleCheckLazySingletonSafe {
     private DoubleCheckLazySingletonSafe() {
     }
 
+    // 双重检查
     public static DoubleCheckLazySingletonSafe getInstance() {
         if (instance == null) {
             synchronized (DoubleCheckLazySingletonSafe.class) {
@@ -158,7 +161,7 @@ public class DoubleCheckLazySingletonSafe {
 如果没有禁止指令重排序，则 2 ，3 步可能会发生指令重排序，这在单线程下是没有问题的，也符合 As-If-Serial 原则，但是如果在多线程下就会出现线程不安全的问题：
 
 ```java
-// 2. 由于线程1已经将变量指向内存地址，所以其他线程判断instance不为空，但instance可能尚未初始化完成
+// 2. 由于线程1已经将变量指向内存地址，所以其他线程判断instance不为空，进而直接获取，但instance可能尚未初始化完成
 if (instance == null) { 
     synchronized (DoubleCheckLazySingletonSafe.class) {
         if (instance == null) {
@@ -174,9 +177,212 @@ return instance;
 
 ### 1.3  使用序列化破坏单例
 
+饿汉式单例和双重检查锁的懒汉式单例都是线程安全的，都能满足日常的开发需求，但如果你是类库的开发者，为了防止自己类库中的单例在调用时被有意或无意地破坏，你还需要考虑单例模式写法安全。其中序列化和反射攻击是两种常见的破坏单例的方式，示例如下：
+
+```java
+public class SerializationDamage {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        HungrySingleton instance = HungrySingleton.getInstance();
+        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("SingletonFile"));
+        outputStream.writeObject(instance);
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File("SingletonFile")));
+        HungrySingleton newInstance = (HungrySingleton) inputStream.readObject();
+        System.out.println(instance == newInstance); // false
+    }
+}
+```
+
+将 HungrySingleton 实现 Serializable 接口后，使用上面的代码将对象序列化写入文件，然后再反序列获取，你会发现两次得到的不是一个对象，这就代表单例模式受到了序列化和反序列化的破坏。想要解决这个问题，需要在对应的单例类中定义 `readResolve()` 方法：
+
+```java
+public class HungrySingleton implements Serializable {
+    ......
+	private Object readResolve() {
+		return instance;
+	}
+    ......
+}
+```
+
+此时在反序列化时该方法就会被调用来返回对应类的实例，对应的 ObjectInputStream 类的源码如下：
+
+```java
+  // 在本用例中，readObject在内部最终调用的是readOrdinaryObject方法
+private Object readOrdinaryObject(boolean unshared) throws IOException{
+       .......
+        if (obj != null && handles.lookupException(passHandle) == null &&
+            desc.hasReadResolveMethod()) //如果对应的对象中有readResolve方法
+        {
+            // 则通过反射调用该方法来获取对应的实例对象
+            Object rep = desc.invokeReadResolve(obj);
+            ........
+           handles.setObject(passHandle, obj = rep);
+        }
+        return obj;
+    }
+```
+
 ### 1.4 使用反射破坏单例
 
+使用反射也可以破坏单例模式，并且由于 Java 的反射功能过于强大，这种破坏几乎是无法规避的，示例如下：
+
+```java
+public class ReflectionDamage {
+    public static void main(String[] args) throws Exception {
+        Constructor<HungrySingleton> constructor = HungrySingleton.class.getDeclaredConstructor();
+        // 获取私有构造器的访问权限
+        constructor.setAccessible(true);
+        HungrySingleton hungrySingleton = constructor.newInstance();
+        HungrySingleton instance = HungrySingleton.getInstance();
+        System.out.println(hungrySingleton == instance); // false
+    }
+}
+```
+
+即便在创建单例对象时将构造器声明为私有，此时仍然可以通过反射获取，此时单例模式就被破坏了。如果你采用的是饿汉式单例，此时可以通过如下的代码来规避这种破坏：
+
+```java
+public class HungrySingleton implements Serializable {
+
+	private static final HungrySingleton instance;
+
+	static {
+		instance = new HungrySingleton();
+	}
+
+    // 由于instance在类创建时就已经初始化完成，所以当使用反射调用构造器时就会抛出自定义的RuntimeException异常
+	private HungrySingleton() {
+		if (instance != null) {
+			throw new RuntimeException("单例模式禁止反射调用");
+		}
+	}
+
+	......
+}
+```
+
+以上是饿汉式单例防止反射攻击的办法，如果你使用的是懒汉式单例，此时由于无法知道对象何时会被创建，并且反射功能能够获取到任意字段，方法，构造器的访问权限，所以此时没有任何方法能够规避掉反射攻击。
+
+那么有没有一种单例模式能够在保证线程安全，还能够防止序列化和反射功能呢？在 Java 语言中，可以通过枚举式单例来实现。
+
 ### 1.5  枚举式单例
+
+使用枚举实现单例的示例如下：
+
+```java
+public enum EnumInstance {
+
+	INSTANCE;
+
+	private String field;
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public static EnumInstance getInstance() {
+		return INSTANCE;
+	}
+}
+```
+
+想要实现一个单例枚举，对应的单例类必须要使用 enum 修饰，其余的字段声明（如：field）, 方法声明（如：setField）都和正常的类一样。首先枚举类是线程安全的，这点可以使用反编译工具 Jad 对类的 class 文件进行反编译来验证：
+
+```java
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   EnumInstance.java
+
+package com.heibaiying.creational.singleton;
+
+// 不可变的类
+public final class EnumInstance extends Enum
+{
+
+    public static EnumInstance[] values()
+    {
+        return (EnumInstance[])$VALUES.clone();
+    }
+
+    public static EnumInstance valueOf(String name)
+    {
+        return (EnumInstance)Enum.valueOf(com/heibaiying/creational/singleton/EnumInstance, name);
+    }
+
+    // 私有构造器，枚举类没有无参构造器，Enum中只定义了Enum(String name, int ordinal) 构造器
+    private EnumInstance(String s, int i)
+    {
+        super(s, i);
+    }
+
+    // 自定义的方法
+    public String getField()
+    {
+        return field;
+    }
+
+    public void setField(String field)
+    {
+        this.field = field;
+    }
+
+    public static EnumInstance getInstance()
+    {
+        return INSTANCE;
+    }
+
+    // 静态不可变的实例对象
+    public static final EnumInstance INSTANCE;
+    // 自定义字段
+    private String field;
+    private static final EnumInstance $VALUES[];
+
+    // 在静态代码中进行初始化
+    static 
+    {
+        INSTANCE = new EnumInstance("INSTANCE", 0);
+        $VALUES = (new EnumInstance[] {
+            INSTANCE
+        });
+    }
+}
+```
+
+通过反编译工具可以看到其和饿汉式单例模式类似，因此它也是线程安全的。另外它也能防止序列化攻击和反射攻击：
+
+```java
+public class EnumInstanceTest {
+	public static void main(String[] args) throws Exception {
+		// 序列化攻击
+		EnumInstance instance = EnumInstance.getInstance();
+		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("EnumSingletonFile"));
+		outputStream.writeObject(instance);
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File("EnumSingletonFile")));
+		EnumInstance newInstance = (EnumInstance) inputStream.readObject();
+		System.out.println(instance == newInstance);
+		// 反射攻击，Enum类中只有一个两个参数的构造器：Enum(String name, int ordinal)
+		Constructor<EnumInstance> constructor = EnumInstance.class.getDeclaredConstructor(String.class, int.class);
+		constructor.setAccessible(true);
+		EnumInstance enumInstance = constructor.newInstance("name", 0);
+		System.out.println(instance == enumInstance);
+	}
+}
+```
+
+对于序列化与反序列化，枚举类单例能保证两次拿到的都是同一个实例。对于反射攻击，枚举类单例会抛出明确的异常：
+
+```java
+Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflectively create enum objects
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:417)
+	at com.heibaiying.creational.singleton.EnumInstanceTest.main(EnumInstanceTest.java:18)
+```
+
+
 
 ## 2. 简单工厂模式
 
@@ -242,9 +448,9 @@ public class ZTest {
 }
 ```
 
-### 2.3  缺陷
+### 2.3  优缺点
 
-简单工厂的缺陷在于其违背了开闭原则。在简单工厂模式下，如果想要增加新的产品，就需要修改简单工厂中的判断逻辑，这就违背了开闭原则，因此其并不属于 GOF 经典的 23 种设计模式。在 Java 语言中，可以通过泛型来尽量规避这一缺陷，此时需要将创建产品的方法修改为如下所示：
+简单工厂的优点在于其向用户屏蔽了对象创建过程，使得用户可以不必关注具体的创建细节，其缺陷在于违背了开闭原则。在简单工厂模式下，如果想要增加新的产品，就需要修改简单工厂中的判断逻辑，这就违背了开闭原则，因此其并不属于 GOF 经典的 23 种设计模式。在 Java 语言中，可以通过泛型来尽量规避这一缺陷，此时需要将创建产品的方法修改为如下所示：
 
 ```java
 public Phone getPhone(Class<? extends Phone> phoneClass) {
@@ -334,17 +540,19 @@ public class ZTest {
 }
 ```
 
+### 3.3  优点
+
+工厂模式的优点在于良好的封装性和可扩展性，如果想要增加新的产品（如：OppoPhone），只需要增加对应的工厂类即可，同时和简单工厂一样，它也向用户屏蔽了不相关的细节，使得系统的耦合度得以降低。
+
 ## 4. 抽象工厂模式
 
 ### 4.1  定义
 
-提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的实现类。
+提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的实现类。抽象工厂模式是工厂模式的升级版本，它适用于存在多个产品的情况。接着上面的例子，假设每个工厂不仅生产手机，而且还需要生产对应的充电器，这样才能算一个可以出售的产品，相关的代码示例如下：
 
 ### 4.2  实现
 
 ![23_abstract_factory](../pictures/23_abstract_factory.png)
-
-假设工厂除了生产手机外，也生产手机的充电器，此时抽象工厂的示例如下：
 
 充电器抽象类：
 
@@ -423,6 +631,10 @@ public class ZTest {
 	}
 }
 ```
+
+### 4.3 优缺点
+
+抽象工厂模式继承了工厂模式的优点，能用于存在多个产品的情况，但其对应的产品族必须相对固定，假设我们现在认为 手机 + 充电器 + 耳机 才算一个可以对外出售的产品，则上面所有的工厂类都需要更改，但显然不是所有的手机都有配套的耳机，手机 + 充电器 这个产品族是相对固定的。
 
 ## 5. 构建者模式
 
@@ -506,7 +718,7 @@ public class XiaomiBuilder extends Builder {
 }
 ```
 
-定义管理者类：
+定义管理者类（也称为导演类），由它来驱使具体的构建者按照指定的顺序完成构建过程：
 
 ```java
 public class Manager {
@@ -541,3 +753,7 @@ public class ZTest {
 Phone(processor=海思麒麟处理器, camera=莱卡摄像头, screen=OLED)
 Phone(processor=高通骁龙处理器, camera=索尼摄像头, screen=OLED)
 ```
+
+### 5.3 优点
+
+建造者模式的优点在于将复杂的构建过程拆分为多个独立的单元，在保证拓展性的基础上也保证了良好的封装性，使得客户端不必知道产品的具体创建流程。

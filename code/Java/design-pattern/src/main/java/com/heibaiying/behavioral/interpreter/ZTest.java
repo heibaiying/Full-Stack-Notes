@@ -23,7 +23,7 @@ public class ZTest {
 
 	//获得值映射
 	public static HashMap<String, Integer> getValue(String exprStr) throws IOException {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		HashMap<String, Integer> map = new HashMap<>();
 		//解析有几个参数要传递
 		for (char ch : exprStr.toCharArray()) {
 			if (ch != '+' && ch != '-') {

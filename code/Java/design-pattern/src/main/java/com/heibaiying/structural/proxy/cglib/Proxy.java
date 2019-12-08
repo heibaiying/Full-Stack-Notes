@@ -26,6 +26,9 @@ public class Proxy implements MethodInterceptor {
 		return enhancer.create();
 	}
 
+	/**
+	 * 我们只需要实现此处的拦截逻辑，其他代码都是相对固定的
+	 */
 	@Override
 	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws InvocationTargetException, IllegalAccessException {
 		System.out.println("权限校验");

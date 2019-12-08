@@ -22,6 +22,7 @@ public class SmartPhone implements Cloneable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		SmartPhone smartPhone = (SmartPhone) super.clone();
+		// 对引用对象进行拷贝
 		smartPhone.productionDate = (Date) smartPhone.productionDate.clone();
 		return smartPhone;
 	}

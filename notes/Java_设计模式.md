@@ -390,7 +390,7 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 
 对于调用者来说，它无需知道对象的具体创建细节，只需要将自己所需对象的类型告诉工厂，然后由工厂自动创建并返回。
 
-### 2.2 实现
+### 2.2 示例
 
 ![23_simple_factory](../pictures/23_simple_factory.png)
 
@@ -469,7 +469,7 @@ public Phone getPhone(Class<? extends Phone> phoneClass) {
 
 定义一个用于创建对象的工厂接口，但具体实例化哪一个工厂则由子类来决定。
 
-### 3.2 实现
+### 3.2 示例
 
 ![23_factory_method](../pictures/23_factory_method.png)
 
@@ -550,7 +550,7 @@ public class ZTest {
 
 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的实现类。抽象工厂模式是工厂模式的升级版本，它适用于存在多个产品的情况。接着上面的例子，假设每个工厂不仅生产手机，而且还需要生产对应的充电器，这样才能算一个可以出售的产品，相关的代码示例如下：
 
-### 4.2  实现
+### 4.2  示例
 
 ![23_abstract_factory](../pictures/23_abstract_factory.png)
 
@@ -762,9 +762,863 @@ Phone(processor=高通骁龙处理器, camera=索尼摄像头, screen=OLED)
 
 ### 6.1  定义
 
-
+用原型示例指定创建对象的种类，并通过拷贝这些原型创建新的对象。
 
 ### 6.2  示例
 
-### 6.3  
+在 Java 语言中可以通过 `clone()` 方法来实现原型模式：
+
+```java
+public class Phone implements Cloneable {
+
+    private String type;
+
+    Phone(String type) {
+        System.out.println("构造器被调用");
+        this.type = type;
+    }
+
+    public void call() {
+        System.out.println(type + "拨打电话");
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        System.out.println("克隆方法被调用");
+        return super.clone();
+    }
+}
+```
+
+使用克隆来创建对象：
+
+```java
+Phone phone = new Phone("3G手机");
+Phone clonePhone = (Phone) phone.clone();
+clonePhone.call();
+```
+
+在使用 clone 方法时需要注意区分深拷贝和浅拷贝：即如果待拷贝的对象中含有引用类型的变量，也需要对其进行拷贝，示例如下：
+
+```java
+public class SmartPhone implements Cloneable {
+
+    private String type;
+    private Date productionDate;
+
+    SmartPhone(String type, Date productionDate) {
+        this.type = type;
+        this.productionDate = productionDate;
+    }
+
+    public void call() {
+        System.out.println(type + "拨打电话");
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        SmartPhone smartPhone = (SmartPhone) super.clone();
+        // 对引用对象进行拷贝
+        smartPhone.productionDate = (Date) smartPhone.productionDate.clone();
+        return smartPhone;
+    }
+}
+```
+
+### 6.3  适用场景
+
+原型模式是直接在内存中进行二进制流的拷贝，被拷贝对象的构造函数并不会被执行，因此其性能表现非常优秀。如果对象的创建需要消耗非常多的资源，此时应该考虑使用原型模式。
+
+
+
+# 结构型
+
+## 1. 代理模式
+
+### 1.1 定义
+
+为目标对象提供一个代理对象以控制外部环境对其的访问，此时外部环境应访问该代理对象，而不是目标对象。通过代理模式，可以在不改变目标对象的情况下，实现功能的扩展。
+
+在 Java 语言中，根据代理对象生成的时间点的不同可以分为静态代理和动态代理，其中动态代理根据实现方式的不同又可以分为 JDK 代理 和 Cglib 代理。
+
+### 1.2 静态代理
+
+此时代理对象和目标对象需要实现相同的接口：
+
+```java
+public interface IService {
+	void compute();
+}
+```
+
+目标对象：
+
+```java
+public class ComputeService implements IService {
+    @Override
+    public void compute() {
+        System.out.println("业务处理");
+    }
+}
+```
+
+在代理对象中注入目标对象的实例：
+
+```java
+public class ProxyService implements IService {
+
+    private IService target;
+
+    public ProxyService(IService target) {
+        this.target = target;
+    }
+
+    @Override
+    public void compute() {
+        System.out.println("权限校验");
+        target.compute();
+        System.out.println("资源回收");
+    }
+}
+```
+
+调用时候应该访问代理对象，而不是目标对象：
+
+```java
+ProxyService proxyService = new ProxyService(new ComputeService());
+proxyService.compute();
+```
+
+### 1.3 JDK 代理
+
+除了使用静态代理外，还可以利用 JDK 中的 Proxy 类和反射功能来实现对目标对象的代理：
+
+```java
+ComputeService target = new ComputeService();
+IService proxyInstance = (IService) Proxy.newProxyInstance(
+    target.getClass().getClassLoader(),
+    target.getClass().getInterfaces(), //代理类要实现的接口列表
+    (proxy, method, args1) -> {
+        System.out.println("权限校验");
+        Object invoke = method.invoke(target, args1);
+        System.out.println("资源回收");
+        return invoke;
+    });
+proxyInstance.compute();
+```
+
+静态代理和 JDK 动态代理都要求目标对象必须实现一个或者多个接口，如果目标对象不存在任何接口，此时可以使用 Cglib 方式对其进行代理。
+
+### 1.4 Cglib 代理
+
+要想使用 Cglib 代理，必须导入相关的依赖：
+
+```xml
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>3.3.0</version>
+</dependency>
+```
+
+此时目标对象不需要实现任何接口：
+
+```java
+public class ComputeService {
+	public void compute() {
+		System.out.println("业务处理");
+	}
+}
+```
+
+使用 Cglib 进行代理：
+
+```java
+public class Proxy implements MethodInterceptor {
+
+    private Object target;
+
+    public Proxy(Object target) {
+        this.target = target;
+    }
+
+    public Object getProxyInstance() {
+        // 创建用于生成生成动态子类的工具类
+        Enhancer enhancer = new Enhancer();
+        // 指定动态生成类的父类
+        enhancer.setSuperclass(target.getClass());
+        // 设置回调
+        enhancer.setCallback(this);
+        // 动态生成子类
+        return enhancer.create();
+    }
+
+   /**
+    * 我们只需要实现此处的拦截逻辑，其他代码都是相对固定的
+    */
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws InvocationTargetException, IllegalAccessException {
+        System.out.println("权限校验");
+        Object invoke = method.invoke(target, args);
+        System.out.println("资源回收");
+        return invoke;
+    }
+}
+```
+
+访问代理对象：
+
+```java
+Proxy proxy = new Proxy(new ComputeService());
+ComputeService service = (ComputeService) proxy.getProxyInstance();
+service.compute();
+```
+
+
+
+## 2. 适配器模式
+
+### 2.1  定义
+
+将一个类的接口转换成客户希望的另外一个接口，从而使得原本由于接口不兼容而无法一起工作的类可以一起工作。
+
+### 2.2 示例
+
+将 220V 的电流通过适配器转换为对应规格的电流给手机充电：
+
+![23_adapter](D:\Full-Stack-Notes\pictures\23_adapter.png)
+
+电源类：
+
+```java
+public class PowerSupply {
+
+    private final int output = 220;
+
+    public int output220V() {
+        System.out.println("电源电压：" + output);
+        return output;
+    }
+}
+```
+
+手机电压规格：
+
+```java
+public interface Target {
+    int output5V();
+}
+```
+
+适配器需要继承自源类，并实现目标类方法：
+
+```java
+public class ChargerAdapter extends PowerSupply implements Target {
+    @Override
+    public int output5V() {
+        int output = output220V();
+        System.out.println("充电头适配转换");
+        output = output / 44;
+        System.out.println("输出电压：" + output);
+        return output;
+    }
+}
+```
+
+测试：
+
+```java
+public class ZTest {
+    public static void main(String[] args) {
+        Target target = new ChargerAdapter();
+        target.output5V();
+    }
+}
+
+// 输出：
+电源电压：220
+充电头适配转换
+输出电压：5
+```
+
+
+
+## 3. 桥接模式
+
+### 3.1 定义
+
+将抽象部分与它的实现部分分离，使它们都可以独立地变化。它使用组合关系来代替继承关系，从而降低了抽象和实现这两个可变维度的耦合度。
+
+### 3.2  优点
+
++ 抽象和实现分离；
++ 优秀的扩展能力；
++ 实现细节对客户端透明，客户可以通过各种聚合来实现不同的需求。
+
+### 3.3 示例
+
+将一个图形的形状和颜色进行分离，从而可以通过组合来实现的不同的效果：
+
+![23_bridge](D:\Full-Stack-Notes\pictures\23_bridge.png)
+
+颜色的抽象和实现：
+
+```java
+public interface Color {
+    String getDesc();
+}
+
+public class Blue implements Color {
+    @Override
+    public String getDesc() {
+        return "蓝色";
+    }
+}
+
+public class Red implements Color {
+    @Override
+    public String getDesc() {
+        return "红色";
+    }
+}
+
+public class Yellow implements Color {
+    @Override
+    public String getDesc() {
+        return "黄色";
+    }
+}
+```
+
+图形的抽象和实现：
+
+```java
+public abstract class Shape {
+
+    private Color color;
+
+    public Shape setColor(Color color) {
+        this.color = color;
+        return this;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public abstract void getDesc();
+}
+
+
+public class Round extends Shape {
+    @Override
+    public void getDesc() {
+        System.out.println(getColor().getDesc() + "圆形");
+    }
+}
+
+public class Square extends Shape {
+    @Override
+    public void getDesc() {
+        System.out.println(getColor().getDesc() + "正方形");
+    }
+}
+```
+
+通过聚合的方式来进行调用：
+
+```java
+new Square().setColor(new Red()).getDesc();
+new Square().setColor(new Blue()).getDesc();
+new Round().setColor(new Blue()).getDesc();
+new Round().setColor(new Yellow()).getDesc();
+```
+
+
+
+## 4. 组合模式
+
+### 4.1 定义
+
+将对象组合成树形结构以表示 “部分-整体” 的层次结构，组合模式使得用户对单个对象和组合对象的使用具有一致性。
+
+### 4.2 优点
+
++ 单个对象和组合对象具有一致性，这简化了客户端代码；
+
++ 可以在组合体类加入新的对象，而无需改变其源码。
+
+### 4.3  示例
+
+模拟 Linux 文件系统：
+
+![23_composite](D:\Full-Stack-Notes\pictures\23_composite.png)
+
+组件类，定义文件夹和文件的所有操作：
+
+```java
+public abstract class Component {
+
+    private String name;
+
+    public Component(String name) {
+        this.name = name;
+    }
+
+    public void add(Component component) {
+        throw new UnsupportedOperationException("不支持添加操作");
+    }
+
+    public void remove(Component component) {
+        throw new UnsupportedOperationException("不支持删除操作");
+    }
+
+
+    public void vim(String content) {
+        throw new UnsupportedOperationException("不支持使用vim编辑器打开");
+    }
+
+    public void cat() {
+        throw new UnsupportedOperationException("不支持查看操作");
+    }
+
+    public void print() {
+        throw new UnsupportedOperationException("不支持打印操作");
+    }
+
+}
+```
+
+文件夹类：
+
+```java
+public class Folder extends Component {
+
+    private List<Component> componentList = new ArrayList<>();
+
+    public Folder(String name) {
+        super(name);
+    }
+
+    @Override
+    public void add(Component component) {
+        componentList.add(component);
+    }
+
+    @Override
+    public void remove(Component component) {
+        componentList.remove(component);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(getName());
+        componentList.forEach(x -> System.out.println("	" + x.getName()));
+    }
+}
+```
+
+文件类：
+
+```java
+public class File extends Component {
+
+    private String content;
+
+    public File(String name) {
+        super(name);
+    }
+
+    @Override
+    public void vim(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public void cat() {
+        System.out.println(content);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(getName());
+    }
+}
+```
+
+通过组合来实现层级结构：
+
+```java
+Folder rootDir = new Folder("ROOT目录");
+Folder nginx = new Folder("Nginx安装目录");
+Folder tomcat = new Folder("Tomcat安装目录");
+File startup = new File("startup.bat");
+rootDir.add(nginx);
+rootDir.add(tomcat);
+rootDir.add(startup);
+rootDir.print();
+startup.vim("java -jar");
+startup.cat();
+nginx.cat();
+```
+
+
+
+## 5. 装饰模式
+
+### 5.1  定义
+
+在不改变现有对象结构的情况下，动态地给该对象增加一些职责或功能。
+
+### 5.2  优点
+
+- 采用装饰模式扩展对象的功能比采用继承方式更加灵活。
+- 可以通过设计多个不同的装饰类，来创造出多个不同行为的组合。
+
+### 5.3 示例
+
+在购买手机后，你可能还会购买屏幕保护膜，手机壳等来进行装饰：
+
+![23_decorator](D:\Full-Stack-Notes\pictures\23_decorator.png)
+
+手机抽象类及其实现：
+
+```java
+public abstract class Phone {
+    public abstract int getPrice();
+    public abstract String  getDesc();
+}
+
+public class MiPhone extends Phone {
+    
+    @Override
+    public int getPrice() {
+        return 1999;
+    }
+    
+    @Override
+    public String getDesc() {
+        return "MiPhone";
+    }
+}
+```
+
+装饰器抽象类：
+
+```java
+public abstract class Decorator extends Phone {
+
+    private Phone phone;
+
+    public Decorator(Phone phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public int getPrice() {
+        return phone.getPrice();
+    }
+
+    @Override
+    public String getDesc() {
+        return phone.getDesc();
+    }
+}
+```
+
+手机壳装饰器：
+
+```java
+public class ShellDecorator extends Decorator {
+
+    public ShellDecorator(Phone phone) {
+        super(phone);
+    }
+
+    @Override
+    public int getPrice() {
+        return super.getPrice() + 200;
+    }
+
+    @Override
+    public String getDesc() {
+        return super.getDesc() + " + 手机壳";
+    }
+}
+```
+
+屏幕保护膜装饰器：
+
+```java
+public class FilmDecorator extends Decorator {
+
+    public FilmDecorator(Phone phone) {
+        super(phone);
+    }
+
+    @Override
+    public int getPrice() {
+        return super.getPrice() + 100;
+    }
+
+    @Override
+    public String getDesc() {
+        return super.getDesc() + " + 钢化膜";
+    }
+}
+```
+
+调用装饰器对目标对象进行装饰：
+
+```java
+public class ZTest {
+    public static void main(String[] args) {
+        ShellDecorator decorator = new ShellDecorator(new FilmDecorator(new MiPhone()));
+        System.out.println(decorator.getDesc() + " : " + decorator.getPrice());
+    }
+}
+
+// 输出： MiPhone + 钢化膜 + 手机壳 : 2299
+```
+
+
+
+## 6. 外观模式
+
+### 6.1  定义
+
+在现在流行的微服务架构模式下，我们通常会将一个大型的系统拆分为多个独立的服务，此时需要提供一个一致性的接口来给外部系统进行调用，这就是外观模式。
+
+### 6.2 优点
+
++ 降低了子系统和客户端之间的耦合度；
++ 对客户端屏蔽了系统内部的实现细节。
+
+### 6.3 示例
+
+模仿电商购物下单，此时内部需要调用支付子系统，仓储子系统，物流子系统，而这些细节对用户都是屏蔽的：
+
+![23_facade](D:\Full-Stack-Notes\pictures\23_facade.png)
+
+安全检查系统：
+
+```java
+public class EnvInspectionService {
+    public boolean evInspection() {
+        System.out.println("支付环境检查...");
+        return true;
+    }
+}
+```
+
+支付子系统：
+
+```java
+public class AccountService {
+    public boolean balanceCheck() {
+        System.out.println("账户余额校验...");
+        return true;
+    }
+}
+```
+
+物流子系统：
+
+```java
+public class LogisticsService {
+    public void ship(Phone phone) {
+        System.out.println(phone.getName() + "已经发货，请注意查收...");
+    }
+}
+```
+
+下单系统（外观门面）：
+
+```java
+public class OrderService {
+
+    private EnvInspectionService inspectionService = new EnvInspectionService();
+    private AccountService accountService = new AccountService();
+    private LogisticsService logisticsService = new LogisticsService();
+
+    public void order(Phone phone) {
+        if (inspectionService.evInspection()) {
+            if (accountService.balanceCheck()) {
+                System.out.println("支付成功");
+                logisticsService.ship(phone);
+            }
+        }
+    }
+}
+```
+
+用户只需要访问外观门面，调用一致性接口即可：
+
+```java
+Phone phone = new Phone("XXX手机");
+OrderService orderService = new OrderService();
+orderService.order(phone);
+
+// 输出：
+支付环境检查...
+账户余额校验...
+支付成功
+XXX手机已经发货，请注意查收...
+```
+
+
+
+## 7. 享元模式
+
+### 7.1 定义
+
+运用共享技术来有効地支持大量细粒度对象的复用，线程池，缓存技术都是其代表性的实现。在享元模式中存在以下两种状态：
+
++ 内部状态，即不会随着环境的改变而改变状态，它在对象初始化时就已经确定；
+
++ 外部状态，指可以随环境改变而改变的状态。
+
+通过享元模式，可以避免在系统中创建大量重复的对象，进而可以节省系统的内存空间。
+
+### 7.2 示例
+
+这里以创建 PPT 模板为例，相同类型的 PPT 模板不再重复创建：
+
+![23_flyweight](D:\Full-Stack-Notes\pictures\23_flyweight.png)
+
+PPT 抽象类：
+
+```java
+public abstract class PowerPoint {
+    /*版权*/
+    private String copyright;
+    private String title;
+
+    /*这里的版权信息是一种内部状态，它在PPT对象第一次创建时就已经确定*/
+    public PowerPoint(String copyright) {
+        this.copyright = copyright;
+    }
+
+    /*PPT标题是一种外部状态，它可以由外部环境根据不同的需求进行更改*/
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    abstract void create();
+
+    @Override
+    public String toString() {
+        return "编号：" + hashCode() + ": PowerPoint{" +
+            "copyright='" + copyright + '\'' +
+            ", title='" + title + '\'' +
+            '}';
+    }
+}
+```
+
+PPT 实现类：
+
+```java
+public class BusinessPPT extends PowerPoint {
+    public BusinessPPT(String copyright) {
+        super(copyright);
+    }
+    @Override
+    void create() {
+        System.out.println("商务类PPT模板");
+    }
+}
+
+public class SciencePPT extends PowerPoint {
+    public SciencePPT(String copyright) {
+        super(copyright);
+    }
+    @Override
+    void create() {
+        System.out.println("科技类PPT模板");
+    }
+}
+
+public class ArtPPT extends PowerPoint {
+    public ArtPPT(String copyright) {
+        super(copyright);
+    }
+    @Override
+    void create() {
+        System.out.println("艺术类PPT模板");
+    }
+}
+```
+
+通过工厂模式来进行创建和共享：
+
+```java
+public class PPTFactory {
+
+    private HashMap<String, PowerPoint> hashMap = new HashMap<>();
+
+    public PowerPoint getPPT(Class<? extends PowerPoint> clazz) {
+        try {
+            String name = clazz.getName();
+            if (hashMap.keySet().contains(name)) {
+                return hashMap.get(name);
+            }
+            Constructor<?> constructor = Class.forName(name).getConstructor(String.class);
+            PowerPoint powerPoint = (PowerPoint) constructor.newInstance("PPT工厂版本所有");
+            hashMap.put(name, powerPoint);
+            return powerPoint;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+```
+
+调用工厂类来创建或获取享元对象：
+
+```java
+public class ZTest {
+    public static void main(String[] args) {
+        PPTFactory pptFactory = new PPTFactory();
+        PowerPoint ppt01 = pptFactory.getPPT(BusinessPPT.class);
+        ppt01.setTitle("第一季度工作汇报");
+        System.out.println(ppt01);
+        PowerPoint ppt02 = pptFactory.getPPT(BusinessPPT.class);
+        ppt02.setTitle("第二季度工作汇报");
+        System.out.println(ppt02);
+        PowerPoint ppt03 = pptFactory.getPPT(SciencePPT.class);
+        ppt03.setTitle("科技展汇报");
+        System.out.println(ppt03);
+    }
+}
+```
+
+
+
+# 行为型
+
+## 1. 观察者模式
+
+
+
+## 2. 责任链模式
+
+## 3. 模板方法模式
+
+## 4. 策略模式
+
+## 5. 命令模式
+
+## 6. 状态模式
+
+## 7. 中介者模式
+
+## 8. 迭代器模式
+
+## 9. 访问者模式
+
+## 10. 备忘录模式
+
+## 11. 解释器模式
 

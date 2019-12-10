@@ -2,6 +2,7 @@ package com.heibaiying.behavioral.template;
 
 public abstract class Phone {
 
+	// 模板方法
 	public void assembling() {
 		adCamera();
 		addBattery();
@@ -11,6 +12,7 @@ public abstract class Phone {
 		packaged();
 	}
 
+	// 具体方法
 	private void adCamera() {
 		System.out.println("组装摄像头");
 	}
@@ -26,5 +28,6 @@ public abstract class Phone {
 	// 钩子方法
 	abstract boolean needAddNFC();
 
+	// 抽象方法
 	abstract void packaged();
 }

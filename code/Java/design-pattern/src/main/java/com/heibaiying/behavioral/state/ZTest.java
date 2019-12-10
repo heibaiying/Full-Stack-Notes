@@ -6,6 +6,7 @@ public class ZTest {
 		player.speed();
 		player.paly();
 		player.speed();
+		player.paly();
 		player.pause();
 		player.close();
 		player.speed();

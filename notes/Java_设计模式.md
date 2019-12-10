@@ -1654,28 +1654,937 @@ public class Business implements Observable {
 观察者接口及用户实现类：
 
 ```java
+public interface Observer {
+    void receive(String message);
+}
+```
 
+```java
+public class User implements Observer {
+
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void receive(String message) {
+        System.out.println(getName() + "收到消息：" + message);
+    }
+}
+```
+
+测试商户发送消息：
+
+```java
+Business business = new Business();
+business.addObserver(new User("用户1"));
+business.addObserver(new User("用户2"));
+business.addObserver(new User("用户3"));
+business.notifyObservers("商品促销通知");
+
+// 输出：
+用户1收到消息：商品促销通知
+用户2收到消息：商品促销通知
+用户3收到消息：商品促销通知
 ```
 
 
 
 ## 2. 责任链模式
 
+### 2.1 定义
+
+使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象连接成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。
+
+### 2.2 优点
+
+- 降低了对象之间的耦合度；
+- 增强了系统的可扩展性。可以根据需求增加新的处理类，满足开闭原则；
+- 增强了系统的灵活性。当工作流程发生变化，可以动态地新增，删除成员或修改其调动次序；
+- 每个对象只需保持一个指向其后继者的引用，而无需保持其他所有处理者的引用，从而可以避免了过多的条件判断语句；
+- 每个类只需要处理自己该处理的工作，不能处理的则传递给下一个对象完成，符合类的单一职责原则。
+
+### 2.3 示例
+
+假设一个正常的流程，根据请假天数的不同，需要不同的领导共同审批：
+
+![23_chain_of_responsibility](D:\Full-Stack-Notes\pictures\23_chain_of_responsibility.png)
+
+申请单：
+
+```java
+public class Application {
+    private String title;
+    /*请假天数*/
+    private int dayNum;
+}
+```
+
+抽象的领导类：
+
+```java
+public abstract class Leader {
+
+    protected Leader leader;
+
+    // 责任链模式的核心：其需要持有一个后继者
+    public Leader setNextLeader(Leader leader) {
+        this.leader = leader;
+        return leader;
+    }
+
+    public abstract void approval(Application application);
+
+}
+```
+
+3天以下的请假只需要组长审核即可：
+
+```java
+public class GroupLeader extends Leader {
+    @Override
+    public void approval(Application application) {
+        System.out.println(application.getTitle() + "被组长审批通过");
+        if (application.getDayNum() >= 3) {
+            leader.approval(application);
+        }
+    }
+}
+```
+
+3天以上5天以下的请假则需要组长和部门经理共同审核：
+
+```java
+public class DepartManager extends Leader {
+	@Override
+	public void approval(Application application) {
+		System.out.println(application.getTitle() + "被部门经理审批通过");
+		if (application.getDayNum() >= 5) {
+			leader.approval(application);
+		}
+	}
+}
+```
+
+5 天以上的请假则还需要总经理审核：
+
+```java
+public class President extends Leader {
+    @Override
+    public void approval(Application application) {
+        System.out.println(application.getTitle() + "被总经理审批通过");
+    }
+}
+```
+
+组建责任链并测试：
+
+```java
+GroupLeader groupLeader = new GroupLeader();
+DepartManager departManager = new DepartManager();
+President president = new President();
+groupLeader.setNextLeader(departManager).setNextLeader(president);
+groupLeader.approval(new Application("事假单", 3));
+groupLeader.approval(new Application("婚假单", 10));
+
+// 输出：
+事假单被组长审批通过
+事假单被部门经理审批通过
+    
+婚假单被组长审批通过
+婚假单被部门经理审批通过
+婚假单被总经理审批通过
+```
+
+
+
 ## 3. 模板方法模式
+
+### 3.1 定义
+
+定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。它通常包含以下角色：
+
+**抽象父类 (Abstract Class) **：负责给出一个算法的轮廓和骨架。它由一个模板方法和若干个基本方法构成：
+
++ 模板方法：定义了算法的骨架，按某种顺序调用其包含的基本方法。
+
++ 基本方法：可以是具体的方法也可以是抽象方法，还可以是钩子方法（在抽象类中已经实现，包括用于判断的逻辑方法和需要子类重写的空方法两种）。
+
+**具体子类 (Concrete Class) **：实现抽象类中所定义的抽象方法和钩子方法。
+
+### 3.2 优点
+
++ 父类定义了公共的行为，可以实现代码的复用；
++ 子类可以通过扩展来增加相应的功能，符合开闭原则。
+
+### 3.3 示例
+
+手机一般都有电池，摄像头等模块，但不是所有手机都有 NFC 模块，如果采用模板模式构建，则相关代码如下：
+
+![23_chain_of_responsibility](D:\Full-Stack-Notes\pictures\23_template.png)
+
+抽象的父类：
+
+```java
+public abstract class Phone {
+
+    // 模板方法
+    public void assembling() {
+        adCamera();
+        addBattery();
+        if (needAddNFC()) {
+            addNFC();
+        }
+        packaged();
+    }
+
+    // 具体方法
+    private void adCamera() {
+        System.out.println("组装摄像头");
+    }
+
+    private void addBattery() {
+        System.out.println("安装电池");
+    }
+
+    private void addNFC() {
+        System.out.println("增加NFC功能");
+    }
+
+    // 钩子方法
+    abstract boolean needAddNFC();
+
+    // 抽象方法
+    abstract void packaged();
+}
+```
+
+具体的子类：
+
+```java
+public class OlderPhone extends Phone {
+
+    @Override
+    boolean needAddNFC() {
+        return false;
+    }
+
+    @Override
+    void packaged() {
+        System.out.println("附赠一个手机壳");
+    }
+}
+```
+
+```java
+public class SmartPhone extends Phone {
+
+    @Override
+    boolean needAddNFC() {
+        return true;
+    }
+
+    @Override
+    void packaged() {
+        System.out.println("附赠耳机一副");
+    }
+}
+```
+
+测试与输出结果如下：
+
+```java
+OlderPhone olderPhone = new OlderPhone();
+olderPhone.assembling();
+// 输出：
+组装摄像头
+安装电池
+附赠一个手机壳
+    
+SmartPhone smartPhone = new SmartPhone();
+smartPhone.assembling();
+// 输出：
+组装摄像头
+安装电池
+增加NFC功能
+附赠耳机一副
+```
+
+
 
 ## 4. 策略模式
 
-## 5. 命令模式
+### 4.1 定义
+
+定义一系列的算法，把它们一个个封装起来，并且使它们可以相互替换，且算法的变化不会影响使用算法的客户。策略模式实际上是一种无处不在的模式，比如根据在 controller 层接收到的参数不同，调用不同的 service 进行处理，这也是策略模式的一种体现。
+
+### 4.2 示例
+
+假设公司需要根据营业额的不同来选择不同的员工激励策略：
+
+![23_strategy](D:\Full-Stack-Notes\pictures\23_strategy.png)
+
+策略接口及其实现类：
+
+```java
+public interface Strategy {
+    void execute();
+}
+
+public class TravelStrategy implements Strategy {
+	@Override
+	public void execute() {
+		System.out.println("集体旅游");
+	}
+}
+
+public class BonusStrategy implements Strategy {
+	@Override
+	public void execute() {
+		System.out.println("奖金激励");
+	}
+}
+
+public class WorkOvertimeStrategy implements Strategy {
+	@Override
+	public void execute() {
+		System.out.println("奖励加班");
+	}
+}
+```
+
+公司类：
+
+```java
+public class Company {
+
+    private Strategy strategy;
+
+    public Company setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+        return this;
+    }
+
+    public void execute() {
+        strategy.execute();
+    }
+}
+```
+
+```java
+public static void main(String[] args) {
+    // 营业额
+    int turnover = Integer.parseInt(args[0]);
+    Company company = new Company();
+    if (turnover > 1000) {
+        company.setStrategy(new BonusStrategy()).execute();
+    } else if (turnover > 100) {
+        company.setStrategy(new TravelStrategy()).execute();
+    } else {
+        company.setStrategy(new WorkOvertimeStrategy()).execute();
+    }
+}
+```
 
 ## 6. 状态模式
 
+### 6.1 定义
+
+对有状态的对象，把复杂的判断逻辑提取到不同的状态对象中，允许状态对象在其内部状态发生改变时改变其行为。
+
+### 6.2 优点
+
+- 状态模式将与特定状态相关的行为局部化到一个状态中，并且将不同状态的行为分割开来，满足单一职责原则；
+- 将不同的状态引入到独立的对象中，使得状态转换变得更加明确，且减少对象间的相互依赖；
+- 有利于程序的扩展，通过定义新的子类很容易地增加新的状态和转换。
+
+### 6.3 示例
+
+假设我们正在开发一个播放器，它有如下图所示四种基本的状态：播放状态，关闭状态，暂停状态，加速播放状态。这四种状态间可以相互转换，但存在一定的限制，比如在关闭或者暂停状态下，都不能加速视频，采用状态模式来实现该播放器的相关代码如下：
+
+![23_state](D:\Full-Stack-Notes\pictures\23_state.png)
+
+定义状态抽象类：
+
+```java
+public class State {
+
+    private Player player;
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void paly() {
+        player.setState(Player.PLAY_STATE);
+    }
+
+    public void pause() {
+        player.setState(Player.PAUSE_STATE);
+    }
+
+    public void close() {
+        player.setState(Player.CLOSE_STATE);
+    }
+
+    public void speed() {
+        player.setState(Player.SPEED_STATE);
+    }
+}
+```
+
+定义四种状态的具体实现类，并限制它们之间的转换关系：
+
+```java
+public class PlayState extends State {
+
+}
+```
+
+```java
+public class CloseState extends State {
+    @Override
+    public void pause() {
+        System.out.println("操作失败：视频已处于关闭状态，无需暂停");
+    }
+    @Override
+    public void speed() {
+        System.out.println("操作失败：视频已处于关闭状态，无法加速");
+    }
+}
+```
+
+```java
+public class PauseState extends State {
+	@Override
+	public void speed() {
+		System.out.print("操作失败：暂停状态下不支持加速");
+	}
+}
+```
+
+```java
+public class SpeedState extends State {
+	@Override
+	public void paly() {
+		System.out.println("系统提示：你当前已处于加速播放状态");
+	}
+}
+```
+
+组装播放器：
+
+```java
+public class Player {
+
+	private State state;
+
+	public final static PlayState PLAY_STATE = new PlayState();
+	public final static PauseState PAUSE_STATE = new PauseState();
+	public final static CloseState CLOSE_STATE = new CloseState();
+	public final static SpeedState SPEED_STATE = new SpeedState();
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+		this.state.setPlayer(this);
+	}
+
+	Player() {
+		// 假设播放器初始状态为关闭
+		this.state = new CloseState();
+		this.state.setPlayer(this);
+	}
+
+	public void paly() {
+		System.out.println("播放视频");
+		state.paly();
+	}
+
+	public void pause() {
+		System.out.println("暂停视频");
+		state.pause();
+	}
+
+	public void close() {
+		System.out.println("关闭视频");
+		state.close();
+	}
+
+	public void speed() {
+		System.out.println("视频加速");
+		state.speed();
+	}
+
+}
+```
+
+调用我们自定义的播放器：
+
+```java
+Player player = new Player();
+player.speed();
+player.paly();
+player.speed();
+player.paly();
+player.pause();
+player.close();
+player.speed();
+
+// 输出：
+视频加速
+操作失败：视频已处于关闭状态，无法加速
+播放视频
+视频加速
+播放视频
+系统提示：你当前已处于加速播放状态
+暂停视频
+关闭视频
+视频加速
+操作失败：视频已处于关闭状态，无法加速
+```
+
+
+
 ## 7. 中介者模式
+
+### 7.1 定义
+
+定义一个中介对象来封装一系列对象之间的交互，使原有对象之间的耦合松散，且可以独立地改变它们之间的交互。
+
+### 7.2 优点
+
+降低了对象之间的耦合度。
+
+### 7.3 示例
+
+这里以房屋中介为例，定义一个抽象的中介类，负责接收客户以及在客户间传递消息：
+
+```java
+abstract class Mediator {
+
+	public abstract void register(Person person);
+
+	public abstract void send(String from, String message);
+}
+```
+
+具体的房屋中介，它会将卖方的出售消息广播给所有人：
+
+```java
+public class HouseMediator extends Mediator {
+
+	private List<Person> personList = new ArrayList<>();
+
+	@Override
+	public void register(Person person) {
+		if (!personList.contains(person)) {
+			personList.add(person);
+			person.setMediator(this);
+		}
+	}
+
+	@Override
+	public void send(String from, String message) {
+		System.out.println(from + "发送消息：" + message);
+		for (Person person : personList) {
+			String name = person.getName();
+			if (!name.equals(from)) {
+				person.receive(message);
+			}
+		}
+	}
+}
+```
+
+定义用户类，它可以是买方也可以是卖方，它们都是中介的客户：
+
+```java
+public class Person {
+
+	private String name;
+	private Mediator mediator;
+
+	public Person(String name) {
+		this.name = name;
+	}
+
+	public void send(String message) {
+		mediator.send(this.name, message);
+	}
+
+	public void receive(String message) {
+		System.out.println(name + "收到消息：" + message);
+	}
+}
+```
+
+最后买卖双方通过中介人就可以进行沟通：
+
+```java
+public class ZTest {
+	public static void main(String[] args) {
+		HouseMediator houseMediator = new HouseMediator();
+		Person seller = new Person("卖方");
+		Person buyer = new Person("买方");
+		houseMediator.register(seller);
+		houseMediator.register(buyer);
+		buyer.send("价格多少");
+		seller.send("10万");
+		buyer.send("太贵了");
+	}
+}
+
+// 输出：
+买方发送消息：价格多少
+卖方收到消息：价格多少
+卖方发送消息：10万
+买方收到消息：10万
+买方发送消息：太贵了
+卖方收到消息：太贵了
+```
+
+
 
 ## 8. 迭代器模式
 
+### 8.1 定义
+
+提供了一种方法用于顺序访问一个聚合对象中的各个元素，而又不暴露该对象的内部表示。
+
+### 8.2 示例
+
+假设现在对书架中的所有书籍进行遍历，首先定义书籍类：
+
+```java
+public class Book {
+	private String name;
+	public Book(String name) {
+		this.name = name;
+	}
+}
+```
+
+定义书柜接口及其实现类：
+
+```java
+public interface Bookshelf {
+	void addBook(Book book);
+	void removeBook(Book book);
+	BookIterator iterator();
+}
+
+public class BookshelfImpl implements Bookshelf {
+
+	private List<Book> bookList = new ArrayList<>();
+
+	@Override
+	public void addBook(Book book) {
+		bookList.add(book);
+	}
+
+	@Override
+	public void removeBook(Book book) {
+		bookList.remove(book);
+	}
+
+	@Override
+	public BookIterator iterator() {
+		return new BookIterator(bookList);
+	}
+}
+```
+
+定义迭代器接口及其实现类：
+
+```java
+public interface Iterator<E> {
+	E next();
+	boolean hasNext();
+}
+
+public class BookIterator implements Iterator<Book> {
+
+	private List<Book> bookList;
+	private int position = 0;
+
+	public BookIterator(List<Book> bookList) {
+		this.bookList = bookList;
+	}
+
+	@Override
+	public Book next() {
+		return bookList.get(position++);
+	}
+
+	@Override
+	public boolean hasNext() {
+		return position < bookList.size();
+	}
+}
+```
+
+调用自定义的迭代器进行遍历：
+
+```java
+BookshelfImpl bookshelf = new BookshelfImpl();
+bookshelf.addBook(new Book("Java书籍"));
+bookshelf.addBook(new Book("Python书籍"));
+bookshelf.addBook(new Book("Go书籍"));
+BookIterator iterator = bookshelf.iterator();
+while (iterator.hasNext()) {
+    System.out.println(iterator.next());
+}
+```
+
+
+
 ## 9. 访问者模式
+
+### 9.1 定义
+
+表示一个作用于某对象结构中各个元素的操作，它使得用户可以在不改变各个元素所对应类的前提下定义对这些元素的操作。
+
+### 9.2 优缺点
+
+优点：
+
+- 扩展性好：能够在不修改对象结构中的元素的情况下，为对象结构中的元素添加新的功能。
+- 复用性好：可以通过访问者来定义整个对象结构通用的功能，从而提高系统的复用程度。
+- 灵活性好：访问者模式将数据结构与作用于结构上的操作解耦，使得操作可相对自由地演化而不影响系统的数据结构。
+
+缺点：
+
++ 增加新的元素类很复杂；
++ 实现相对繁琐。
+
+
+### 9.3 示例
+
+通常不同级别的员工对于公司档案的访问权限是不同的，为方便理解，如下图所示假设只有公开和加密两种类型的档案，并且只有总经理和部门经理才能进入档案室：
+
+![23_visitor](D:\Full-Stack-Notes\pictures\23_visitor.png)
+
+定义档案类及其实现类：
+
+```java
+public interface Archive {
+    // 接受访问者
+	void accept(Visitor visitor);
+}
+
+public class PublicArchive implements Archive {
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);
+	}
+}
+
+public class SecretArchive implements Archive {
+	@Override
+	public void accept(Visitor visitor) {
+		visitor.visit(this);
+	}
+}
+```
+
+定义访问者接口及其实现类：
+
+```java
+public interface Visitor {
+    // 访问公开档案
+	void visit(PublicArchive publicArchive);
+    // 访问加密档案
+	void visit(SecretArchive secretArchive);
+}
+```
+
+```java
+public class DepartManager implements Visitor {
+
+	@Override
+	public void visit(PublicArchive publicArchive) {
+		System.out.println("所有公开档案");
+	}
+
+	@Override
+	public void visit(SecretArchive secretArchive) {
+		System.out.println("三级以下权限的加密档案");
+	}
+}
+```
+
+```java
+public class President implements Visitor {
+
+	@Override
+	public void visit(PublicArchive publicArchive) {
+		System.out.println("所有公开档案");
+	}
+
+	@Override
+	public void visit(SecretArchive secretArchive) {
+		System.out.println("所有加密档案");
+	}
+}
+```
+
+通过公司类来管理访问：
+
+```java
+public class Company {
+
+	private List<Archive> archives = new ArrayList<>();
+
+    // 接收档案
+	void add(Archive archive) {
+		archives.add(archive);
+	}
+
+      // 移除档案
+	void remove(Archive archive) {
+		archives.remove(archive);
+	}
+
+    // 接待访问者
+	void accept(Visitor visitor) {
+		for (Archive archive : archives) {
+			archive.accept(visitor);
+		}
+	}
+
+}
+```
+
+测试及输出结果：
+
+```java
+Company company = new Company();
+company.add(new SecretArchive());
+company.add(new PublicArchive());
+
+company.accept(new DepartManager());
+// 输出：
+三级以下权限的加密档案
+所有公开档案
+
+company.accept(new President());
+// 输出：
+所有加密档案
+所有公开档案
+```
+
+
 
 ## 10. 备忘录模式
 
+### 10.1 定义
+
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便在需要时能将该对象恢复到原有状态。
+
+### 10.2 优缺点
+
+优点是能够用于异常情况下的恢复，能够提高系统的安全性；缺点是需要额外的存储空间来保存历史状态。
+
+### 10.3 示例
+
+编辑器的撤销功能，数据库的快照功能都是备忘录模式的一种典型实现，这里我们以 Git 保存历史版本信息为例，进行演示：
+
+文章类：
+
+```java
+public class Article {
+	private String title;
+	private String content;
+}
+```
+
+根据业务的需求，你可能只需要保存数据的部分字段，或者还需要额外增加字段（如保存时间等），所以需要在保存时需要将目标对象转换为备忘录对象：
+
+```java
+// 备忘录对象
+public class Memorandum {
+
+	private String title;
+	private String content;
+	private Date createTime;
+
+	public Memorandum(Article article) {
+		this.title = article.getTitle();
+		this.content = article.getContent();
+		this.createTime = new Date();
+	}
+
+	public Article toArticle() {
+		return new Article(this.title, this.content);
+	}
+
+}
+```
+
+管理者类：
+
+```java
+public class GitRepository {
+
+	private List<Memorandum> repository = new ArrayList<>();
+
+    // 保存当前数据
+	public void save(Article article) {
+		Memorandum memorandum = new Memorandum(article);
+		repository.add(memorandum);
+	}
+
+    // 获取指定版本类的数据
+	public Article get(int version) {
+		Memorandum memorandum = repository.get(version);
+		return memorandum.toArticle();
+	}
+
+    // 撤销当前操作
+	public Article back() {
+		return repository.get(repository.size() - 1).toArticle();
+	}
+}
+```
+
+测试类：
+
+```java
+GitRepository repository = new GitRepository();
+Article article = new Article("Java手册", "版本一");
+repository.save(article);
+article.setContent("版本二");
+repository.save(article);
+article.setContent("版本三");
+repository.save(article);
+System.out.println(repository.back());
+System.out.println(repository.get(0));
+```
+
+
+
 ## 11. 解释器模式
+
+给分析对象定义一种语言，并定义该语言的文法表示，然后设计一个解析器来解释语言中的语句，用编译语言的方式来分析应用中的实例。解释器模式的实现比较复杂，在通常的开发也较少使用，这里就不提供示例了。
+
+
+
+以上所有示例的源码见：[design-pattern](https://github.com/heibaiying/Full-Stack-Notes/tree/master/code/Java/design-pattern)
+
+
+
+
+
+## 参考资料
+
+1.  Erich Gamma / Richard Helm / Ralph Johnson / John Vlissides . 设计模式（可复用面向对象软件的基础）. 机械工业出版社 . 2000-9
+2. 秦小波 . 设计模式之禅（第2版）. 机械工业出版社 . 2014-2-25
+3. [Java 设计模式](http://c.biancheng.net/view/1317.html)
+4. [Java 设计模式精讲 Debug 方式 + 内存分析](https://coding.imooc.com/class/270.html)
 

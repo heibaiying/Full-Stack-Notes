@@ -1600,6 +1600,63 @@ public class ZTest {
 
 ## 1. 观察者模式
 
+### 1.1  定义
+
+定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+
+### 1.2  优点
+
+降低了目标对象和观察者之间的耦合。
+
+### 1.3  示例
+
+假设多个用户都关注某一个商家，当商家发出降价等通知时，所有用户都应该收到：
+
+![23_observer](../pictures/23_observer.png)
+
+被观察者接口及商家实现类：
+
+```java
+public interface Observable {
+
+    void addObserver(Observer observer);
+
+    void removeObserver(Observer observer);
+
+    void notifyObservers(String message);
+}
+```
+
+```java
+public class Business implements Observable {
+
+    private List<Observer> observerList = new ArrayList<>();
+
+    @Override
+    public void addObserver(Observer observer) {
+        observerList.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observerList.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        for (Observer observer : observerList) {
+            observer.receive(message);
+        }
+    }
+}
+```
+
+观察者接口及用户实现类：
+
+```java
+
+```
+
 
 
 ## 2. 责任链模式

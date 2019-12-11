@@ -4,39 +4,39 @@
 
 <nav>
 软件设计原则<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-开闭原则">1. 开闭原则</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-里氏替换原则">2. 里氏替换原则</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-依赖倒置原则">3. 依赖倒置原则</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-单一职责原则">4. 单一职责原则</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-接口隔离原则">5. 接口隔离原则</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-迪米特法则-最少知道原则">6. 迪米特法则 (最少知道原则)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-合成复用原则-组合复用原则">7. 合成复用原则 (组合复用原则)</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-开闭原则">1. 开闭原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-里氏替换原则">2. 里氏替换原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-依赖倒置原则">3. 依赖倒置原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-单一职责原则">4. 单一职责原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-接口隔离原则">5. 接口隔离原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-迪米特法则-最少知道原则">6. 迪米特法则 (最少知道原则)</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-合成复用原则-组合复用原则">7. 合成复用原则 (组合复用原则)</a><br/>
 创建型<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-单例模式">1. 单例模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-简单工厂模式">2. 简单工厂模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-工厂模式">3. 工厂模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-抽象工厂模式">4. 抽象工厂模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-构建者模式">5. 构建者模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-原型模式">6. 原型模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-单例模式">1. 单例模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-简单工厂模式">2. 简单工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-工厂模式">3. 工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-抽象工厂模式">4. 抽象工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-构建者模式">5. 构建者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-原型模式">6. 原型模式</a><br/>
 结构型<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-代理模式">1. 代理模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-适配器模式">2. 适配器模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-桥接模式">3. 桥接模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-组合模式">4. 组合模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-装饰模式">5. 装饰模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-外观模式">6. 外观模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-享元模式">7. 享元模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-代理模式">1. 代理模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-适配器模式">2. 适配器模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-桥接模式">3. 桥接模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-组合模式">4. 组合模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-装饰模式">5. 装饰模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-外观模式">6. 外观模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-享元模式">7. 享元模式</a><br/>
 行为型<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-观察者模式">1. 观察者模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-责任链模式">2. 责任链模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-模板方法模式">3. 模板方法模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-策略模式">4. 策略模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-状态模式">6. 状态模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-中介者模式">7. 中介者模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-迭代器模式">8. 迭代器模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#9-访问者模式">9. 访问者模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#10-备忘录模式">10. 备忘录模式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-解释器模式">11. 解释器模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-观察者模式">1. 观察者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-责任链模式">2. 责任链模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-模板方法模式">3. 模板方法模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-策略模式">4. 策略模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-状态模式">6. 状态模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-中介者模式">7. 中介者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-迭代器模式">8. 迭代器模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#9-访问者模式">9. 访问者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#10-备忘录模式">10. 备忘录模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-解释器模式">11. 解释器模式</a><br/>
 </nav>
 
 

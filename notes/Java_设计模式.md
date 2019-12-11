@@ -1,5 +1,46 @@
 # 设计模式
 
+
+
+<nav>
+<a href="#软件设计的原则">软件设计的原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-开闭原则">1. 开闭原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-里氏替换原则">2. 里氏替换原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-依赖倒置原则">3. 依赖倒置原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-单一职责原则">4. 单一职责原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-接口隔离原则">5. 接口隔离原则</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-迪米特法则-最少知道原则">6. 迪米特法则 (最少知道原则)</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-合成复用原则-组合复用原则">7. 合成复用原则 (组合复用原则)</a><br/>
+<a href="#创建型">创建型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-单例模式">1. 单例模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-简单工厂模式">2. 简单工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-工厂模式">3. 工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-抽象工厂模式">4. 抽象工厂模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-构建者模式">5. 构建者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-原型模式">6. 原型模式</a><br/>
+<a href="#结构型">结构型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-代理模式">1. 代理模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-适配器模式">2. 适配器模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-桥接模式">3. 桥接模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-组合模式">4. 组合模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5-装饰模式">5. 装饰模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-外观模式">6. 外观模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-享元模式">7. 享元模式</a><br/>
+<a href="#行为型">行为型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-观察者模式">1. 观察者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-责任链模式">2. 责任链模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-模板方法模式">3. 模板方法模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-策略模式">4. 策略模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-状态模式">6. 状态模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-中介者模式">7. 中介者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-迭代器模式">8. 迭代器模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#9-访问者模式">9. 访问者模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#10-备忘录模式">10. 备忘录模式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-解释器模式">11. 解释器模式</a><br/>
+</nav>
+
+
+
 ## 软件设计的原则
 
 ### 1. 开闭原则
@@ -392,7 +433,9 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 
 ### 2.2 示例
 
-![23_simple_factory](../pictures/23_simple_factory.png)
+<div align="center"> <img src="../pictures/23_simple_factory.png"/> </div>
+
+
 
 产品抽象类：
 
@@ -471,7 +514,9 @@ public Phone getPhone(Class<? extends Phone> phoneClass) {
 
 ### 3.2 示例
 
-![23_factory_method](../pictures/23_factory_method.png)
+<div align="center"> <img src="../pictures/23_factory_method.png"/> </div>
+
+
 
 产品抽象类：
 
@@ -552,7 +597,9 @@ public class ZTest {
 
 ### 4.2  示例
 
-![23_abstract_factory](../pictures/23_abstract_factory.png)
+<div align="center"> <img src="../pictures/23_abstract_factory.png"/> </div>
+
+
 
 充电器抽象类：
 
@@ -644,7 +691,9 @@ public class ZTest {
 
 ### 5.2 示例
 
-![23_builder](../pictures/23_builder.png)
+<div align="center"> <img src="../pictures/23_builder.png"/> </div>
+
+
 
 产品实体类：
 
@@ -986,7 +1035,9 @@ service.compute();
 
 将 220V 的电流通过适配器转换为对应规格的电流给手机充电：
 
-![23_adapter](..\pictures\23_adapter.png)
+<div align="center"> <img src="..\pictures\23_adapter.png"/> </div>
+
+
 
 电源类：
 
@@ -1059,7 +1110,9 @@ public class ZTest {
 
 将一个图形的形状和颜色进行分离，从而可以通过组合来实现的不同的效果：
 
-![23_bridge](..\pictures\23_bridge.png)
+<div align="center"> <img src="..\pictures\23_bridge.png"/> </div>
+
+
 
 颜色的抽象和实现：
 
@@ -1152,7 +1205,9 @@ new Round().setColor(new Yellow()).getDesc();
 
 模拟 Linux 文件系统：
 
-![23_composite](..\pictures\23_composite.png)
+<div align="center"> <img src="..\pictures\23_composite.png"/> </div>
+
+
 
 组件类，定义文件夹和文件的所有操作：
 
@@ -1279,7 +1334,9 @@ nginx.cat();
 
 在购买手机后，你可能还会购买屏幕保护膜，手机壳等来进行装饰：
 
-![23_decorator](..\pictures\23_decorator.png)
+<div align="center"> <img src="..\pictures\23_decorator.png"/> </div>
+
+
 
 手机抽象类及其实现：
 
@@ -1398,7 +1455,9 @@ public class ZTest {
 
 模仿电商购物下单，此时内部需要调用支付子系统，仓储子系统，物流子系统，而这些细节对用户都是屏蔽的：
 
-![23_facade](..\pictures\23_facade.png)
+<div align="center"> <img src="..\pictures\23_facade.png"/> </div>
+
+
 
 安全检查系统：
 
@@ -1484,7 +1543,9 @@ XXX手机已经发货，请注意查收...
 
 这里以创建 PPT 模板为例，相同类型的 PPT 模板不再重复创建：
 
-![23_flyweight](..\pictures\23_flyweight.png)
+<div align="center"> <img src="..\pictures\23_flyweight.png"/> </div>
+
+
 
 PPT 抽象类：
 
@@ -1617,7 +1678,9 @@ public class ZTest {
 
 假设多个用户都关注某一个商家，当商家发出降价等通知时，所有用户都应该收到：
 
-![23_observer](../pictures/23_observer.png)
+<div align="center"> <img src="../pictures/23_observer.png"/> </div>
+
+
 
 被观察者接口及商家实现类：
 
@@ -1718,7 +1781,9 @@ business.notifyObservers("商品促销通知");
 
 假设一个正常的流程，根据请假天数的不同，需要不同的领导共同审批：
 
-![23_chain_of_responsibility](..\pictures\23_chain_of_responsibility.png)
+<div align="center"> <img src="..\pictures\23_chain_of_responsibility.png"/> </div>
+
+
 
 申请单：
 
@@ -1831,7 +1896,9 @@ groupLeader.approval(new Application("婚假单", 10));
 
 手机一般都有电池，摄像头等模块，但不是所有手机都有 NFC 模块，如果采用模板模式构建，则相关代码如下：
 
-![23_chain_of_responsibility](..\pictures\23_template.png)
+<div align="center"> <img src="..\pictures\23_template.png"/> </div>
+
+
 
 抽象的父类：
 
@@ -1932,7 +1999,9 @@ smartPhone.assembling();
 
 假设公司需要根据营业额的不同来选择不同的员工激励策略：
 
-![23_strategy](..\pictures\23_strategy.png)
+<div align="center"> <img src="..\pictures\23_strategy.png"/> </div>
+
+
 
 策略接口及其实现类：
 
@@ -2016,7 +2085,9 @@ public static void main(String[] args) {
 
 假设我们正在开发一个播放器，它有如下图所示四种基本的状态：播放状态，关闭状态，暂停状态，加速播放状态。这四种状态间可以相互转换，但存在一定的限制，比如在关闭或者暂停状态下，都不能加速视频，采用状态模式来实现该播放器的相关代码如下：
 
-![23_state](..\pictures\23_state.png)
+<div align="center"> <img src="..\pictures\23_state.png"/> </div>
+
+
 
 定义状态抽象类：
 
@@ -2380,7 +2451,9 @@ while (iterator.hasNext()) {
 
 通常不同级别的员工对于公司档案的访问权限是不同的，为方便理解，如下图所示假设只有公开和加密两种类型的档案，并且只有总经理和部门经理才能进入档案室：
 
-![23_visitor](..\pictures\23_visitor.png)
+<div align="center"> <img src="..\pictures\23_visitor.png"/> </div>
+
+
 
 定义档案类及其实现类：
 

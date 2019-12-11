@@ -3,7 +3,7 @@
 
 
 <nav>
-软件设计的原则<br/>
+软件设计原则<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-开闭原则">1. 开闭原则</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-里氏替换原则">2. 里氏替换原则</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-依赖倒置原则">3. 依赖倒置原则</a><br/>

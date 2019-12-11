@@ -8,7 +8,7 @@
 
 ### 2. 里氏替换原则
 
-定义：继承必须保证确保超类所拥有的性质在子类中仍然成立。即子类在继承父类时，除了添加新的方法来新增功能外，尽量避免重写父类方法，因为这会导致整个继承体系的复用性变差。
+定义：继承必须保证超类所拥有的性质在子类中仍然成立。即子类在继承父类时，除了添加新的方法来新增功能外，尽量避免重写父类方法，因为这会导致整个继承体系的复用性变差。
 
 ### 3. 依赖倒置原则
 
@@ -83,7 +83,7 @@ public class StaticInnerClassHungrySingleton {
 }
 ```
 
-恶汉式单例的优点在于其不存在线程安全问题，对象的唯一性由虚拟机在类初始化创建时保证；其缺点在于如果对象的创建比较消耗资源，并且单例对象不一定会被使用到，此时就会造成资源的浪费。
+饿汉式单例的优点在于其不存在线程安全问题，对象的唯一性由虚拟机在类初始化创建时保证；其缺点在于如果对象的创建比较消耗资源，并且单例对象不一定会被使用到，此时就会造成资源的浪费。
 
 ### 1.2 懒汉式单例
 
@@ -150,7 +150,7 @@ public class DoubleCheckLazySingletonSafe {
 }
 ```
 
-还是沿用上面的举例，假设单例对象已经创建完成，并有 100 个线程并发获取该单例对象，此时 `instance == null` 判断肯定是 false，所以所有线程都会直接获得该单例对象，而不会进入 synchronized 同步代码块，这减小了锁的锁定范围，用更小的锁粒度获得了更好的性能。但内部的 `if` 代码块任然需要使用 synchronized 关键字修饰，从而保证整个 if 代码块的原子性。
+还是沿用上面的举例，假设单例对象已经创建完成，并有 100 个线程并发获取该单例对象，此时 `instance == null` 判断肯定是 false，所以所有线程都会直接获得该单例对象，而不会进入 synchronized 同步代码块，这减小了锁的锁定范围，用更小的锁粒度获得了更好的性能。但内部的 `if` 代码块仍然需要使用 synchronized 关键字修饰，从而保证整个 if 代码块的原子性。
 
 需要注意的是这里的 instance 需要使用 volatile 关键修饰，用于禁止对象在创建过程中出现指令重排序。通常对象的创建分为以下三步：
 
@@ -177,7 +177,7 @@ return instance;
 
 ### 1.3  使用序列化破坏单例
 
-饿汉式单例和双重检查锁的懒汉式单例都是线程安全的，都能满足日常的开发需求，但如果你是类库的开发者，为了防止自己类库中的单例在调用时被有意或无意地破坏，你还需要考虑单例模式写法安全。其中序列化和反射攻击是两种常见的破坏单例的方式，示例如下：
+饿汉式单例和双重检查锁的懒汉式单例都是线程安全的，都能满足日常的开发需求，但如果你是类库的开发者，为了防止自己类库中的单例在调用时被有意或无意地破坏，你还需要考虑单例模式的写法安全。其中序列化和反射攻击是两种常见的破坏单例的方式，示例如下：
 
 ```java
 public class SerializationDamage {
@@ -204,7 +204,7 @@ public class HungrySingleton implements Serializable {
 }
 ```
 
-此时在反序列化时该方法就会被调用来返回对应类的实例，对应的 ObjectInputStream 类的源码如下：
+此时在反序列化时该方法就会被调用来返回单例对象，对应的 ObjectInputStream 类的源码如下：
 
 ```java
   // 在本用例中，readObject在内部最终调用的是readOrdinaryObject方法
@@ -213,7 +213,7 @@ private Object readOrdinaryObject(boolean unshared) throws IOException{
         if (obj != null && handles.lookupException(passHandle) == null &&
             desc.hasReadResolveMethod()) //如果对应的对象中有readResolve方法
         {
-            // 则通过反射调用该方法来获取对应的实例对象
+            // 则通过反射调用该方法来获取对应的单例对象
             Object rep = desc.invokeReadResolve(obj);
             ........
            handles.setObject(passHandle, obj = rep);
@@ -239,7 +239,7 @@ public class ReflectionDamage {
 }
 ```
 
-即便在创建单例对象时将构造器声明为私有，此时仍然可以通过反射获取，此时单例模式就被破坏了。如果你采用的是饿汉式单例，此时可以通过如下的代码来规避这种破坏：
+即便在创建单例对象时将构造器声明为私有，此时仍然可以通过反射修改权限来获取，此时单例模式就被破坏了。如果你采用的是饿汉式单例，此时可以通过如下的代码来规避这种破坏：
 
 ```java
 public class HungrySingleton implements Serializable {
@@ -640,7 +640,7 @@ public class ZTest {
 
 ### 5.1 定义
 
-将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示。它是将一个复杂对象的创建过程分解为多个简单的步骤，然后一步一步的组装完成。
+将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示。它将一个复杂对象的创建过程分解为多个简单的步骤，然后一步一步的组装完成。
 
 ### 5.2 示例
 
@@ -762,7 +762,7 @@ Phone(processor=高通骁龙处理器, camera=索尼摄像头, screen=OLED)
 
 ### 6.1  定义
 
-用原型示例指定创建对象的种类，并通过拷贝这些原型创建新的对象。
+用原型实例指定创建对象的种类，并通过拷贝这些原型创建新的对象。
 
 ### 6.2  示例
 
@@ -986,7 +986,7 @@ service.compute();
 
 将 220V 的电流通过适配器转换为对应规格的电流给手机充电：
 
-![23_adapter](D:\Full-Stack-Notes\pictures\23_adapter.png)
+![23_adapter](..\pictures\23_adapter.png)
 
 电源类：
 
@@ -1010,7 +1010,7 @@ public interface Target {
 }
 ```
 
-适配器需要继承自源类，并实现目标类方法：
+适配器需要继承自源类，并实现目标类接口：
 
 ```java
 public class ChargerAdapter extends PowerSupply implements Target {
@@ -1059,7 +1059,7 @@ public class ZTest {
 
 将一个图形的形状和颜色进行分离，从而可以通过组合来实现的不同的效果：
 
-![23_bridge](D:\Full-Stack-Notes\pictures\23_bridge.png)
+![23_bridge](..\pictures\23_bridge.png)
 
 颜色的抽象和实现：
 
@@ -1152,7 +1152,7 @@ new Round().setColor(new Yellow()).getDesc();
 
 模拟 Linux 文件系统：
 
-![23_composite](D:\Full-Stack-Notes\pictures\23_composite.png)
+![23_composite](..\pictures\23_composite.png)
 
 组件类，定义文件夹和文件的所有操作：
 
@@ -1279,7 +1279,7 @@ nginx.cat();
 
 在购买手机后，你可能还会购买屏幕保护膜，手机壳等来进行装饰：
 
-![23_decorator](D:\Full-Stack-Notes\pictures\23_decorator.png)
+![23_decorator](..\pictures\23_decorator.png)
 
 手机抽象类及其实现：
 
@@ -1387,7 +1387,7 @@ public class ZTest {
 
 ### 6.1  定义
 
-在现在流行的微服务架构模式下，我们通常会将一个大型的系统拆分为多个独立的服务，此时需要提供一个一致性的接口来给外部系统进行调用，这就是外观模式。
+在现在流行的微服务架构模式下，我们通常会将一个大型的系统拆分为多个独立的服务，此时需要提供一个一致性的接口来给外部系统进行调用，这就是外观模式的一种体现。
 
 ### 6.2 优点
 
@@ -1398,7 +1398,7 @@ public class ZTest {
 
 模仿电商购物下单，此时内部需要调用支付子系统，仓储子系统，物流子系统，而这些细节对用户都是屏蔽的：
 
-![23_facade](D:\Full-Stack-Notes\pictures\23_facade.png)
+![23_facade](..\pictures\23_facade.png)
 
 安全检查系统：
 
@@ -1452,7 +1452,7 @@ public class OrderService {
 }
 ```
 
-用户只需要访问外观门面，调用一致性接口即可：
+用户只需要访问外观门面，调用下单接口即可：
 
 ```java
 Phone phone = new Phone("XXX手机");
@@ -1472,7 +1472,7 @@ XXX手机已经发货，请注意查收...
 
 ### 7.1 定义
 
-运用共享技术来有効地支持大量细粒度对象的复用，线程池，缓存技术都是其代表性的实现。在享元模式中存在以下两种状态：
+运用共享技术来有效地支持大量细粒度对象的复用，线程池，缓存技术都是其代表性的实现。在享元模式中存在以下两种状态：
 
 + 内部状态，即不会随着环境的改变而改变状态，它在对象初始化时就已经确定；
 
@@ -1484,7 +1484,7 @@ XXX手机已经发货，请注意查收...
 
 这里以创建 PPT 模板为例，相同类型的 PPT 模板不再重复创建：
 
-![23_flyweight](D:\Full-Stack-Notes\pictures\23_flyweight.png)
+![23_flyweight](..\pictures\23_flyweight.png)
 
 PPT 抽象类：
 
@@ -1592,6 +1592,11 @@ public class ZTest {
         System.out.println(ppt03);
     }
 }
+
+// 输出：
+编号：1744347043: PowerPoint{copyright='PPT工厂版本所有', title='第一季度工作汇报'}
+编号：1744347043: PowerPoint{copyright='PPT工厂版本所有', title='第二季度工作汇报'}
+编号：662441761: PowerPoint{copyright='PPT工厂版本所有', title='科技展汇报'}
 ```
 
 
@@ -1602,7 +1607,7 @@ public class ZTest {
 
 ### 1.1  定义
 
-定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+定义对象间一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
 
 ### 1.2  优点
 
@@ -1619,10 +1624,13 @@ public class ZTest {
 ```java
 public interface Observable {
 
+    // 接收观察者
     void addObserver(Observer observer);
 
+    // 移除观察者
     void removeObserver(Observer observer);
-
+    
+    // 通知观察者
     void notifyObservers(String message);
 }
 ```
@@ -1696,7 +1704,7 @@ business.notifyObservers("商品促销通知");
 
 ### 2.1 定义
 
-使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象连接成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。
+使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象连接成一条链，并沿着这条链传递该请求，直到有一个对象处理完它为止。
 
 ### 2.2 优点
 
@@ -1710,7 +1718,7 @@ business.notifyObservers("商品促销通知");
 
 假设一个正常的流程，根据请假天数的不同，需要不同的领导共同审批：
 
-![23_chain_of_responsibility](D:\Full-Stack-Notes\pictures\23_chain_of_responsibility.png)
+![23_chain_of_responsibility](..\pictures\23_chain_of_responsibility.png)
 
 申请单：
 
@@ -1804,7 +1812,7 @@ groupLeader.approval(new Application("婚假单", 10));
 
 ### 3.1 定义
 
-定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。它通常包含以下角色：
+定义一个操作的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。它通常包含以下角色：
 
 **抽象父类 (Abstract Class) **：负责给出一个算法的轮廓和骨架。它由一个模板方法和若干个基本方法构成：
 
@@ -1823,7 +1831,7 @@ groupLeader.approval(new Application("婚假单", 10));
 
 手机一般都有电池，摄像头等模块，但不是所有手机都有 NFC 模块，如果采用模板模式构建，则相关代码如下：
 
-![23_chain_of_responsibility](D:\Full-Stack-Notes\pictures\23_template.png)
+![23_chain_of_responsibility](..\pictures\23_template.png)
 
 抽象的父类：
 
@@ -1918,13 +1926,13 @@ smartPhone.assembling();
 
 ### 4.1 定义
 
-定义一系列的算法，把它们一个个封装起来，并且使它们可以相互替换，且算法的变化不会影响使用算法的客户。策略模式实际上是一种无处不在的模式，比如根据在 controller 层接收到的参数不同，调用不同的 service 进行处理，这也是策略模式的一种体现。
+定义一系列的算法，并将它们独立封装后再提供给客户端使用，从而使得算法的变化不会影响到客户端的使用。策略模式实际上是一种无处不在的模式，比如根据在 controller 层接收到的参数不同，调用不同的 service 进行处理，这也是策略模式的一种体现。
 
 ### 4.2 示例
 
 假设公司需要根据营业额的不同来选择不同的员工激励策略：
 
-![23_strategy](D:\Full-Stack-Notes\pictures\23_strategy.png)
+![23_strategy](..\pictures\23_strategy.png)
 
 策略接口及其实现类：
 
@@ -1973,6 +1981,8 @@ public class Company {
 }
 ```
 
+客户端使用时，需要根据不同的营业额选择不同的激励策略：
+
 ```java
 public static void main(String[] args) {
     // 营业额
@@ -1987,6 +1997,8 @@ public static void main(String[] args) {
     }
 }
 ```
+
+
 
 ## 6. 状态模式
 
@@ -2004,7 +2016,7 @@ public static void main(String[] args) {
 
 假设我们正在开发一个播放器，它有如下图所示四种基本的状态：播放状态，关闭状态，暂停状态，加速播放状态。这四种状态间可以相互转换，但存在一定的限制，比如在关闭或者暂停状态下，都不能加速视频，采用状态模式来实现该播放器的相关代码如下：
 
-![23_state](D:\Full-Stack-Notes\pictures\23_state.png)
+![23_state](..\pictures\23_state.png)
 
 定义状态抽象类：
 
@@ -2368,7 +2380,7 @@ while (iterator.hasNext()) {
 
 通常不同级别的员工对于公司档案的访问权限是不同的，为方便理解，如下图所示假设只有公开和加密两种类型的档案，并且只有总经理和部门经理才能进入档案室：
 
-![23_visitor](D:\Full-Stack-Notes\pictures\23_visitor.png)
+![23_visitor](..\pictures\23_visitor.png)
 
 定义档案类及其实现类：
 
@@ -2446,7 +2458,7 @@ public class Company {
 		archives.add(archive);
 	}
 
-      // 移除档案
+    // 移除档案
 	void remove(Archive archive) {
 		archives.remove(archive);
 	}
@@ -2504,7 +2516,7 @@ public class Article {
 }
 ```
 
-根据业务的需求，你可能只需要保存数据的部分字段，或者还需要额外增加字段（如保存时间等），所以需要在保存时需要将目标对象转换为备忘录对象：
+根据业务需求的不同，你可能只需要保存数据的部分字段，或者还需要额外增加字段（如保存时间等），所以在保存时需要将目标对象转换为备忘录对象：
 
 ```java
 // 备忘录对象
@@ -2514,6 +2526,7 @@ public class Memorandum {
 	private String content;
 	private Date createTime;
 
+    // 根据目标对象来创建备忘录对象
 	public Memorandum(Article article) {
 		this.title = article.getTitle();
 		this.content = article.getContent();

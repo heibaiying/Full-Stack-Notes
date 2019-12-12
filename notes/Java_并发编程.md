@@ -1,5 +1,64 @@
 # Java 并发编程基础
 
+<nav>
+<a href="#一线程">一、线程</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-创建线程">1.1 创建线程</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-线程属性">1.2 线程属性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-线程状态">1.3 线程状态</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-线程终止">1.4 线程终止</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15--线程中断">1.5  线程中断</a><br/>
+<a href="#二基本概念">二、基本概念</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-变量分类">2.1 变量分类</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22--竞态">2.2  竞态</a><br/>
+<a href="#三原子性">三、原子性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-定义">3.1 定义</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-非原子性协定">3.2 非原子性协定</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33--保证原子性">3.3  保证原子性</a><br/>
+<a href="#四可见性">四、可见性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-定义">4.1 定义</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-高速缓存">4.2 高速缓存</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-缓存一致性协议">4.3 缓存一致性协议</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-写缓冲器与无效化队列">4.4 写缓冲器与无效化队列</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#45-内存屏障">4.5 内存屏障</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#46--保证可见性">4.6  保证可见性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#47-Java-内存模型">4.7 Java 内存模型</a><br/>
+<a href="#五有序性">五、有序性</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-顺序语义">5.1 顺序语义</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-重排序类型">5.2 重排序类型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#53-貌似串行语义">5.3 貌似串行语义</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#54-内存重排序">5.4 内存重排序</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#55-保证顺序性">5.5 保证顺序性</a><br/>
+<a href="#六锁机制">六、锁机制</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61--内部锁">6.1  内部锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62--显示锁">6.2  显示锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#63--读写锁">6.3  读写锁</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#64--锁优化">6.4  锁优化</a><br/>
+<a href="#七无锁并行">七、无锁并行</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#71--CAS">7.1  CAS</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#72--引用型">7.2  引用型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#73--数组型">7.3  数组型</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#74--字段更新型">7.4  字段更新型</a><br/>
+<a href="#八线程间的协作">八、线程间的协作</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#81-等待与通知">8.1 等待与通知</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#82-条件变量">8.2 条件变量</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#83--Join">8.3  Join</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#84-CountDownLatch">8.4 CountDownLatch</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#85-CyclicBarrier">8.5 CyclicBarrier</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#86-Semaphore">8.6 Semaphore</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#87-LockSupport">8.7 LockSupport</a><br/>
+<a href="#九线程池">九、线程池</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#91--线程池分类">9.1  线程池分类</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#92-定时任务">9.2 定时任务</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#93--线程池内部实现">9.3  线程池内部实现</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#94--线程池扩展">9.4  线程池扩展</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#95-线程池大小">9.5 线程池大小</a><br/>
+<a href="#十Future">十、Future</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#101-Future">10.1 Future </a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#102--FutureTask">10.2  FutureTask</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#103--CompletableFuture">10.3  CompletableFuture</a><br/>
+<a href="#十一ThreadLocal">十一、ThreadLocal</a><br/>
+</nav>
+
 ## 一、线程
 
 ### 1.1 创建线程
@@ -92,7 +151,9 @@ Java 线程的生命周期分为以下五类状态：
 
 各个状态之间的转换关系如下图：
 
-![线程完整生命周期](../pictures/线程完整生命周期.jpg)
+<div align="center"> <img src="../pictures/线程完整生命周期.jpg"/> </div>
+
+
 
 ### 1.4 线程终止
 
@@ -262,7 +323,9 @@ public class J1_ThreadUnsafe {
 
 现代处理器一般具有多个层次的高速缓存，如：一级缓存（L1 Cache）、二级缓存（L2 Cache）、三级缓存（L3 Cache）等。其中一级缓存通常包含两部分，其中一部分用于存储指令（L1i），另外一部分用于存储数据（L1d）。距离处理器越近的高速缓存，其存储速率越快，制造成本越高，因此其容量也越小。在 Linux 系统中，可以使用 `lscpu` 命令查看其高速缓存的情况：
 
-![cahce](../pictures/cahce.png)
+<div align="center"> <img src="../pictures/cahce.png"/> </div>
+
+
 
 ### 4.3 缓存一致性协议
 
@@ -322,7 +385,9 @@ public class J1_ThreadUnsafe {
 
 线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中的变量；不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递需要通过主内存来完成。
 
-![java内存模型](../pictures/java内存模型.png)
+<div align="center"> <img src="../pictures/java内存模型.png"/> </div>
+
+
 
 
 

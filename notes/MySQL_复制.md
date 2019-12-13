@@ -62,7 +62,6 @@ MySQL 的复制原理如下图所示：
 
 <div align="center"> <img src="../pictures/mysql-replication.jpg"/> </div>
 
-
 ### 2.2 配置步骤
 
 首先主节点需要开启二进制日志，并且在同一个复制环境下，主备节点的 server-id  需要不一样：
@@ -328,12 +327,12 @@ mysql> SHOW STATUS LIKE 'Rpl_semi_sync_slave_status';
 
 #### 4. 可选配置
 
-半同步日志还有以下两个可选配置：一个是 rpl_semi_sync_master_wait_for_slave_count，它表示主节点需要至少等待几个从节点复制完成，默认值为 1，因为等待过多从节点可能会导致长时间的延迟，所以通常使用默认值即可。另一个常用参数是 rpl_semi_sync_master_wait_point ，它主要是用于控制等待的时间点，它有以下两个可选值：
+半同步日志还有以下两个可选配置：一个是 `rpl_semi_sync_master_wait_for_slave_count`，它表示主节点需要至少等待几个从节点复制完成，默认值为 1，因为等待过多从节点可能会导致长时间的延迟，所以通常使用默认值即可。另一个常用参数是 `rpl_semi_sync_master_wait_point` ，它主要是用于控制等待的时间点，它有以下两个可选值：
 
-- `AFTER_SYNC`（默认值）：主服务器将每个事务写入其二进制日志，并将二进制日志同步到磁盘后开始进行等待。在收到从节点的确认后，才将事务提交给存储引擎并将结果返回给客户端。
-- `AFTER_COMMIT`：主服务器将每个事务写入其二进制日志并同步到磁盘，然后将事务提交到存储引擎，提交后再进行等待。在收到从节点的确认后，才将结果返回给客户端。
+- **AFTER_SYNC**（默认值）：主服务器将每个事务写入其二进制日志，并将二进制日志同步到磁盘后开始进行等待。在收到从节点的确认后，才将事务提交给存储引擎并将结果返回给客户端。
+- **AFTER_COMMIT**：主服务器将每个事务写入其二进制日志并同步到磁盘，然后将事务提交到存储引擎，提交后再进行等待。在收到从节点的确认后，才将结果返回给客户端。
 
-第二种方式是 MySQL 5.7.2 之前默认方式，但这种方式会导致数据的丢失，所以在 5.7.2 版本后就引入了第一种方式作为默认方式，它可以实现无损复制 (lossless replication)，数据基本无丢失，因此 rpl_semi_sync_master_wait_point 参数通常也不用进行修改，采用默认值即可。想要查看当前版本该参数的值，可以使用如下命令：
+第二种方式是 MySQL 5.7.2 之前默认方式，但这种方式会导致数据的丢失，所以在 5.7.2 版本后就引入了第一种方式作为默认方式，它可以实现无损复制 (lossless replication)，数据基本无丢失，因此 `rpl_semi_sync_master_wait_point` 参数通常也不用进行修改，采用默认值即可。想要查看当前版本该参数的值，可以使用如下命令：
 
 ```shell
 mysql> SHOW VARIABLES LIKE 'rpl_semi_sync_master_wait_point';
@@ -357,7 +356,6 @@ MMM (Master-Master replication manager for MySQL) 是由 Perl 语言开发的一
 除了管理双主节点，MMM 也负责管理所有 Slave节点，在出现宕机、复制延迟或复制错误，MMM 会移除该节点的 VIP，直至节点恢复正常。MMM 高可用的架构示例图如下：
 
 <div align="center"> <img src="../pictures/mysql-MMM架构.png"/> </div>
-
 MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补齐丢失的数据，所以会存在数据不一致性的风险。另外 MMM 的发布时间比较早，所以其也不支持 MySQL 最新的基于 GTID 的复制，如果你使用的是基于 GTID 的复制，则只能采用 MHA。
 
 ### 5.2 MHA
@@ -365,7 +363,6 @@ MMM 架构的缺点在于虽然其能实现自动切换，但却不会主动补�
 MHA (Master High Availability) 是由 Perl 实现的一款高可用程序，相对于 MMM ，它能尽量避免数据不一致的问题。它监控的是一主多从的复制架构，架构如下图所示：
 
 <div align="center"> <img src="../pictures/mysql-MHA架构.png"/> </div>
-
 在 Master 节点宕机后，其处理流程如下：
 
 1. 尝试从宕机 Master 中保存二进制日志；

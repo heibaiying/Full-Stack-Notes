@@ -153,23 +153,17 @@ GO0bnFVWrAuFgr1JMuMZkvfDNyTpoiGU7n/Wlsa151CirHQnANVk3NzE3FErx8v6pAcO0ctX3xFecmSr
 
 + **switchType**：
 
-  默认值为 1，代表自动切换；
-
-  设置为 2，代表基于 MySQL 主从同步的状态来决定是否切换；
-
-  设置为 3，代表基于 MySQL galary cluster 的切换机制进行切换；
-
-  如果你的集群基于 MMM 或 MHA 等高可用架构实现自动切换，则可以将该值设置为 -1，代表不切换。
+  + 默认值为 1，代表自动切换；
+  + 设置为 2，代表基于 MySQL 主从同步的状态来决定是否切换；
+  + 设置为 3，代表基于 MySQL galary cluster 的切换机制进行切换；
+  + 如果你的集群基于 MMM 或 MHA 等高可用架构实现自动切换，则可以将该值设置为 -1，代表不切换。
 
 + **balance**：
 
-  balance="0" ：不开启读写分离机制，所有读请求都发送到当前可用的 writeHost 上。
-
-  balance="1" ：全部的 readHost 与 stand by writeHost 参与读操作。stand by writeHost 通常指的是双主复制中处于 stand 状态的主节点，即假设集群复制架构为 Master1 -> Slave1，Master2 -> Slave2，并且 M1 与 M2  互为主备 )，此时 Master2 ，Slave1，Slave2 都会参与读的负载。
-
-  balance="2" ：所有读请求随机在 writeHost、 readhost 上进行分发。
-
-  balance="3" ：所有读请求随机分发到 writeHost 对应的 readhost 执行，writerHost 不负担读压力。
+  + `balance="0"` ：不开启读写分离机制，所有读请求都发送到当前可用的 writeHost 上。
+  + `balance="1"` ：全部的 readHost 与 stand by writeHost 参与读操作。stand by writeHost 通常指的是双主复制中处于 stand 状态的主节点，即假设集群复制架构为 Master1 -> Slave1，Master2 -> Slave2，并且 M1 与 M2  互为主备 )，此时 Master2 ，Slave1，Slave2 都会参与读的负载。
+  + `balance="2"` ：所有读请求随机在 writeHost、 readhost 上进行分发。
+  + `balance="3"` ：所有读请求随机分发到 writeHost 对应的 readhost 执行，writerHost 不负担读压力。
 
 ### 4.3 rule.xml
 
@@ -237,7 +231,6 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 综合以上全部内容，这里给出一个分库分表的示例，其架构如下：
 
 <div align="center"> <img src="../pictures/mysql-mycat-分库分表实战.png"/> </div>
-
 如上图所示，这里模拟的是一个电商数据库，并对其执行分库分表操作：
 
 - 将用户相关表，订单相关表，商品相关表分表拆分到单独的数据库中；
@@ -351,7 +344,7 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 Access denied for user 'xxx', because password is error
 ```
 
-这是由于从 MySQL 8.0.4 开始使用 caching_sha2_password 作为认证的插件，而之前版本的插件为 mysql_native_password，我在测试中使用的 Mycat 版本为 1.6.7，它并不支持 caching_sha2_password 。因此在登录时候需要通过 `--default_auth` 来指定使用原有的认证插件。
+这是由于从 MySQL 8.0.4 开始使用 `caching_sha2_password` 作为认证的插件，而之前版本的插件为 `mysql_native_password`，我在测试中使用的 Mycat 版本为 1.6.7，它并不支持 `caching_sha2_password` 。因此在登录时候需要通过 `--default_auth` 来指定使用原有的认证插件：
 
 ```shell
 # 1.6.7 版本 Mycat 默认的连接端口号为 8066

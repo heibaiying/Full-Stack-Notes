@@ -50,7 +50,6 @@ RabbitMQ 完全实现了 AMQP 协议，并基于相同的模型架构。RabbitMQ
 RabbitMQ 与 AMQP 遵循相同的模型架构，其架构示例图如下：
 
 <div align="center"> <img src="../pictures/rabbitmq-模型架构.png"/> </div>
-
 ### 1. Publisher（发布者）
 
 发布者 (或称为生产者) 负责生产消息并将其投递到指定的交换器上。
@@ -110,17 +109,14 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 这是最简单的一种交换器模型，此时会把消息路由到与该交换器绑定的所有队列中。如下图，任何发送到 X 交换器上的消息，都会被路由到 Q1 和 Q2 两个队列上。
 
 <div align="center"> <img src="../pictures/rabbitmq-fanout-exchange.png"/> </div>
-
 ### 5.2 direct
 
 把消息路由到 BindingKey 和 RountingKey 完全一样的队列中。如下图，当消息的 RountingKey 为 orange 时，消息会被路由到 Q1 队列；当消息的 RountingKey  为 black 或 green 时，消息会被路由到 Q2 队列。
 
 <div align="center"> <img src="../pictures/rabbitmq-direct-exchange.png"/> </div>
-
 需要特别说明的是一个交换器绑定多个队列时，它们的 BindingKey 是可以相同的，如下图。此时当消息的 RountingKey 为 black 时，消息会同时被路由到 Q1 和 Q2 队列。
 
 <div align="center"> <img src="../pictures/rabbitmq-direct-exchange-2.png"/> </div>
-
 ### 5.3 topic
 
 将消息路由到 BindingKey 和 RountingKey 相匹配的队列中，匹配规则如下：
@@ -131,7 +127,6 @@ RabbitMQ 支持多种交换器类型，常用的有以下四种：
 以下是官方文档中的示例，交换器与队列的绑定情况如图所示，此时的路由情况如下：
 
 <div align="center"> <img src="../pictures/rabbitmq-topic-exchange.png"/> </div>
-
 + 路由键为 `lazy.orange.elephant` 的消息会发送给所有队列；
 + 路由键为 `quick.orange.fox` 的消息只会发送给 Q1 队列；
 + 路由键为 `lazy.brown.fox` 的消息只会发送给 Q2 队列；

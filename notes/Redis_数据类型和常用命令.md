@@ -4,14 +4,14 @@
 
 Redis 5 支持以下多种数据类型：
 
-- 二进制安全字符串。
-- Lists (列表)：根据插入顺序排序的字符串元素的集合。
-- Sets (集)：未排序的不重复的字符串元素的集合。
-- Sorted Sets (排序集)：类似于集，但每个字符串元素与被称为分数的值相关，元素总是按其分数排序。
-- Hashes (散列) ：由字段 (Field) 和值都是字符串组成的映射的集合。
-- Bit Arrays (也称 bitmaps 位图) ：Bitmaps 本身不是一种数据结构， 实际上它就是字符串，但是它可以对字符串的位进行操作，所以在 Redis 官方的分类当中将其单独归为一类；
-- HyperLogLogs：实际类型为字符串类型 ，它是一种基数算法， 通过 HyperLogLog 可以利用极小的内存空间完成独立总数的统计。 
-- Streams (流) ：Stream是 Redis 5.0 引入的一种新数据类型，用于在生产者和消费者之间建立数据通道。
+- 二进制安全的字符串。
+- **Lists (列表)**：根据插入顺序排序的字符串元素的集合。
+- **Sets (集)**：未排序的不重复的字符串元素的集合。
+- **Sorted Sets (排序集)**：类似于集，但每个字符串元素与被称为分数的值相关，元素总是按其分数排序。
+- **Hashes (散列)** ：由字段 (Field) 和值都是字符串组成的映射的集合。
+- **Bit Arrays (也称 bitmaps 位图)** ：Bitmaps 本身不是一种数据结构， 实际上它就是字符串，但是它可以对字符串的位进行操作，所以在 Redis 官方的分类当中将其单独归为一类；
+- **HyperLogLogs**：实际类型为字符串类型 ，它是一种基数算法， 通过 HyperLogLog 可以利用极小的内存空间完成独立总数的统计。 
+- **Streams (流)** ：Stream是 Redis 5.0 引入的一种新数据类型，用于在生产者和消费者之间建立数据通道。
 
 ## 二、常用命令
 
@@ -104,11 +104,11 @@ Redis 5 支持以下多种数据类型：
 | 交集 | zinterstore destination numkeys key \[key ...]  [weights weight [weight ...]] \[aggregate sum\|min\|max] |
 | 并集 | zunionstore destination numkeys key \[key ...] [weights weight [weight ...]] \[aggregate sum\|min\|max] |
 
-- destination： 交集计算的结果保存到这个键。
-- numkeys： 需要做交集计算键的个数。
-- key[key...]： 需要做交集计算的键。 
-- weights weight[weight...]： 每个键的权重， 在做交集计算时， 每个键中的每个 member 会将自己分数乘以这个权重， 每个键的权重默认是1。
-- aggregate sum|min|max： 计算成员交集后， 分值可以按照sum（和） 、min（最小值） 、 max（最大值） 做汇总， 默认值是 sum。 
+- **destination**： 交集计算的结果保存到这个键。
+- **numkeys**： 需要做交集计算键的个数。
+- **key[key...]**： 需要做交集计算的键。 
+- **weights weight[weight...]**： 每个键的权重， 在做交集计算时， 每个键中的每个 member 会将自己分数乘以这个权重， 每个键的权重默认是1。
+- **aggregate sum|min|max**： 计算成员交集后， 分值可以按照sum（和） 、min（最小值） 、 max（最大值） 做汇总， 默认值是 sum。 
 
 ### 2.7 全局命令
 
@@ -126,10 +126,10 @@ Redis 5 支持以下多种数据类型：
 
 可以使用以下命令完成设置键的过期时间：
 
-- expire key seconds： 键在 seconds 秒后过期；
-- expireat key timestamp： 键在秒级时间戳 timestamp 后过期； 
-- pexpire key milliseconds： 键在 milliseconds 毫秒后过期；
-- pexpireat key milliseconds-timestamp：键在毫秒级时间戳 timestamp 后过期。 
+- **expire key seconds**： 键在 seconds 秒后过期；
+- **expireat key timestamp**： 键在秒级时间戳 timestamp 后过期； 
+- **pexpire key milliseconds**： 键在 milliseconds 毫秒后过期；
+- **pexpireat key milliseconds-timestamp**：键在毫秒级时间戳 timestamp 后过期。 
 
 注意事项：
 
@@ -148,9 +148,9 @@ Redis 5 支持以下多种数据类型：
 scan cursor [match pattern] [count number] 
 ```
 
-- cursor：游标，第一次遍历从 0 开始， 每次遍历完都会返回当前游标的值， 直到游标值为 0， 表示遍历结束。
-- match patternr：可选参数， 它的作用的是匹配特定模式的键；
-- count numberr：可选参数， 它的作用是表明每次要遍历的键个数， 默认值是 10。 
+- **cursor**：游标，第一次遍历从 0 开始， 每次遍历完都会返回当前游标的值， 直到游标值为 0， 表示遍历结束。
+- **match pattern**：可选参数， 它的作用的是匹配特定模式的键；
+- **count number**：可选参数， 它的作用是表明每次要遍历的键个数， 默认值是 10。 
 
 ### 2.10 数据库管理
 

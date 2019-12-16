@@ -1,9 +1,14 @@
 # Nginx 基础
 
 <nav>
-<a href="#一Nginx-简介">一、Nginx简介</a><br/>
+<a href="#一Nginx-简介">一、Nginx 简介</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-简介">1.1 简介</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-正向代理和反向代理">1.2 正向代理和反向代理</a><br/>
 <a href="#二基本命令">二、基本命令</a><br/>
 <a href="#三配置格式">三、配置格式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-基本配置格式">3.1 基本配置格式</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-时间和空间单位">3.2 时间和空间单位</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-官方配置模板">3.3 官方配置模板</a><br/>
 <a href="#四部署静态网站">四、部署静态网站</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-增加配置">4.1 增加配置</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-检查配置">4.2 检查配置</a><br/>
@@ -17,6 +22,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61-动静分离配置">6.1 动静分离配置</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62-常见配置异常">6.2 常见配置异常</a><br/>
 </nav>
+
 
 
 ## 一、Nginx 简介
@@ -66,7 +72,7 @@ Nginx 的配置由全局配置和局部配置（指令块）共同组成，所�
 
 ```properties
 <section>{
-	<directive>	<parameters>;
+    <directive>    <parameters>;
 }
 ```
 
@@ -106,7 +112,7 @@ pid        logs/nginx.pid;
 
 
 events {
-	# 指定每个工程线程的最大连接数，总的连接数 max_clients = worker_processes * worker_connections
+    # 指定每个工程线程的最大连接数，总的连接数 max_clients = worker_processes * worker_connections
     worker_connections  1024;
 }
 
@@ -135,11 +141,11 @@ http {
     keepalive_timeout  65;
 
     # 开启文件压缩
-   	gzip  on;
+       gzip  on;
 
     # 配置nginx服务器(虚拟主机)
     server {
-    	# 监听端口
+        # 监听端口
         listen       80;
         server_name  localhost;
 
@@ -147,13 +153,13 @@ http {
         charset koi8-r;
         # 配置当前虚拟主机的访问日志的存放位置
         access_log  logs/host.access.log  main;
-		
+        
         # 虚拟主机对应的映射目录
         location / {
             root   html;
             index  index.html index.htm;
         }
-			
+            
         # 错误重定向页面
         # error_page  404              /404.html;
         error_page   500 502 503 504  /50x.html;
@@ -185,7 +191,7 @@ http {
     server {
         listen       443 ssl;
         server_name  localhost;
-		
+        
         # 指定数字证书
         ssl_certificate      cert.pem;
         # 指定密匙
@@ -294,15 +300,15 @@ run -d  -it  --privileged=true -v /usr/webapps02:/usr/local/tomcat/webapps \
 ```properties
 # 这里指令块的名称可以随意指定，只要和下面的proxy_pass的值相同即可，通常配置为项目名
 upstream springboot {
-	server 192.168.0.226:8080;
-	server 192.168.0.226:8090;
+    server 192.168.0.226:8080;
+    server 192.168.0.226:8090;
 }
 
 server {
-	listen 9020;
-	location / {
-		proxy_pass http://springboot;
-	}
+    listen 9020;
+    location / {
+        proxy_pass http://springboot;
+    }
 }
 ```
 
@@ -318,9 +324,9 @@ server {
 
 ```properties
 upstream myapp1 {
-	server srv1.example.com weight=3;
-	server srv2.example.com weight=2;
-	server srv3.example.com;
+    server srv1.example.com weight=3;
+    server srv2.example.com weight=2;
+    server srv3.example.com;
 }
 ```
 
@@ -330,10 +336,10 @@ upstream myapp1 {
 
 ```properties
 upstream myapp1 {
-	least_conn;
-	server srv1.example.com;
-	server srv2.example.com;
-	server srv3.example.com;
+    least_conn;
+    server srv1.example.com;
+    server srv2.example.com;
+    server srv3.example.com;
 }
 ```
 
@@ -372,15 +378,15 @@ Nginx 能够支持高并发的访问，并具有静态资源缓存等特性，�
 
 ```shell
 server {
-	listen 9020;
-	location / {
-		proxy_pass http://springboot;
-	}
-	# 通过正则来控制所需要分离的静态资源
-	location ~ .*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ {
-		# 静态资源存放目录
-		root /usr/resources/;
-	}
+    listen 9020;
+    location / {
+        proxy_pass http://springboot;
+    }
+    # 通过正则来控制所需要分离的静态资源
+    location ~ .*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ {
+        # 静态资源存放目录
+        root /usr/resources/;
+    }
 }
 ```
 

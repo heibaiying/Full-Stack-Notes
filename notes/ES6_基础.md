@@ -55,6 +55,7 @@
 </nav>
 
 
+
 ## 一、变量声明
 
 ### 1.1 var
@@ -107,13 +108,13 @@ console.log(window.RegExp === RegExp); // true
 
 ```javascript
 function test(flag) {
-	if (flag) {
-		let value = "blue";  // value的作用域被限制在该{}所包裹的代码块中
-		console.log(value);
-	} else {
-		console.log(value); //value在此处不能访问
-	}
-	console.log(value);	 //value在此处不能访问
+    if (flag) {
+        let value = "blue";  // value的作用域被限制在该{}所包裹的代码块中
+        console.log(value);
+    } else {
+        console.log(value); //value在此处不能访问
+    }
+    console.log(value);     //value在此处不能访问
 }
 ```
 
@@ -143,12 +144,12 @@ ES6 中新增了 `const` 关键字，用于声明不可变的常量，它类似�
 
 ```javascript
 const author = {
-	name: "heibai",
+    name: "heibai",
 };
 author.name = "ying"; // 可以修改对象的属性
 console.log(author);  // 但不可以对 const 修饰的常量进行重新赋值
 author = {
-	name: "heibaiying"
+    name: "heibaiying"
 };
 ```
 
@@ -158,9 +159,9 @@ author = {
 
 ```javascript
 (function test() {
-	console.log(typeof value); // ReferenceError: value is not defined
-	let value = "blue";  // 下面的语句都不会被输出
-	console.log(value);
+    console.log(typeof value); // ReferenceError: value is not defined
+    let value = "blue";  // 下面的语句都不会被输出
+    console.log(value);
 })();
 ```
 
@@ -169,8 +170,8 @@ author = {
 ```javascript
 console.log(typeof value);  // undefined
 (function test() {
-	let value = "blue"; 
-	console.log(value); // blue
+    let value = "blue"; 
+    console.log(value); // blue
 })();
 ```
 
@@ -205,12 +206,12 @@ list.forEach(function (func) {
 ```javascript
 let list = [];
 for (let i = 0; i < 10; i++) {
-	list.push(function () {
-		console.log(i);
-	});
+    list.push(function () {
+        console.log(i);
+    });
 }
 list.forEach(function (func) {
-	func();
+    func();
 });
 // 输出 0 到 9
 ```
@@ -272,27 +273,27 @@ console.log("hello".repeat(2));
 ```java
 // 1.模板字面量
 let name = "Nicholas",
-	message01 = `Hello, ${name}.`;
+    message01 = `Hello, ${name}.`;
 console.log(message01); // "Hello, Nicholas."
 
 // 2.支持JS表达式
 let count = 10,
-	price = 0.25,
-	message02 = `${count} items cost $${(count * price).toFixed(2)}.`;
+    price = 0.25,
+    message02 = `${count} items cost $${(count * price).toFixed(2)}.`;
 console.log(message02); // "10 items cost $2.50."
 
 // 3.多行字符串
 let message03 = `Multiline
 string`;
 console.log(message03);      // Hello,
-						   // string
+                           // string
 
 // 4.多行字符串与模板嵌套
 let fullName = "Nicholas",
-	message04 = `Hello, 
-	my name is ${fullName}.`;
-console.log(message04); 	// Hello,
-						  // my name is Nicholas.
+    message04 = `Hello, 
+    my name is ${fullName}.`;
+console.log(message04);     // Hello,
+                          // my name is Nicholas.
 ```
 
 
@@ -305,8 +306,8 @@ ES6 中支持为函数的参数指定默认值，该默认值可以是基本类�
 
 ```javascript
 function request(url, timeout = 2000, callback = function() {}) {
-	console.log(`url: ${url}, timeout: ${timeout}`);
-	callback();
+    console.log(`url: ${url}, timeout: ${timeout}`);
+    callback();
 }
 
 request("GitHub"); // url: GitHub, timeout: 2000
@@ -320,7 +321,7 @@ request("GitHub", 5000, () => console.log("超时异常")); // url: GitHub, time
 
 ```javascript
 function test01(first, second = first) {
-	console.log(`first: ${first}, second: ${second}`);
+    console.log(`first: ${first}, second: ${second}`);
 }
 ```
 
@@ -328,7 +329,7 @@ function test01(first, second = first) {
 
 ```javascript
 function test02(first = second, second) {
-	console.log(`first: ${first}, second: ${second}`);
+    console.log(`first: ${first}, second: ${second}`);
 }
 
 test02(undefined,2); // ReferenceError: second is not defined
@@ -343,7 +344,7 @@ test02(1,2);
 
 ```javascript
 function each(...elements) {
-	elements.forEach((element) => console.log(element));
+    elements.forEach((element) => console.log(element));
 }
 
 test(1, 2, 3, 4, 5);
@@ -356,8 +357,8 @@ test(1, 2, 3, 4, 5);
 
 ```javascript
 let object = {
-	set name(...value) { // 异常：Setter function argument must not be a rest parameter
-	}
+    set name(...value) { // 异常：Setter function argument must not be a rest parameter
+    }
 };
 ```
 
@@ -367,7 +368,7 @@ let object = {
 
 ```javascript
 function each(...elements) {
-	elements.forEach((element) => console.log(element));
+    elements.forEach((element) => console.log(element));
 }
 
 let list = [1, 2, 3, 4, 5];
@@ -401,27 +402,27 @@ let doNothing02 = function() {};
 let reflect01 = value => value;
 //  等效箭头表达式：
 let reflect02 = function (value) {
-	return value;
+    return value;
 };
 
 let sum01 = (num1, num2) => num1 + num2;
 //  等效箭头表达式：
 let sum02 = function (num1, num2) {
-	return num1 + num2;
+    return num1 + num2;
 };
 
 let getDetail01 = id => ({id: id, name: "heibaiying"});
 // 等效箭头表达式：
 let getDetail02 = function (id) {
-	return {
-		id: id,
-		name: "heibaiying"
-	};
+    return {
+        id: id,
+        name: "heibaiying"
+    };
 };
 
 function test() {
     // // 箭头函数能访问包含它的函数的arguments
-	return () => arguments[0]; 
+    return () => arguments[0]; 
 }
 let arrowFunction = test("hello");
 console.log(arrowFunction());  // hello
@@ -641,8 +642,8 @@ ES6 允许按照一定模式，从数组和对象中提取值来对变量进行�
 
 ```javascript
 let person = {
-	name: "heibaiying",
-	age: 18
+    name: "heibaiying",
+    age: 18
 };
 let {name, age} = person;
 console.log(name); // "heibaiying"
@@ -653,8 +654,8 @@ ES6 还支持为待解构的变量传入默认值：
 
 ```javascript
 let person = {
-	name: "heibaiying",
-	age: 18
+    name: "heibaiying",
+    age: 18
 };
 let {name, age, occupation = "programmer"} = person;
 console.log(occupation); // programmer
@@ -664,8 +665,8 @@ console.log(occupation); // programmer
 
 ```javascript
 let person = {
-	name: "heibaiying",
-	age: 18
+    name: "heibaiying",
+    age: 18
 };
 let {name: myName, age: myAge, occ: occupation = "programmer"} = person;
 console.log(myName);
@@ -677,11 +678,11 @@ console.log(occupation);
 
 ```javascript
 let person = {
-	name: "heibaiying",
-	age: 18,
-	teacher: {
-		name: "heibai"
-	}
+    name: "heibaiying",
+    age: 18,
+    teacher: {
+        name: "heibai"
+    }
 };
 let {teacher: {name: teacherName}} = person;
 console.log(teacherName); //  "heibai"
@@ -758,12 +759,12 @@ let a = 1, b = 2;
 
 ```javascript
 function setCookie(name, value, options) {
-	options = options || {};
-	let secure = options.secure,
-	path = options.path,
-	domain = options.domain,
-	expires = options.expires;
-	.....
+    options = options || {};
+    let secure = options.secure,
+    path = options.path,
+    domain = options.domain,
+    expires = options.expires;
+    .....
 }
 ```
 
@@ -771,12 +772,12 @@ function setCookie(name, value, options) {
 
 ```javascript
 function setCookie(name, value, {secure, path, domain, expires} = {}) {
-	console.log(`secure: ${secure}, path: ${path}, domain:${domain}, expires:${expires}`)
+    console.log(`secure: ${secure}, path: ${path}, domain:${domain}, expires:${expires}`)
 }
 
 setCookie("type", "js", {
-	secure: true,
-	expires: 60000
+    secure: true,
+    expires: 60000
 });   // secure: true, path: undefined, domain:undefined, expires:60000
 ```
 
@@ -784,12 +785,12 @@ setCookie("type", "js", {
 
 ```javascript
 function setCookie02(name, value,
-					 {
-						 secure = false,
-						 path = "/",
-						 domain = "example.com",
-						 expires = new Date(Date.now() + 360000000)
-					 } = {} ) {
+                     {
+                         secure = false,
+                         path = "/",
+                         domain = "example.com",
+                         expires = new Date(Date.now() + 360000000)
+                     } = {} ) {
 }
 ```
 
@@ -872,11 +873,11 @@ console.log(symbol05);  // Symbol(age)
 
 ```javascript
 function getPerson(name, age) {
-	return {
-		name,
-		age,
-		[Symbol("createTime")]: Date.now()
-	}
+    return {
+        name,
+        age,
+        [Symbol("createTime")]: Date.now()
+    }
 }
 
 let person = getPerson("heibaiying", 10);
@@ -922,8 +923,8 @@ Set 在使用 `forEach()` 进行遍历时，会接收三个参数：
 ```javascript
 let set03 = new Set(["hei", "bai", "ying"]);
 set03.forEach(function (value, key, ownerSet) {
-	console.log(key + " " + value);
-	console.log(ownerSet === set03);
+    console.log(key + " " + value);
+    console.log(ownerSet === set03);
 });
 // hei hei
 // true
@@ -939,27 +940,27 @@ set03.forEach(function (value, key, ownerSet) {
 let Set04 = new Set([1, 2]);
 let processor = {
     // 输出方法
-	output(value) {
-		console.log(value);
-	},
-	process(dataSet) {
-		dataSet.forEach(function (value) {
-			this.output(value); // 调用this指代对象的输出方法
-		}, this);
-		// 1. 给forEach()传入一个this作为第二个参数
-	}
+    output(value) {
+        console.log(value);
+    },
+    process(dataSet) {
+        dataSet.forEach(function (value) {
+            this.output(value); // 调用this指代对象的输出方法
+        }, this);
+        // 1. 给forEach()传入一个this作为第二个参数
+    }
 };
 processor.process(Set04);
 
 // 2. 使用箭头函数，箭头函数的this由包含它的第一个非箭头函数来决定
 let set05 = new Set([1, 2]);
 let processor = {
-	output(value) {
-		console.log(value);
-	},
-	process(dataSet) {
-		dataSet.forEach((value) => this.output(value));
-	}
+    output(value) {
+        console.log(value);
+    },
+    process(dataSet) {
+        dataSet.forEach((value) => this.output(value));
+    }
 };
 processor.process(set05);
 ```
@@ -970,7 +971,7 @@ Set 对内部存储的对象持有的是强引用，这意味只要对于 Set �
 
 ```javascript
 let set07 = new Set(),
-	item = {name: "heibaiying"};
+    item = {name: "heibaiying"};
 set07.add(item);
 item = null;
 // 将item置为null,其所指向的对象 {name: "heibaiying"} 仍然不会被垃圾回收，因为其还被Set所持有
@@ -1012,8 +1013,8 @@ console.log(map02.size); // 2
 // 3.进行遍历
 let map03 = new Map([["name", "Nicholas"], ["age", 25]]);
 map03.forEach(function (value, key, ownerMap) {
-	console.log(key + " " + value);
-	console.log(ownerMap === map03);
+    console.log(key + " " + value);
+    console.log(ownerMap === map03);
 });
 ```
 
@@ -1031,20 +1032,20 @@ WeakMap 和上面的 WeakSet 类似，用于解决 Map 存在的强引用问题�
 
 ```javascript
 function createIterator(items) {
-	let i = 0;
-	return {
-		hasNext() {
-			return i < items.length;
-		},
-		next() {
-			return i < items.length ? items[i++] : undefined;
-		},
-	};
+    let i = 0;
+    return {
+        hasNext() {
+            return i < items.length;
+        },
+        next() {
+            return i < items.length ? items[i++] : undefined;
+        },
+    };
 }
 
 let iterator = createIterator([1, 2, 3, 4, 5]);
 while (iterator.hasNext()) {
-	console.log(iterator.next());
+    console.log(iterator.next());
 }
 ```
 
@@ -1054,9 +1055,9 @@ while (iterator.hasNext()) {
 
 ```javascript
 function* createIterator(items) {
-	for (let i = 0; i < items.length; i++) {
-		yield items[i];
-	}
+    for (let i = 0; i < items.length; i++) {
+        yield items[i];
+    }
 }
 
 let iterator = createIterator([1, 2, 3]);
@@ -1070,9 +1071,9 @@ console.log(iterator.next()); // { value: undefined, done: true }
 
 ```javascript
 function * getIterator() {
-	yield 1;
-	yield 2;
-	yield 3;
+    yield 1;
+    yield 2;
+    yield 3;
 }
 let iterator = getIterator();
 console.log(iterator.next().value); // 1
@@ -1089,7 +1090,7 @@ ES6 中的大多数集合都支持使用 for-of 循环，示例如下：
 ```javascript
 let colors = ["red", "green", "blue"];
 for (let color of colors){
-	console.log(color)
+    console.log(color)
 }
 ```
 
@@ -1097,18 +1098,18 @@ for (let color of colors){
 
 ```javascript
 let collection = {
-	items: [],
-	* [Symbol.iterator]() {
-		for (let item of this.items) {
-			yield item;
-		}
-	}
+    items: [],
+    * [Symbol.iterator]() {
+        for (let item of this.items) {
+            yield item;
+        }
+    }
 };
 collection.items.push(1);
 collection.items.push(2);
 collection.items.push(3);
 for (let x of collection) {
-	console.log(x);
+    console.log(x);
 }
 ```
 
@@ -1134,21 +1135,21 @@ map.set("name", "heibaiying");
 map.set("age", "12");
 
 for (let entry of list.entries()) {
-	console.log(entry); 
+    console.log(entry); 
 }
 // [ 0, 'red' ]
 // [ 1, 'green' ]
 // [ 2, 'blue' ]
 
 for (let entry of set.entries()) {
-	console.log(entry);
+    console.log(entry);
 }
 // [ 'red', 'red' ]
 // [ 'green', 'green' ]
 // [ 'blue', 'blue' ]
 
 for (let entry of map.entries()) {
-	console.log(entry);
+    console.log(entry);
 }
 
 // [ 'name', 'heibaiying' ]
@@ -1162,7 +1163,7 @@ for (let entry of map.entries()) {
 ```javascript
 var divs = document.getElementsByTagName("div");
 for (let div of divs) {
-	console.log(div.id);
+    console.log(div.id);
 }
 ```
 
@@ -1171,7 +1172,7 @@ for (let div of divs) {
 ```javascript
 let message = "abc";
 for (let i = 0; i < message.length; i++) {
-	console.log(message[i]);
+    console.log(message[i]);
 }
 // a
 // b
@@ -1197,20 +1198,20 @@ ES6 中的类和函数一样，是一等公民，这意味着它能作为参数�
 ```javascript
 class Employee {
 
-	/*构造器*/
-	constructor(name, age) {
-		this.name = name;
-		this.age = age;
-	}
-	/*实例方法*/
-	sayName() {
-		console.log("员工：" + this.name);
-	}
+    /*构造器*/
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    /*实例方法*/
+    sayName() {
+        console.log("员工：" + this.name);
+    }
 
-	/*静态方法*/
-	static create(name) {
-		return new Employee(name);
-	}
+    /*静态方法*/
+    static create(name) {
+        return new Employee(name);
+    }
 }
 
 let employee = new Employee("heibai");
@@ -1224,10 +1225,10 @@ employee.sayName();
 ```javascript
 class Manager extends Employee {
 
-	/*覆写原有的方法*/
-	sayName() {
-		console.log("领导：" + this.name);
-	}
+    /*覆写原有的方法*/
+    sayName() {
+        console.log("领导：" + this.name);
+    }
 }
 
 let manager = new Manager("ying");
@@ -1238,11 +1239,11 @@ manager.sayName();
 
 ```javascript
 function getBase(flag) {
-	if (flag) {
-		return Manager;
-	} else {
-		return Employee;
-	}
+    if (flag) {
+        return Manager;
+    } else {
+        return Employee;
+    }
 }
 
 class CEO extends getBase(true) {
@@ -1273,28 +1274,28 @@ ES6 引入代理的真正作用是：允许用户拦截在目标对象上的底�
 
 ```javascript
 let person = {
-	name: "heibai",
-	idCard: null
+    name: "heibai",
+    idCard: null
 };
 // 建立代理
 let proxy = new Proxy(person, {
     // 拦截写入操作
-	set(target, propertyKey, value, receiver) {
+    set(target, propertyKey, value, receiver) {
         // 对输入的合法性进行校验
-		if (propertyKey === "idCard" && value.length !== 18) {
-			throw new Error("输入的身份证长度必须为18位");
-		}
-		// 调用反射进行修改
-		return Reflect.set(target, propertyKey, value, receiver);
-	},
+        if (propertyKey === "idCard" && value.length !== 18) {
+            throw new Error("输入的身份证长度必须为18位");
+        }
+        // 调用反射进行修改
+        return Reflect.set(target, propertyKey, value, receiver);
+    },
     // 拦截读取操作
-	get(target, propertyKey, receiver) {
-		if (propertyKey === "idCard") {
-			throw new Error("身份证是私密信息，无权读取");
-		}
-		//  调用反射获取值
-		return Reflect.get(target, propertyKey, receiver);
-	}
+    get(target, propertyKey, receiver) {
+        if (propertyKey === "idCard") {
+            throw new Error("身份证是私密信息，无权读取");
+        }
+        //  调用反射获取值
+        return Reflect.get(target, propertyKey, receiver);
+    }
 });
 proxy.name = "ying";
 console.log(proxy.name);
@@ -1344,19 +1345,19 @@ export const magicNumber = 7;
 
 // 2.导出函数
 export function sum(num1, num2) {
-	return num1 + num1;
+    return num1 + num1;
 }
 
 // 3.导出类
 export class Rectangle {
-	constructor(length, width) {
-		this.length = length;
-		this.width = width;
-	}
+    constructor(length, width) {
+        this.length = length;
+        this.width = width;
+    }
 }
 
 function multiply(num1, num2) {
-	return num1 * num2;
+    return num1 * num2;
 }
 
 // 4.导出已有的函数
@@ -1422,18 +1423,18 @@ ES6 支持使用 `default` 关键字来实现默认值导出，一个模块只�
 ```javascript
 // 方式一
 export default function(num1, num2) {
-	return num1 + num2;
+    return num1 + num2;
 }
 
 // 方式二
 function sum(num1, num2) {
-	return num1 + num2;
+    return num1 + num2;
 } 
 export default sum;
 
 // 方式三
 function sum(num1, num2) {
-	return num1 + num2;
+    return num1 + num2;
 } 
 export { sum as default };
 ```
@@ -1465,9 +1466,9 @@ export * from "./example.js";
 ```javascript
 Array.prototype.pushAll = function(items) {
     if (!Array.isArray(items)) {
-   		throw new TypeError("Argument must be an array.");
+           throw new TypeError("Argument must be an array.");
     }
-	return this.push(...items);
+    return this.push(...items);
 };
 ```
 

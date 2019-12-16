@@ -1482,3 +1482,9 @@ let items = [];
 items.pushAll(colors);
 ```
 
+
+
+## 参考资料
+
++ Nicholas C. Zakas . 深入理解ES6 . 电子工业出版社 . 2017-7-1
++ [阮一峰 . ECMAScript 6 入门](https://es6.ruanyifeng.com/)

@@ -50,6 +50,7 @@ RabbitMQ 完全实现了 AMQP 协议，并基于相同的模型架构。RabbitMQ
 RabbitMQ 与 AMQP 遵循相同的模型架构，其架构示例图如下：
 
 <div align="center"> <img src="../pictures/rabbitmq-模型架构.png"/> </div>
+
 ### 1. Publisher（发布者）
 
 发布者 (或称为生产者) 负责生产消息并将其投递到指定的交换器上。

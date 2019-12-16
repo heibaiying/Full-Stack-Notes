@@ -9,7 +9,7 @@
 ## 💻 前端基础
 
 - [JavaScript 基础](notes/JavaScript_基础.md)
-- ECMAScript 6.0 基础
+- [ECMAScript 6.0 基础](notes/ES6_基础.md)
 
 
 
@@ -60,7 +60,7 @@
 
 + [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
 + [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
-+ [基于 HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
++ [HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
 
 ### ZooKeeper 
 

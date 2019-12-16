@@ -1200,11 +1200,7 @@ console.log(ceo instanceof Manager);
 
 
 
-## 十一、异步编程
-
-
-
-## 十二、代理与反射
+## 十一、代理与反射
 
 ES6 支持对象代理，你可以通过 `new Proxy(target)` 来基于目标对象创建一个代理对象，这个代理对象对目标对象进行了虚拟，因此该代理对象与目标对象在表面上可以被当作同一个对象来对待：
 
@@ -1272,4 +1268,162 @@ ES6 支持对底层的多种行为进行代理，具体如下：
 
 
 
-## 十三、模块化
+## 十二、模块化
+
+从 ES6 开始，JavaScript 开始支持模块化加载，相比于传统的 JS 脚本，模块化 JS 具有以下特性：
+
+- 模块中的代码自动运行在严格模式下，并且无法退出严格模式；
+- 在模块顶级作用域中创建的变量，不会被自动添加到共享的全局作用域，它们只会在模块顶级作用域内部存在；
+- 模块顶级作用域的 `this` 值为 undefined ；
+- 模块中的内容只有使用 `export` 导出后才能被外部访问；
+- 允许使用 `import` 从其他模块导入绑定。
+
+### 12.1 基本导出
+
+使用 `export` 可以进行基本的导出：
+
+```javascript
+// 1.导出变量或常量
+export var color = "red";
+export let name = "Nicholas";
+export const magicNumber = 7;
+
+// 2.导出函数
+export function sum(num1, num2) {
+	return num1 + num1;
+}
+
+// 3.导出类
+export class Rectangle {
+	constructor(length, width) {
+		this.length = length;
+		this.width = width;
+	}
+}
+
+function multiply(num1, num2) {
+	return num1 * num2;
+}
+
+// 4.导出已有的函数
+export {multiply};
+```
+
+### 12.2 基本导出
+
+使用 `import` 可以实现基本的导入，可以导入单个绑定，也可以一次性导入多个绑定：
+
+```javascript
+import { sum } from "./example.js";
+console.log(sum(1, 2)); // 3
+
+import { sum, multiply, magicNumber } from "./example.js";
+```
+
+也可以将整个模块一次性导入，然后再使用 `模块名.导出名称` 的格式进行调用：
+
+```javascript
+import * as example from "./example.js";
+console.log(example.sum(1,example.magicNumber)); 
+console.log(example.multiply(1, 2)); 
+```
+
+如果想要在浏览器中使用导入模块化的 JS ，需要指定其 type 类型为 `module`，它会告诉浏览器要将内联代码或是指定文件中的代码当作模块来解析，而不是当作脚本：
+
+```javascript
+<script type="module" src="index.js"></script>
+```
+
+### 12.3 导入路径
+
+导入模块的路径必须以 `/` ， `./` ， `../` 开头，它们的含义分别如下：
+
+- 以 `/` 为起始，表示从根目录开始解析；
+- 以 `./` 为起始，表示从当前目录开始解析；
+- 以 `../` 为起始，表示从父级目录开始解析。
+
+### 12.3 导入导出重命名
+
+ES6 支持对导入导出的原始名称进行重命名：
+
+```javascript
+function sum(num1, num2) {
+return num1 + num2;
+}
+// 对导出名称进行重命名
+export { sum as add };
+```
+
+```javascript
+// 对导入名称进行重命名
+import { add as sum } from "./example.js";
+console.log(typeof add); // "undefined"
+console.log(sum(1, 2)); // 3
+```
+
+### 12.4 导入导出默认值
+
+ES6 支持使用 `default` 关键字来实现默认值导出，一个模块只能有一个导出默认值，它代表的就是整个模块，实现方式如下：
+
+```javascript
+// 方式一
+export default function(num1, num2) {
+	return num1 + num2;
+}
+
+// 方式二
+function sum(num1, num2) {
+	return num1 + num2;
+} 
+export default sum;
+
+// 方式三
+function sum(num1, num2) {
+	return num1 + num2;
+} 
+export { sum as default };
+```
+
+因为默认值代表的就是整个模块，所以导入时就无需使用 `{}` 进行绑定，直接导入即可：
+
+```javascript
+import sum from "./example.js";
+console.log(sum(1, 2)); // 3
+```
+
+### 12.5 导入再导出
+
+ES6 支持对导入的模块进行再导出：
+
+```java
+// 导入再导出
+export { sum } from "./example.js";
+// 对导入模块进行重命名后再导出
+export { sum as add } from "./example.js";
+// 将导入模块的所有值再导出
+export * from "./example.js";
+```
+
+### 12.6 无绑定导入
+
+有些模块可以没有任何导出，例如只修改了全局作用域的对象，如下：
+
+```javascript
+Array.prototype.pushAll = function(items) {
+    if (!Array.isArray(items)) {
+   		throw new TypeError("Argument must be an array.");
+    }
+	return this.push(...items);
+};
+```
+
+尽管没有任何导入与导出，这依然是一个有效的模块。由于它没有任何导出，因此可以使用简化的语法来导入，而无须任何绑定：
+
+```javascript
+import "./example.js";
+
+let colors = ["red", "green", "blue"];
+let items = [];
+items.pushAll(colors);
+```
+

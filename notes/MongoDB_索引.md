@@ -75,7 +75,7 @@ db.user.createIndex( { name: -1 } )
 db.user.getIndexes()
 ```
 
-从输出中可以看到默认的索引名为：字段名+排序规则。这里除了我们为 name 字段创建的索引外，集合中还有一个 `_id` 字段的索引，这是程序自动创建的，用于禁止插入相同 `_id` 的文档。
+从输出中可以看到默认的索引名为：字段名+排序规则。这里除了我们为 name 字段创建的索引外，集合中还有一个 `_id` 字段的索引，这是程序自动创建的，用于禁止插入相同 `_id` 的文档：
 
 ```json
 {
@@ -110,10 +110,9 @@ db.user.find({}).sort({name:-1})
 db.user.find({}).sort({name:1})
 ```
 
-当前大多数数据库都支持双向遍历索引，这和存储结构有关 (如下图)。在 B-Tree 结构的叶子节点上，存储了索引键的值及其对应文档的位置信息，而每个叶子节点间则类似于双向链表，所以如下图既可以从值为 4 的索引遍历到值为 92 的索引，反之亦然。
+当前大多数数据库都支持双向遍历索引，这和存储结构有关 (如下图)。在 B-Tree 结构的叶子节点上，存储了索引键的值及其对应文档的位置信息，而每个叶子节点间则类似于双向链表，既可以从前往后遍历，也可以从后往前遍历：
 
 <div align="center"> <img src="../pictures/b-tree.png"/> </div>
-
 
 ### 2.2 复合索引
 
@@ -123,7 +122,7 @@ db.user.find({}).sort({name:1})
 db.user.createIndex( { name: -1,birthday: 1} )
 ```
 
-需要注意的是 MongoDB 的复合索引具备前缀索引的特征，即如果你创建了索引 `{ a:1, b: 1, c: 1, d: 1 }`，那么等价于在该集合上，还存在了以下三个索引，这三个隐式索引同样可以用于优化查询和排序操作：
+需要注意的是 MongoDB 的复合索引具备前缀索引的特征，即如果你创建了索引 `{ a:1, b: 1, c: 1, d: 1 }`，那么等价于在该集合上还存在了以下三个索引，这三个隐式索引同样可以用于优化查询和排序操作：
 
 ```shell
 { a: 1 }
@@ -202,7 +201,7 @@ db.<collection>.createIndex(
 db.user.createIndex( { name: -1,birthday: 1}, { unique: true })
 ```
 
-此时再执行下面的操作就会报错，因为 name = heibai 并且 birthday = new Date(1998,08,23) 的数据已经存在。
+此时再执行下面的操作就会报错，因为 `name = heibai` 并且 `birthday = new Date(1998,08,23)` 的数据已经存在：
 
 ```shell
 db.user.insertOne({
@@ -211,7 +210,7 @@ db.user.insertOne({
 })
 ```
 
-上面这种情况比较明显，但是如果你执行下面这个操作两次，你会发现只有第一次能够插入成功，第二个就会报 duplicate key 异常。这是因为在唯一索引的约束下，不存在这种状态也会被当做一种唯一值。
+上面这种情况比较明显，但是如果你执行下面这个操作两次，你会发现只有第一次能够插入成功，第二个就会报 duplicate key 异常。这是因为在唯一索引的约束下，name 不存在的这种状态也会被当做一种唯一状态：
 
 ```shell
 db.user.insertOne({
@@ -234,10 +233,10 @@ db.user.createIndex( { name: -1,birthday: 1}, { unique: true,sparse: true})
 
 ### 3.3 部分索引
 
-部分索引主要用于为符合条件的部分数据创建索引，它必须与 partialFilterExpression 选项一起使用。 partialFilterExpression 选项可以使用以下表达式来确定数据范围：
+部分索引主要用于为符合条件的部分数据创建索引，它必须与 `partialFilterExpression` 选项一起使用。 `partialFilterExpression` 选项可以使用以下表达式来确定数据范围：
 
-- 等式表达式（即 字段: 值 或使用 $eq 运算符）;
-- $exists: true 表达式；
+- 等式表达式（即 `字段: 值` 或使用 $eq 运算符）；
+- `$exists: true` 表达式；
 - $gt、$gte、$lt、$lte 操作符；
 - $type 操作符；
 - 处于顶层的 $and 操作符。
@@ -253,7 +252,7 @@ db.user.createIndex(
 
 ### 3.4 TTL 索引
 
-TTL 索引允许为每个文档设置一个超时时间，当一个文档达到超时时间后，就会被删除。TTL索引的到期时间等于索引字段的值 + 指定的秒数，示例如下：
+TTL 索引允许为每个文档设置一个超时时间，当一个文档达到超时时间后，就会被删除。TTL索引的到期时间等于索引字段的值 + 指定的秒数，这里的索引字段的值只能是 Date 类型，示例如下：
 
 ```shell
 db.user.createIndex( { "birthday": 1 }, { expireAfterSeconds: 60 } )
@@ -328,17 +327,17 @@ db.user.find({name:"heibai"},{name:1,age:1}).sort({ name:1}).explain()
 }
 ```
 
-输出结果中内层的 inputStage.stage 的值为 `IXSCAN`，代表此时用到了索引进行扫描，并且 indexName 字段显示了对应的索引为 name_-1_birthday_1。而外层 inputStage.stage 的值为 `FETCH`，代表除了从索引上获取数据外，还需要去对应的文档上获取数据，因为 age 信息并不存储在索引上。这个输出可以证明 MongoDB 是支持前缀索引的，且单键索引支持双向扫描。
+输出结果中内层的 `inputStage.stage` 的值为 `IXSCAN`，代表此时用到了索引进行扫描，并且 `indexName` 字段显示了对应的索引为 `name_-1_birthday_1`。而外层 `inputStage.stage` 的值为 `FETCH`，代表除了从索引上获取数据外，还需要去对应的文档上获取数据，因为 age 信息并不存储在索引上。这个输出可以证明 MongoDB 是支持前缀索引的，且单键索引支持双向扫描。
 
 ### 5.2 覆盖索引
 
-这里我们对上面的查询语句略做修改，不返回 age 字段和默认的 _id 字段，语句如下：
+这里我们对上面的查询语句略做修改，不返回 age 字段和默认的 `_id` 字段，语句如下：
 
 ```shell
 db.user.find({name:"heibai"},{_id:0, name:1}).sort({ name:1 }).explain()
 ```
 
-此时输出结果如下。可以看到该查询少了一个 `FETCH` 阶段。代表此时只需要扫描索引就可以获取到所需的全部信息，这种情况下  name_-1_birthday_1 索引就是这一次查询操作的覆盖索引。
+此时输出结果如下。可以看到该查询少了一个 `FETCH` 阶段。代表此时只需要扫描索引就可以获取到所需的全部信息，这种情况下  `name_-1_birthday_1` 索引就是这一次查询操作的覆盖索引。
 
 ```json
 "inputStage" : {

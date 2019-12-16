@@ -61,7 +61,7 @@ db.employees.insertMany([
 一个简单的聚合操作如下，这个聚合操作会经过两个阶段的数据处理：
 
 + 第一个管道阶段为 $match：会筛选出所有性别值为 F 的雇员的文档，然后输出到下一个管道操作中；
-+ 第二个管道阶段为 $project：用于定义返回的字段内容，这里返回 fullname 字段，它由 firstName + lastName 组成。
++ 第二个管道阶段为 $project：用于定义返回的字段内容，这里返回 fullname 字段，它由 `firstName + lastName` 组成。
 
 ```shell
 db.employees.aggregate([
@@ -116,7 +116,7 @@ db.employees.aggregate([
 ])
 ```
 
-从 MongoDB 3.6 开始，还可以在聚合表达式中使用 $project + 变量 REMOVE 来按照条件定义返回字段，设置为 REMOVE 变量的字段将会从 $projection 的输出中排除。示例如下：
+从 MongoDB 3.6 开始，还可以在聚合表达式中使用 `$project + REMOVE` 来按照条件过滤返回字段，设置为 REMOVE 的字段将会从 $projection 的输出中排除。示例如下：
 
 ```shell
 db.employees.aggregate([
@@ -228,7 +228,7 @@ db.employees.aggregate( [
 ] )
 ```
 
-此时输出内容如下。如果 preserveNullAndEmptyArrays 的值为 false 或者没有设置，则 10003 这条数据不会被输出。
+此时输出内容如下。如果 preserveNullAndEmptyArrays 的值为 false 或者没有设置，则 10003 这条数据不会被输出：
 
 ```json
 {"emp_no":10001,"hobby":"basketball","arrayIndex":0},
@@ -245,9 +245,7 @@ db.employees.aggregate( [
 
 ### 1.5 $sort
 
-$sort 主要用于排序操作，需要注意的是如果可以，应当尽量将该操作放置在管道的第一阶段，从而可以利用索引进行排序，否则就需要使用内存进行排序，这时排序操作就会变得相当昂贵，需要额外消耗内存和计算资源。
-
-示例如下：
+$sort 主要用于排序操作，需要注意的是如果可以，应当尽量将该操作放置在管道的第一阶段，从而可以利用索引进行排序，否则就需要使用内存进行排序，这时排序操作就会变得相当昂贵，需要额外消耗内存和计算资源。示例如下：
 
 ```shell
 db.employees.aggregate([
@@ -331,7 +329,7 @@ db.employees.aggregate([
 ]) 
 ```
 
-输出结果如下，为节省篇幅和突出重点，这里只显示部分内容，下文亦同。从输出中可以看到员工的职位信息都作为内嵌文档插入到指定的 emp_title 字段下，等价于执行了 left outer join 操作。
+输出结果如下，为节省篇幅和突出重点，这里只显示部分内容，下文亦同。从输出中可以看到员工的职位信息都作为内嵌文档插入到指定的 emp_title 字段下，等价于执行了 left outer join 操作：
 
 ```text
 {
@@ -384,7 +382,7 @@ db.employees.aggregate([
 }
 ```
 
-- **from**：指定同一数据库中的集合以进行连接操作；
+- **from**：指定同一数据库中的集合以进行连接操作。
 - **let**：可选操作。用于指定在管道阶段中使用的变量，需要注意的是访问 let 变量必须使用 $expr 运算符。 
 - **pipeline**：必选值，用于指定要在已连接集合上运行的管道。需要注意的是该管道无法直接访问输入文档中的字段，需要先在 let 中进行定义，然后再引用。 
 - **as**：指定用于存放匹配文档的新数组字段的名称。如果指定的字段已存在，则进行覆盖。
@@ -526,7 +524,7 @@ $out 用于将数据写入指定的集合，它必须是管道中的最后一个
 - 创建临时集合；
 - 将索引从现有集合复制到临时集合；
 - 将文档插入临时集合中；
-- 调用 db.collection.renameCollection(target, true) 方法将临时集合重命名为目标集合。
+- 调用 `db.collection.renameCollection(target, true)` 方法将临时集合重命名为目标集合。
 
 $out 的使用示例如下：
 
@@ -554,13 +552,13 @@ db.employees.aggregate([
 
 #### $sort + $limit
 
-当排序操作在限制操作之前时，如果没有中间阶段会修改文档数量 (例如 $unwind，$group)，优化器会将 $limit 合并到 $sort中。如果在 $sort 和 $limit 之间存在修改文档数量的管道阶段，MongoDB 将不会执行合并。
+当排序操作在限制操作之前时，如果没有中间阶段会修改文档数量 (例如 $unwind，$group)，优化器会将 $limit 合并到 $sort 中。如果在 $sort 和 $limit 之间存在修改文档数量的管道阶段，MongoDB 将不会执行合并。
 
 了解这些优化策略可以有助于我们在开发中合理设置管道的顺序。想要了解全部的优化策略，可以参阅 MongoDB 的官方文档：[Aggregation Pipeline Optimization](https://docs.mongodb.com/manual/core/aggregation-pipeline-optimization/) 。
 
 ## 三、MapReduce
 
-MongoDB 的 MapReduce 在概念上与 Hadoop MapReduce 类似，MongoDB 将 *map* 阶段应用于每个符合条件的每个输入文档，*map* 阶段的输出结果是 key-value 键值对。对于具有多个值的 key，MongoDB 会执行 *reduce* 阶段，该阶段负责收集并聚合数据，然后将结果存储在集合中。
+MongoDB 的 MapReduce 在概念上与 Hadoop MapReduce 类似，MongoDB 将 *map* 阶段应用于每个符合条件的输入文档，*map* 阶段的输出结果是 key-value 键值对。对于具有多个值的 key，MongoDB 会执行 *reduce* 阶段，该阶段负责收集并聚合数据，然后将结果存储在集合中。
 
 这里我们以按照性别分组计算员工的平均年龄为例，演示 MapReduce 的基本使用，语句如下：
 
@@ -605,7 +603,7 @@ db.employees.count({gender:"M"})
 
 ### 4.2 estimatedDocumentCount
 
-官方更加推荐使用 estimatedDocumentCount 计算集合中所有文档的数量，它会直接获取元数据信息并返回，因此它并不支持传入查询条件，示例如下：
+官方更加推荐使用 estimatedDocumentCount 计算集合中所有文档的数量，它会直接获取元数据信息并返回，因此它不支持传入查询条件，示例如下：
 
 ```shell
 db.employees.estimatedDocumentCount({})

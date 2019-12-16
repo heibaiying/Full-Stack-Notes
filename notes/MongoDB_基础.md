@@ -64,7 +64,7 @@
 db.collection.insert()
 ```
 
-在 MongoDB 3.2 之前，插入数据的语法如上，可以用于插入单条或者多条数据。在 3.2 之后，MongoDB 为了增强 API 的语义，增加了如下两个 API ，分别用于显示表达插入单条数据和多条数据的行为。
+在 MongoDB 3.2 之前，插入数据的语法如上，可以用于插入单条或者多条数据。在 3.2 之后，MongoDB 为了增强 API 的语义，增加了如下两个 API ，分别用于显示表达插入单条数据和多条数据的行为：
 
 ```shell
 db.collection.insertOne() 
@@ -124,7 +124,7 @@ db.collection.find(<query>, <projection>)
 ```
 
 + `<query>`：用于指定查询条件，不加任何条件则默认查询集合中全部数据；
-+ `<projection>`：可选操作，用于自定查询的返回字段，1 表示该字段包含在返回结果中，0 表示不返回，示例如下：
++ `<projection>`：可选操作，用于过滤返回字段，1 表示对应的字段包含在返回结果中，0 表示不包含，示例如下：
 
 ```shell
 db.user.find({},{name: 1, ObjectId:-1})}
@@ -173,13 +173,13 @@ Mongodb 提供了逻辑操作符 `$or`、`$and`、`$not`、`$nor` ，用于处�
 ```shell
 db.user.find( { $or: [{ name: "heibai" }, { age: { $gt: 30 } }] })
 ```
-查询所有姓名不是以 hei 开头的所有用户，此时可以使用 $not 操作符来配合正则表达式：
+查询姓名不是以 hei 开头的所有用户，此时可以使用 $not 操作符来配合正则表达式：
 
 ```shell
 db.user.find({name: {$not: /^hei*/}})
 ```
 
-如果文档中存在 name 字段，则它的值不能为 heibai，如果文档中存在 age 字段，则它的值不能大于 30 ，只有满足以上两个条件的文档才会被查询出来，示例如下：
+如果要求 name 字段的值不能为 heibai， age 字段的值不能大于 30，则对应的查询语句如下：
 
 ```shell
 db.user.find( { $nor: [{ name: "heibai" }, { age: { $gt: 30 } }] })
@@ -189,12 +189,12 @@ $and 操作符的使用率比较低，因为此时更好的方式是把多个条
 
 ### 3.5 集合查询
 
-如果需要查询个人爱好中有 football 的所有用户，即只要集合 Hobby 中存在 football 即可，对应的查询方法如下：
+如果需要查询个人爱好中有 football 的所有用户，即集合 Hobby 中存在 football 即可，对应的查询语句如下：
 
 ```shell
 db.user.find({Hobby: "football"})
 ```
-如果想要获取集合中指定位置等于指定值的文档，对应的查询方法如下：
+如果想要获取集合中指定位置等于指定值的文档，对应的查询语句如下：
 
 ```shell
 db.user.find({"Hobby.2": "football"})
@@ -279,7 +279,7 @@ db.user.updateOne(
 
 ### 4.3 数组修改器
 
-在修改操作中，比较复杂的是对数组数据的修改，为了解决这个问题，MongoDB 提供了一系列的修改器，用于数组操作：
+在修改操作中，比较复杂的是对数组数据的修改，为了解决这个问题，MongoDB 提供了一系列的数组修改器，用于数组操作：
 
 #### 1. $push
 
@@ -316,7 +316,7 @@ db.user.updateOne(
 
 #### 4. index
 
-对于数组还可以直接修改指定下标位置的元素，示例如下：
+用于直接修改指定下标位置的元素，示例如下：
 
 ```shell
 db.user.updateOne(

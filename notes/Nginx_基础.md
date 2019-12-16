@@ -40,7 +40,6 @@ Nginx 能够同时支持正向代理和反向代理，这两种代理模式的�
 + 反向代理发生在服务端，客户端并不知道发生了代理，示例如下。用户只知道将请求发送给 Nginx，但是并不知道请求被转发了，也不知道被转发给了哪一台应用服务器。实际上对于用户来说，他也没必要知道，因为请求结果都是相同的。
 
 <div align="center"> <img src="../pictures/nginx-plus.png"/> </div>
-
 ## 二、基本命令
 
 Nginx Shell 的基本使用格式如下：
@@ -55,8 +54,8 @@ nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
 - **-t**：检测配置文件是否有语法错误；
 - **-q**：静默模式，在检测配置期间除了错误提示外，不输出其他消息；
 - **-s signal**：向 Master 进程发送信号，支持以下信号类型：stop ( 立即停止 )，quit ( 优雅停止 )，reload ( 重新加载配置文件 )，reopen (打开一个新的日志文件来继续记录日志) ； 
-- **-p prefix** ：指定路径的前缀，默认为安装目录，如 /usr/app/nginx-1.16.1/ ；
-- **-c filename** ：指定配置文件的位置， 默认值为 conf/nginx.conf，其实际指向的路径为 prefix + filename；
+- **-p prefix** ：指定路径的前缀，默认为安装目录，如 `/usr/app/nginx-1.16.1/` ；
+- **-c filename** ：指定配置文件的位置， 默认值为 `conf/nginx.conf`，其实际指向的路径为 `prefix + filename`；
 - **-g directives**：从指定的配置文件中设置全局指令。
 
 ## 三、配置格式
@@ -73,9 +72,9 @@ Nginx 的配置由全局配置和局部配置（指令块）共同组成，所�
 
 指令块使用大括号进行划分，大括号内是独立的配置上下文，包含指令和具体的参数，每行指令以分号作为结尾。除此之外，Nginx 的配置中还支持以下操作：
 
-+ 使用 include 语法来引入外部配置文件，从而可以将每个独立的配置拆分到单独的文件中；
-+ 支持使用 # 符号来添加注释；
-+ 支持使用 $ 符号来引用变量；
++ 支持使用 `include` 语法来引入外部配置文件，从而可以将每个独立的配置拆分到单独的文件中；
++ 支持使用 `#` 符号来添加注释；
++ 支持使用 `$` 符号来引用变量；
 + 部分指令的参数支持使用正则表达式。
 
 ### 3.2 时间和空间单位
@@ -216,7 +215,7 @@ Nginx 通常用作 HTTP 服务器来部署静态资源，其具体的操作步�
 
 ### 4.1 增加配置
 
-修改 nginx.conf ，并在 http 指令块中增加如下配置：
+修改 `nginx.conf` ，并在 http 指令块中增加如下配置：
 
 ```properties
  server {
@@ -290,7 +289,7 @@ run -d  -it  --privileged=true -v /usr/webapps02:/usr/local/tomcat/webapps \
 
 ### 5.2 负载均衡配置
 
-修改 nginx.conf ，并在 http 指令块中增加如下配置：
+修改 `nginx.conf` ，并在 http 指令块中增加如下配置：
 
 ```properties
 # 这里指令块的名称可以随意指定，只要和下面的proxy_pass的值相同即可，通常配置为项目名
@@ -389,7 +388,7 @@ server {
 
 #### 1. No such file or directory
 
-第一个常见的问题是找不到静态资源，此时可以查看 logs 目录下的 error.log 日志，通常输出如下：
+第一个常见的问题是找不到静态资源，此时可以查看 logs 目录下的 `error.log` 日志，通常输出如下：
 
 ```shell
 2019/09/01 17:12:43 [error] 12402#0: *163 open() "/usr/resources/spring-boot-tomcat/css/show.css"
@@ -398,7 +397,7 @@ request: "GET /spring-boot-tomcat/css/show.css HTTP/1.1", host: "192.168.0.226:9
 referrer: "http://192.168.0.226:9020/spring-boot-tomcat/index"
 ```
 
-出现这个问题，是因为 Nginx 要求静态资源的请求路径必须和原有请求路径完全相同，这里我的项目在 Tomcat 中解压后的项目名为 pring-boot-tomcat，以 show.css 文件为例，其正确的存储路径应该为：
+出现这个问题，是因为 Nginx 要求静态资源的请求路径必须和原有请求路径完全相同，这里我的项目在 Tomcat 中解压后的项目名为 `pring-boot-tomcat`，以 show.css 文件为例，其正确的存储路径应该为：
 
 ```shell
 /usr/resources/spring-boot-tomcat/css/show.css

@@ -313,8 +313,7 @@ request("GitHub"); // url: GitHub, timeout: 2000
 request("GitHub", undefined); // url: GitHub, timeout: 2000
 request("GitHub", null); // url: GitHub, timeout: null
 request("GitHub", 5000);  // url: GitHub, timeout: 5000
-request("GitHub", 5000, () => console.log("超时异常")); // url: GitHub, timeout: 5000
-									                   // 超时异常							
+request("GitHub", 5000, () => console.log("超时异常")); // url: GitHub, timeout: 5000 超时异常						
 ```
 
 特别情况下，一个参数的默认值可以是另一个参数：

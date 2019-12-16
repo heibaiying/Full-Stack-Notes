@@ -9,7 +9,7 @@
 ## 💻 前端基础
 
 - [JavaScript 基础](notes/JavaScript_基础.md)
-- ECMAScript 6.0 基础
+- [ECMAScript 6.0 基础](notes/ES6_基础.md)
 
 
 

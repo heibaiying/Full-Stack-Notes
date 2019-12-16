@@ -1,4 +1,59 @@
 #  ECMAScript 6 基础
+<nav>
+<a href="#一变量声明">一、变量声明</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-var">1.1 var</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-let">1.2 let</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-const">1.3 const</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-暂时性死区">1.4 暂时性死区</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-循环体内的变量">1.5 循环体内的变量</a><br/>
+<a href="#二字符串的扩展">二、字符串的扩展</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-字符串方法">2.1 字符串方法</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-模板字面量">2.2 模板字面量</a><br/>
+<a href="#三函数的扩展">三、函数的扩展</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-参数默认值">3.1 参数默认值</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-剩余参数">3.2 剩余参数</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-扩展运算符">3.3 扩展运算符</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-箭头函数">3.4 箭头函数</a><br/>
+<a href="#四对象的扩展">四、对象的扩展</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-对象字面量">4.1 对象字面量</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-相等性判断">4.2 相等性判断</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-属性复制">4.3 属性复制</a><br/>
+<a href="#五数组的扩展">五、数组的扩展</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-创建数组">5.1 创建数组</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-数组方法">5.2 数组方法</a><br/>
+<a href="#六解构">六、解构</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61-对象解构">6.1 对象解构</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62-数组解构">6.2 数组解构</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#63-参数解构">6.3 参数解构</a><br/>
+<a href="#七Symbol">七、Symbol</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#71-创建-Symbol">7.1 创建 Symbol</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#72-使用-Symbol">7.2 使用 Symbol</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#73-共享-Symbol">7.3 共享 Symbol</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#74-检索-Symbol">7.4 检索 Symbol</a><br/>
+<a href="#八Set--与-Map">八、Set  与 Map</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#81-Set">8.1 Set </a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#82-WeakSet">8.2 WeakSet</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#83-Map">8.3 Map</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#84-WeakMap">8.4 WeakMap</a><br/>
+<a href="#九迭代器与生成器">九、迭代器与生成器</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#91-迭代器">9.1 迭代器</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#92-生成器">9.2 生成器</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#93-for-of-循环">9.3 for-of 循环</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#94-内置迭代器">9.4 内置迭代器</a><br/>
+<a href="#十类">十、类</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#101-类">10.1 类</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#102-继承">10.2 继承</a><br/>
+<a href="#十一代理与反射">十一、代理与反射</a><br/>
+<a href="#十二模块化">十二、模块化</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#121-基本导出">12.1 基本导出</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#122-基本导出">12.2 基本导出</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#123-导入路径">12.3 导入路径</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#124-导入导出重命名">12.4 导入导出重命名</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#125-导入导出默认值">12.5 导入导出默认值</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#126-导入再导出">12.6 导入再导出</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#127-无绑定导入">12.7 无绑定导入</a><br/>
+</nav>
+
 
 ## 一、变量声明
 
@@ -1342,7 +1397,7 @@ console.log(example.multiply(1, 2));
 - 以 `./` 为起始，表示从当前目录开始解析；
 - 以 `../` 为起始，表示从父级目录开始解析。
 
-### 12.3 导入导出重命名
+### 12.4 导入导出重命名
 
 ES6 支持对导入导出的原始名称进行重命名：
 
@@ -1361,7 +1416,7 @@ console.log(typeof add); // "undefined"
 console.log(sum(1, 2)); // 3
 ```
 
-### 12.4 导入导出默认值
+### 12.5 导入导出默认值
 
 ES6 支持使用 `default` 关键字来实现默认值导出，一个模块只能有一个导出默认值，它代表的就是整个模块，实现方式如下：
 
@@ -1391,7 +1446,7 @@ import sum from "./example.js";
 console.log(sum(1, 2)); // 3
 ```
 
-### 12.5 导入再导出
+### 12.6 导入再导出
 
 ES6 支持对导入的模块进行再导出：
 
@@ -1404,7 +1459,7 @@ export { sum as add } from "./example.js";
 export * from "./example.js";
 ```
 
-### 12.6 无绑定导入
+### 12.7 无绑定导入
 
 有些模块可以没有任何导出，例如只修改了全局作用域的对象，如下：
 

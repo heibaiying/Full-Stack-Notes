@@ -82,6 +82,8 @@
 
 这里我只有三台服务器，为保证高可用，三台服务器上均部署 mongod 服务（每个服务器上使用不同端口部署两个 mongod 服务），形成两个分片副本集；同时三台服务器上均部署 config servers 服务，形成一个配置副本集：
 
+<div align="center"> <img src="../pictures/mongodb-分片集群.png"/> </div>
+
 ### 2.1 分片副本集配置
 
 第一个分片副本集的配置 `mongod-27018.conf` 如下：

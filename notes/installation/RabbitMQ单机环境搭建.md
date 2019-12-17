@@ -20,7 +20,7 @@
 
 ## 一、前置条件
 
-RabbitMQ 由 Erlang 语言所编写，所以在安装 RabbitMQ 前需要安装 Erlang 。两者的版本兼容关系如下。本篇文章选用的 RabbitMQ 版本为 3.7.15 ， Erlang 版本为 22.0 。
+RabbitMQ 由 Erlang 语言所编写，所以在安装 RabbitMQ 前需要安装 Erlang 。两者的版本兼容关系如下。本篇文章选用的 RabbitMQ 版本为 3.7.15 ， Erlang 版本为 22.0 ：
 
 | RabbitMQ version                                             | Minimum required Erlang/OTP | Maximum supported Erlang/OTP |
 | :----------------------------------------------------------- | :-------------------------- | :--------------------------- |
@@ -156,7 +156,7 @@ rabbitmq-plugins enable rabbitmq_management
 访问端口为 `15672`。默认的用户名和密码都是 `guest` 。如果你所用浏览器和 RabbitMQ 服务不在同一台主机上，此时应该无法登录，并出现下面的提示 ：
 
 <div align="center"> <img src="../../pictures/RabbitMQ-访问限制.png"/> </div>
-之所以会出现这个提示，是因为出于安全考虑，RabbitMQ 只允许在本机使用默认的`guest`用户名登录。想要在其他主机上登录，可以使用自定义的账户。
+之所以会出现这个提示，是因为出于安全考虑，RabbitMQ 只允许在本机使用默认的`guest`用户名登录。想要在其他主机上登录，需要使用自定义的账户。
 
 ### 4.2 新增账户
 

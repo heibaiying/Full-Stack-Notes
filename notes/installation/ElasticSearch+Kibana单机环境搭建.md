@@ -76,17 +76,17 @@ root soft nofile 65536
 root hard nofile 65536
 ```
 
-修改配置完成重启 shell 客户端即可生效，想要验证是否生效，可以使用命令 `ulimit -a` 查看输出中的 `open files` 的值是否为 65536。
+修改配置完成重启 shell 客户端即可生效，想要验证是否生效，可以使用命令 `ulimit -a` 查看输出中的 `open files` 的值是否为 65536 。
 
 ### 1.4 启动服务
 
-进入安装目录的`bin`目录下，执行以下命令启动服务。这里为了观察效果使用前台方式启动，如果想要以后台进程的方式启动，则需要在后面加上`-d`参数：
+进入安装目录的 `bin` 目录下，执行以下命令启动服务。这里为了观察效果使用前台方式启动，如果想要以后台进程的方式启动，则需要在后面加上 `-d` 参数：
 
 ```she
 ./elasticsearch
 ```
 
-需要特别注意的是，处于安全的考虑，Elasticsearch 不允许使用 root 账户启动服务，所以启动时需要切换到其他用户。同时启动用户必须拥有 Elasticsearch 目录的访问权限，可以先使用`chown`命令授权后再使用`su`命令切换到对应用户，示例如下： 
+需要特别注意的是，处于安全的考虑，Elasticsearch 不允许使用 root 账户启动服务，所以启动时需要切换到其他用户。同时启动用户必须拥有 Elasticsearch 目录的访问权限，可以先使用 `chown` 命令授权后再使用 `su` 命令切换到对应用户，示例如下： 
 
 ```shell
 useradd heibaiying
@@ -95,10 +95,9 @@ chown -R heibaiying:heibaiying /usr/app/elasticsearch-7.2.0/
 
 ### 1.5 启动验证
 
-想要验证是否启动成功，可以使用`jps`命令查看`Elasticsearch`进程是否启动，也可以访问`9200`端口，出现如下页面则代表启动成功：
+想要验证是否启动成功，可以使用 `jps` 命令查看 `Elasticsearch` 进程是否启动，也可以访问`9200`端口，出现如下页面则代表启动成功：
 
 <div align="center"> <img src="../../pictures/elk-web-ui.png"/> </div>
-
 ## 二、Kibana 安装
 
 ### 2.1 修改配置
@@ -112,13 +111,13 @@ server.host: 0.0.0.0
 
 ### 2.2 启动服务
 
-同样 Kibana 不允许使用 root 账户启动服务，所以启动时候需要切换到其他用户。同时启动用户必须拥有 Kibana 目录的访问权限，可以先使用`chown`命令授权后再使用`su`命令切换到对应用户，示例如下： 
+同样 Kibana 不允许使用 root 账户启动服务，所以启动时需要切换到其他用户。同时启动用户必须拥有 Kibana 目录的访问权限，可以先使用 `chown` 命令授权后再使用 `su` 命令切换到对应用户，示例如下： 
 
 ```shell
 chown -R heibaiying:heibaiying /usr/app/kibana-7.2.0-linux-x86_64/
 ```
 
-切换用户，并进入到安装目录的`bin`目录下，启动服务：
+切换用户，并进入到安装目录的 `bin` 目录下，启动服务：
 
 ```shell
 # 切换用户
@@ -127,7 +126,7 @@ su - heibaiying
 ./kibana
 ```
 
-需要说明的是这里 kibana 启动时候没有`-d`这个参数，想要后台启动，则可以使用以下命令：
+需要说明的是这里 kibana 启动时候没有 `-d` 这个参数，想要后台启动，则可以使用以下命令：
 
 ```shell
 nohup ./kibana  &
@@ -138,7 +137,6 @@ nohup ./kibana  &
 kibana Web UI 的访问端口号为`5601`，出现以下页面则代表启动成功：
 
 <div align="center"> <img src="../../pictures/kibana-web-ui.png"/> </div>
-
 ### 2.4 界面汉化
 
 kibana 7.0 的界面支持中文显示，可以在 `conf/kibana.yml` 中增加如下选项来进行配置：

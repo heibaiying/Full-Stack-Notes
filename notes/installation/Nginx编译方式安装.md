@@ -2,7 +2,7 @@
 
 ## 一、安装依赖
 
-+  **PCRE**：安装 PCRE 库来支持正则表达式，它主要被 NGINX Core 和 Rewrite 模块所需要：
++  **PCRE**：用于支持正则表达式，它主要被 NGINX Core 和 Rewrite 模块所需要：
 
 ```shell
 # PCRE库的编译需要该组件，所以需要预先安装
@@ -16,7 +16,7 @@ $ make
 $ sudo make install
 ```
 
-+ **zlib** ：安装 zlib 库来支持 header 头压缩，它主要被 NGINX Gzip 模块所依赖：
++ **zlib** ：用于支持 header 头压缩，它主要被 NGINX Gzip 模块所依赖：
 
 ```shell
 $ wget http://zlib.net/zlib-1.2.11.tar.gz
@@ -27,7 +27,7 @@ $ make
 $ sudo make install
 ```
 
-+ **OpenSSL**：安装 OpenSSL 库来支持 HTTPS 协议，它主要被 NGINX SSL 模块和其他模块所依赖：
++ **OpenSSL**：用于支持 HTTPS 协议，它主要被 NGINX SSL 模块和其他模块所依赖：
 
 ```shell
 yum install openssl openssl-devel
@@ -46,7 +46,7 @@ $ tar -zxvf nginx-1.16.1.tar.gz
 
 ### 2.2 编译安装
 
-按需编译 Nginx，可以使用 `--with` 来包含非默认安装的模块，或使用 `--without` 来排除默认安装的模块。关于全部模块的信息，可以使用 ` ./configure  --help` 命令进行查看或查阅官方文档：https://nginx.org/en/docs/configure.html  ：
+按需编译 Nginx，可以使用 `--with` 来包含非默认安装的模块，或使用 `--without` 来排除默认安装的模块。关于全部模块的信息，可以使用 ` ./configure  --help` 命令查看或查阅官方文档：https://nginx.org/en/docs/configure.html  ：
 
 ```shell
 $ cd nginx-1.16.1

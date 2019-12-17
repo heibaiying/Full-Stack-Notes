@@ -6,6 +6,7 @@
 + 深入理解 Java 虚拟机
 
 
+
 ## 💻 前端基础
 
 - [JavaScript 基础](notes/JavaScript_基础.md)
@@ -46,7 +47,9 @@
 + [Linux 常用 Shell 命令](notes/Linux_常用Shell命令.md)
 + [Docker 基础](notes/Docker_基础.md)
 
-## 常用技术栈
+
+
+##  :books: 常用技术栈
 
 ### Kafka
 
@@ -75,3 +78,12 @@
 - [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
 
 
+
+##  :hammer: 软件安装
+
++ [Redis 单机环境安装](installation\Redis单机环境搭建.md)
++ [RabbitMQ 单机环境安装](installation\RabbitMQ单机环境搭建.md)
++ [Nginx 单机环境安装](installation\Nginx编译方式安装.md)
++ [MySQL 单机环境安装](installation\MySQL单机环境搭建.md)
++ [MongoDB 单机环境安装](installation\MongoDB单机环境搭建.md)
++ [ElasticSearch + Kibana 单机环境安装](installation\ElasticSearch+Kibana单机环境搭建.md)

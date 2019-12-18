@@ -81,9 +81,9 @@
 
 ##  :hammer: 软件安装
 
-+ [Redis 单机环境安装](installation\Redis单机环境搭建.md)
-+ [RabbitMQ 单机环境安装](installation\RabbitMQ单机环境搭建.md)
-+ [Nginx 单机环境安装](installation\Nginx编译方式安装.md)
-+ [MySQL 单机环境安装](installation\MySQL单机环境搭建.md)
-+ [MongoDB 单机环境安装](installation\MongoDB单机环境搭建.md)
-+ [ElasticSearch + Kibana 单机环境安装](installation\ElasticSearch+Kibana单机环境搭建.md)
++ [Redis 单机环境安装](installation/Redis单机环境搭建.md)
++ [RabbitMQ 单机环境安装](installation/RabbitMQ单机环境搭建.md)
++ [Nginx 单机环境安装](installation/Nginx编译方式安装.md)
++ [MySQL 单机环境安装](installation/MySQL单机环境搭建.md)
++ [MongoDB 单机环境安装](installation/MongoDB单机环境搭建.md)
++ [ElasticSearch + Kibana 单机环境安装](installation/ElasticSearch+Kibana单机环境搭建.md)

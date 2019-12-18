@@ -78,12 +78,12 @@ db.employees.aggregate([
 
 ```shell
 {
-	"_id" : ObjectId("5d3fe6488ba16934ccce999d"),
-	"fullName" : "GeorgiFacello"
+    "_id" : ObjectId("5d3fe6488ba16934ccce999d"),
+    "fullName" : "GeorgiFacello"
 },
 {
-	"_id" : ObjectId("5d3fe6488ba16934ccce99a0"),
-	"fullName" : "ChirstianKoblick"
+    "_id" : ObjectId("5d3fe6488ba16934ccce99a0"),
+    "fullName" : "ChirstianKoblick"
 }
 ```
 
@@ -158,16 +158,16 @@ db.employees.aggregate(
 
 ```json
 {
-	"_id" : "M",
-	"totalAge" : 78,
-	"avgAge" : 39,
-	"count" : 2
+    "_id" : "M",
+    "totalAge" : 78,
+    "avgAge" : 39,
+    "count" : 2
 },
 {
-	"_id" : "F",
-	"totalAge" : 66,
-	"avgAge" : 33,
-	"count" : 2
+    "_id" : "F",
+    "totalAge" : 66,
+    "avgAge" : 33,
+    "count" : 2
 }
 ```
 
@@ -188,10 +188,10 @@ db.employees.aggregate(
 
 # 输出如下
 {
-	"_id" : null,
-	"totalAge" : 144,
-	"avgAge" : 36,
-	"count" : 4
+    "_id" : null,
+    "totalAge" : 144,
+    "avgAge" : 36,
+    "count" : 4
 }
 ```
 
@@ -337,11 +337,11 @@ db.employees.aggregate([
   "emp_no" : 10001,
   ........
   "emp_title" : [
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
-	  "emp_no" : 10001,
-	  "title" : "Senior Engineer"
-	}
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+      "emp_no" : 10001,
+      "title" : "Senior Engineer"
+    }
   ]
 },
 
@@ -352,16 +352,16 @@ db.employees.aggregate([
   "emp_no" : 10004,
   ........
   "emp_title" : [
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
-	  "emp_no" : 10004,
-	  "title" : "Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
-	  "emp_no" : 10004,
-	  "title" : "Senior Engineer"
-	}
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+      "emp_no" : 10004,
+      "title" : "Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+      "emp_no" : 10004,
+      "title" : "Senior Engineer"
+    }
   ]
 }
 ```
@@ -412,31 +412,31 @@ db.employees.aggregate([
   "emp_no" : 10001,
   .......
   "emps_title" : [
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
-	  "emp_no" : 10001,
-	  "title" : "Senior Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
-	  "emp_no" : 10002,
-	  "title" : "Staff"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
-	  "emp_no" : 10003,
-	  "title" : "Senior Engineer"
- 	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
-	  "emp_no" : 10004,
-	  "title" : "Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
-	  "emp_no" : 10004,
-	  "title" : "Senior Engineer"
-	}
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+      "emp_no" : 10001,
+      "title" : "Senior Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a6"),
+      "emp_no" : 10002,
+      "title" : "Staff"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a7"),
+      "emp_no" : 10003,
+      "title" : "Senior Engineer"
+     },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+      "emp_no" : 10004,
+      "title" : "Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+      "emp_no" : 10004,
+      "title" : "Senior Engineer"
+    }
   ]
 },
 
@@ -445,31 +445,31 @@ db.employees.aggregate([
   "emp_no" : 10002,
   .......
   "emps_title" : [
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a5"),
-	  "emp_no" : 10001,
-	  "title" : "Senior Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a6"),
-	  "emp_no" : 10002,
-	  "title" : "Staff"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a7"),
-	  "emp_no" : 10003,
-	  "title" : "Senior Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a8"),
-	  "emp_no" : 10004,
-	  "title" : "Engineer"
-	},
-	{
-	  "_id" : ObjectId("5d4011728ba16934ccce99a9"),
-	  "emp_no" : 10004,
-	  "title" : "Senior Engineer"
-	}
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a5"),
+      "emp_no" : 10001,
+      "title" : "Senior Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a6"),
+      "emp_no" : 10002,
+      "title" : "Staff"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a7"),
+      "emp_no" : 10003,
+      "title" : "Senior Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a8"),
+      "emp_no" : 10004,
+      "title" : "Engineer"
+    },
+    {
+      "_id" : ObjectId("5d4011728ba16934ccce99a9"),
+      "emp_no" : 10004,
+      "title" : "Senior Engineer"
+    }
   ]
 },
 
@@ -565,10 +565,10 @@ MongoDB 的 MapReduce 在概念上与 Hadoop MapReduce 类似，MongoDB 将 *map
 ```shell
 db.employees.mapReduce(
     function(){
-    	emit(this.gender,this.age)
+        emit(this.gender,this.age)
     },
     function(key,values){
-    	return Array.avg(values)
+        return Array.avg(values)
      },
     { out:"age_avg"}
 )

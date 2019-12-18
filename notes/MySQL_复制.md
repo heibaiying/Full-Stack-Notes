@@ -110,10 +110,10 @@ mysql> SHOW MASTER STATUS;
 
 ```shell
 CHANGE MASTER TO MASTER_HOST='192.168.0.226',\
- 		MASTER_USER='repl',	\
-		MASTER_PASSWORD='123456',\
-		MASTER_LOG_FILE='mysql-bin.000001',\
-		MASTER_LOG_POS=887;
+         MASTER_USER='repl',    \
+        MASTER_PASSWORD='123456',\
+        MASTER_LOG_FILE='mysql-bin.000001',\
+        MASTER_LOG_POS=887;
 ```
 
 开始复制：
@@ -220,9 +220,9 @@ STOP SLAVE IO_THREAD FOR CHANNEL '';
 
 ```shell
 CHANGE MASTER TO MASTER_HOST='192.168.0.226',\
-		MASTER_USER='repl',
-		MASTER_PASSWORD='123456',
-		MASTER_AUTO_POSITION=1;
+        MASTER_USER='repl',
+        MASTER_PASSWORD='123456',
+        MASTER_AUTO_POSITION=1;
 ```
 
 开始复制：
@@ -236,9 +236,9 @@ START SLAVE;
 ```sql
 mysql> SHOW SLAVE STATUS\G
 ....
-Master_UUID			: e1148574-bdd0-11e9-8873-0800273acbfd
-Retrieved_Gtid_Set	: e1148574-bdd0-11e9-8873-0800273acbfd:1-2
-Executed_Gtid_Set	: e1148574-bdd0-11e9-8873-0800273acbfd:1-2
+Master_UUID            : e1148574-bdd0-11e9-8873-0800273acbfd
+Retrieved_Gtid_Set    : e1148574-bdd0-11e9-8873-0800273acbfd:1-2
+Executed_Gtid_Set    : e1148574-bdd0-11e9-8873-0800273acbfd:1-2
 .....
 ```
 

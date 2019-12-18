@@ -90,7 +90,7 @@
 
 ```shell
 processManagement:
-	# 以后台进程的方式启动
+    # 以后台进程的方式启动
     fork: true
 systemLog:
     destination: file
@@ -103,10 +103,10 @@ net:
     port: 27018
     bindIp: 0.0.0.0    
 replication:
-	# 副本集的名称
+    # 副本集的名称
     replSetName: rs0
 sharding:
-	# 在集群中的角色为分片
+    # 在集群中的角色为分片
     clusterRole: shardsvr
 ```
 
@@ -125,10 +125,10 @@ net:
     port: 37018
     bindIp: 0.0.0.0
 replication:
-	# 副本集的名称
+    # 副本集的名称
     replSetName: rs1
 sharding:
-	# 在集群中的角色为分片
+    # 在集群中的角色为分片
     clusterRole: shardsvr
 ```
 
@@ -146,13 +146,13 @@ systemLog:
 storage:
     dbPath: "/home/mongodb/config-serve-data"
 net:
-	# 配置服务的默认端口为27019
+    # 配置服务的默认端口为27019
     port: 27019
     bindIp: 0.0.0.0
 replication:
     replSetName: configReplSet
 sharding:
-	# 在集群中的角色为配置服务
+    # 在集群中的角色为配置服务
     clusterRole: configsvr
 ```
 

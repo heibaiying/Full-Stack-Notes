@@ -88,19 +88,19 @@
 ```java
 public class HungrySingleton implements Serializable {
 
-	private static final HungrySingleton instance;
+    private static final HungrySingleton instance;
 
-	static {
-		instance = new HungrySingleton();
-	}
+    static {
+        instance = new HungrySingleton();
+    }
 
     // 确保构造器私有
-	private HungrySingleton() {}
+    private HungrySingleton() {}
 
     // 获取单例对象
-	public static HungrySingleton getInstance() {
-		return instance;
-	}
+    public static HungrySingleton getInstance() {
+        return instance;
+    }
 }
 ```
 
@@ -133,17 +133,17 @@ public class StaticInnerClassHungrySingleton {
 ```java
 public class LazySingletonUnsafe {
 
-	private static LazySingletonUnsafe instance = null;
+    private static LazySingletonUnsafe instance = null;
 
-	private LazySingletonUnsafe() {
-	}
+    private LazySingletonUnsafe() {
+    }
 
-	public static LazySingletonUnsafe getInstance() {
-		if (instance == null) {
-			instance = new LazySingletonUnsafe();
-		}
-		return instance;
-	}
+    public static LazySingletonUnsafe getInstance() {
+        if (instance == null) {
+            instance = new LazySingletonUnsafe();
+        }
+        return instance;
+    }
 }
 ```
 
@@ -159,11 +159,11 @@ if (instance == null) {
 
 ```java
 public synchronized static LazySingletonUnsafe getInstance() {
-		if (instance == null) {
-			instance = new LazySingletonUnsafe();
-		}
-		return instance;
-	}
+        if (instance == null) {
+            instance = new LazySingletonUnsafe();
+        }
+        return instance;
+    }
 ```
 
 此时该方法是线程安全的，但是性能却存在问题。因为 synchronized 修饰的是静态方法，其锁住的是整个类对象，这意味着所有想要获取该单例对象的线程都必须要等待内部锁的释放。假设单例对象已经创建完成，并有 100 个线程并发获取该单例对象，则这 100 个线程都需要等待，显然这会降低系统的吞吐量，因此更好的方式是采用 **双重检查锁的机制** 来实现懒汉式单例：
@@ -238,9 +238,9 @@ public class SerializationDamage {
 ```java
 public class HungrySingleton implements Serializable {
     ......
-	private Object readResolve() {
-		return instance;
-	}
+    private Object readResolve() {
+        return instance;
+    }
     ......
 }
 ```
@@ -285,20 +285,20 @@ public class ReflectionDamage {
 ```java
 public class HungrySingleton implements Serializable {
 
-	private static final HungrySingleton instance;
+    private static final HungrySingleton instance;
 
-	static {
-		instance = new HungrySingleton();
-	}
+    static {
+        instance = new HungrySingleton();
+    }
 
     // 由于instance在类创建时就已经初始化完成，所以当使用反射调用构造器时就会抛出自定义的RuntimeException异常
-	private HungrySingleton() {
-		if (instance != null) {
-			throw new RuntimeException("单例模式禁止反射调用");
-		}
-	}
+    private HungrySingleton() {
+        if (instance != null) {
+            throw new RuntimeException("单例模式禁止反射调用");
+        }
+    }
 
-	......
+    ......
 }
 ```
 
@@ -313,21 +313,21 @@ public class HungrySingleton implements Serializable {
 ```java
 public enum EnumInstance {
 
-	INSTANCE;
+    INSTANCE;
 
-	private String field;
+    private String field;
 
-	public String getField() {
-		return field;
-	}
+    public String getField() {
+        return field;
+    }
 
-	public void setField(String field) {
-		this.field = field;
-	}
+    public void setField(String field) {
+        this.field = field;
+    }
 
-	public static EnumInstance getInstance() {
-		return INSTANCE;
-	}
+    public static EnumInstance getInstance() {
+        return INSTANCE;
+    }
 }
 ```
 
@@ -398,20 +398,20 @@ public final class EnumInstance extends Enum
 
 ```java
 public class EnumInstanceTest {
-	public static void main(String[] args) throws Exception {
-		// 序列化攻击
-		EnumInstance instance = EnumInstance.getInstance();
-		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("EnumSingletonFile"));
-		outputStream.writeObject(instance);
-		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File("EnumSingletonFile")));
-		EnumInstance newInstance = (EnumInstance) inputStream.readObject();
-		System.out.println(instance == newInstance);
-		// 反射攻击，Enum类中只有一个两个参数的构造器：Enum(String name, int ordinal)
-		Constructor<EnumInstance> constructor = EnumInstance.class.getDeclaredConstructor(String.class, int.class);
-		constructor.setAccessible(true);
-		EnumInstance enumInstance = constructor.newInstance("name", 0);
-		System.out.println(instance == enumInstance);
-	}
+    public static void main(String[] args) throws Exception {
+        // 序列化攻击
+        EnumInstance instance = EnumInstance.getInstance();
+        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("EnumSingletonFile"));
+        outputStream.writeObject(instance);
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File("EnumSingletonFile")));
+        EnumInstance newInstance = (EnumInstance) inputStream.readObject();
+        System.out.println(instance == newInstance);
+        // 反射攻击，Enum类中只有一个两个参数的构造器：Enum(String name, int ordinal)
+        Constructor<EnumInstance> constructor = EnumInstance.class.getDeclaredConstructor(String.class, int.class);
+        constructor.setAccessible(true);
+        EnumInstance enumInstance = constructor.newInstance("name", 0);
+        System.out.println(instance == enumInstance);
+    }
 }
 ```
 
@@ -419,8 +419,8 @@ public class EnumInstanceTest {
 
 ```java
 Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflectively create enum objects
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:417)
-	at com.heibaiying.creational.singleton.EnumInstanceTest.main(EnumInstanceTest.java:18)
+    at java.lang.reflect.Constructor.newInstance(Constructor.java:417)
+    at com.heibaiying.creational.singleton.EnumInstanceTest.main(EnumInstanceTest.java:18)
 ```
 
 
@@ -441,7 +441,7 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 
 ```java
 public abstract class Phone {
-	public abstract void call(String phoneNum);
+    public abstract void call(String phoneNum);
 }
 ```
 
@@ -483,11 +483,11 @@ public class PhoneFactory {
 
 ```java
 public class ZTest {
-	public static void main(String[] args) {
-		PhoneFactory phoneFactory = new PhoneFactory();
-		phoneFactory.getPhone("xiaomi").call("123");
-		phoneFactory.getPhone("huawei").call("321");
-	}
+    public static void main(String[] args) {
+        PhoneFactory phoneFactory = new PhoneFactory();
+        phoneFactory.getPhone("xiaomi").call("123");
+        phoneFactory.getPhone("huawei").call("321");
+    }
 }
 ```
 
@@ -670,12 +670,12 @@ public class XiaomiPhoneFactory implements Factory {
 
 ```java
 public class ZTest {
-	public static void main(String[] args) {
-		XiaomiPhoneFactory xiaomiPhoneFactory = new XiaomiPhoneFactory();
-		xiaomiPhoneFactory.produceCharger().Charge(xiaomiPhoneFactory.producePhone());
-		HuaweiPhoneFactory huaweiPhoneFactory = new HuaweiPhoneFactory();
-		huaweiPhoneFactory.produceCharger().Charge(huaweiPhoneFactory.producePhone());
-	}
+    public static void main(String[] args) {
+        XiaomiPhoneFactory xiaomiPhoneFactory = new XiaomiPhoneFactory();
+        xiaomiPhoneFactory.produceCharger().Charge(xiaomiPhoneFactory.producePhone());
+        HuaweiPhoneFactory huaweiPhoneFactory = new HuaweiPhoneFactory();
+        huaweiPhoneFactory.produceCharger().Charge(huaweiPhoneFactory.producePhone());
+    }
 }
 ```
 
@@ -699,12 +699,12 @@ public class ZTest {
 
 ```java
 public class Phone {
-	/*处理器*/
-	private String processor;
-	/*摄像头*/
-	private String camera;
-	/*屏幕*/
-	private String screen;
+    /*处理器*/
+    private String processor;
+    /*摄像头*/
+    private String camera;
+    /*屏幕*/
+    private String screen;
 }
 ```
 
@@ -714,11 +714,11 @@ public class Phone {
 public abstract class Builder {
 
     protected Phone phone = new Phone();
-	/*安装处理器*/
+    /*安装处理器*/
     public abstract void addProcessor();
-	/*组装摄像头*/
+    /*组装摄像头*/
     public abstract void addCamera();
-	/*安装屏幕*/
+    /*安装屏幕*/
     public abstract void addScreen();
   
     public Phone produce() {
@@ -750,20 +750,20 @@ public class HuaweiBuilder extends Builder {
 
 ```java
 public class XiaomiBuilder extends Builder {
-	@Override
-	public void addProcessor() {
-		phone.setProcessor("高通骁龙处理器");
-	}
+    @Override
+    public void addProcessor() {
+        phone.setProcessor("高通骁龙处理器");
+    }
 
-	@Override
-	public void addCamera() {
-		phone.setCamera("索尼摄像头");
-	}
+    @Override
+    public void addCamera() {
+        phone.setCamera("索尼摄像头");
+    }
 
-	@Override
-	public void addScreen() {
-		phone.setScreen("OLED");
-	}
+    @Override
+    public void addScreen() {
+        phone.setScreen("OLED");
+    }
 }
 ```
 
@@ -772,18 +772,18 @@ public class XiaomiBuilder extends Builder {
 ```java
 public class Manager {
 
-	private Builder builder;
+    private Builder builder;
 
-	public Manager(Builder builder) {
-		this.builder = builder;
-	}
+    public Manager(Builder builder) {
+        this.builder = builder;
+    }
 
-	public Phone buy() {
-		builder.addCamera();
-		builder.addProcessor();
-		builder.addScreen();
-		return builder.produce();
-	}
+    public Phone buy() {
+        builder.addCamera();
+        builder.addProcessor();
+        builder.addScreen();
+        return builder.produce();
+    }
 }
 ```
 
@@ -791,12 +791,12 @@ public class Manager {
 
 ```java
 public class ZTest {
-	public static void main(String[] args) {
-		Phone huawei = new Manager(new HuaweiBuilder()).buy();
-		System.out.println(huawei);
-		Phone xiaomi = new Manager(new XiaomiBuilder()).buy();
-		System.out.println(xiaomi);
-	}
+    public static void main(String[] args) {
+        Phone huawei = new Manager(new HuaweiBuilder()).buy();
+        System.out.println(huawei);
+        Phone xiaomi = new Manager(new XiaomiBuilder()).buy();
+        System.out.println(xiaomi);
+    }
 }
 // 输出：
 Phone(processor=海思麒麟处理器, camera=莱卡摄像头, screen=OLED)
@@ -896,7 +896,7 @@ public class SmartPhone implements Cloneable {
 
 ```java
 public interface IService {
-	void compute();
+    void compute();
 }
 ```
 
@@ -974,9 +974,9 @@ proxyInstance.compute();
 
 ```java
 public class ComputeService {
-	public void compute() {
-		System.out.println("业务处理");
-	}
+    public void compute() {
+        System.out.println("业务处理");
+    }
 }
 ```
 
@@ -1268,7 +1268,7 @@ public class Folder extends Component {
     @Override
     public void print() {
         System.out.println(getName());
-        componentList.forEach(x -> System.out.println("	" + x.getName()));
+        componentList.forEach(x -> System.out.println("    " + x.getName()));
     }
 }
 ```
@@ -1831,13 +1831,13 @@ public class GroupLeader extends Leader {
 
 ```java
 public class DepartManager extends Leader {
-	@Override
-	public void approval(Application application) {
-		System.out.println(application.getTitle() + "被部门经理审批通过");
-		if (application.getDayNum() >= 5) {
-			leader.approval(application);
-		}
-	}
+    @Override
+    public void approval(Application application) {
+        System.out.println(application.getTitle() + "被部门经理审批通过");
+        if (application.getDayNum() >= 5) {
+            leader.approval(application);
+        }
+    }
 }
 ```
 
@@ -2011,24 +2011,24 @@ public interface Strategy {
 }
 
 public class TravelStrategy implements Strategy {
-	@Override
-	public void execute() {
-		System.out.println("集体旅游");
-	}
+    @Override
+    public void execute() {
+        System.out.println("集体旅游");
+    }
 }
 
 public class BonusStrategy implements Strategy {
-	@Override
-	public void execute() {
-		System.out.println("奖金激励");
-	}
+    @Override
+    public void execute() {
+        System.out.println("奖金激励");
+    }
 }
 
 public class WorkOvertimeStrategy implements Strategy {
-	@Override
-	public void execute() {
-		System.out.println("奖励加班");
-	}
+    @Override
+    public void execute() {
+        System.out.println("奖励加班");
+    }
 }
 ```
 
@@ -2141,19 +2141,19 @@ public class CloseState extends State {
 
 ```java
 public class PauseState extends State {
-	@Override
-	public void speed() {
-		System.out.print("操作失败：暂停状态下不支持加速");
-	}
+    @Override
+    public void speed() {
+        System.out.print("操作失败：暂停状态下不支持加速");
+    }
 }
 ```
 
 ```java
 public class SpeedState extends State {
-	@Override
-	public void paly() {
-		System.out.println("系统提示：你当前已处于加速播放状态");
-	}
+    @Override
+    public void paly() {
+        System.out.println("系统提示：你当前已处于加速播放状态");
+    }
 }
 ```
 
@@ -2162,47 +2162,47 @@ public class SpeedState extends State {
 ```java
 public class Player {
 
-	private State state;
+    private State state;
 
-	public final static PlayState PLAY_STATE = new PlayState();
-	public final static PauseState PAUSE_STATE = new PauseState();
-	public final static CloseState CLOSE_STATE = new CloseState();
-	public final static SpeedState SPEED_STATE = new SpeedState();
+    public final static PlayState PLAY_STATE = new PlayState();
+    public final static PauseState PAUSE_STATE = new PauseState();
+    public final static CloseState CLOSE_STATE = new CloseState();
+    public final static SpeedState SPEED_STATE = new SpeedState();
 
-	public State getState() {
-		return state;
-	}
+    public State getState() {
+        return state;
+    }
 
-	public void setState(State state) {
-		this.state = state;
-		this.state.setPlayer(this);
-	}
+    public void setState(State state) {
+        this.state = state;
+        this.state.setPlayer(this);
+    }
 
-	Player() {
-		// 假设播放器初始状态为关闭
-		this.state = new CloseState();
-		this.state.setPlayer(this);
-	}
+    Player() {
+        // 假设播放器初始状态为关闭
+        this.state = new CloseState();
+        this.state.setPlayer(this);
+    }
 
-	public void paly() {
-		System.out.println("播放视频");
-		state.paly();
-	}
+    public void paly() {
+        System.out.println("播放视频");
+        state.paly();
+    }
 
-	public void pause() {
-		System.out.println("暂停视频");
-		state.pause();
-	}
+    public void pause() {
+        System.out.println("暂停视频");
+        state.pause();
+    }
 
-	public void close() {
-		System.out.println("关闭视频");
-		state.close();
-	}
+    public void close() {
+        System.out.println("关闭视频");
+        state.close();
+    }
 
-	public void speed() {
-		System.out.println("视频加速");
-		state.speed();
-	}
+    public void speed() {
+        System.out.println("视频加速");
+        state.speed();
+    }
 
 }
 ```
@@ -2251,9 +2251,9 @@ player.speed();
 ```java
 abstract class Mediator {
 
-	public abstract void register(Person person);
+    public abstract void register(Person person);
 
-	public abstract void send(String from, String message);
+    public abstract void send(String from, String message);
 }
 ```
 
@@ -2262,26 +2262,26 @@ abstract class Mediator {
 ```java
 public class HouseMediator extends Mediator {
 
-	private List<Person> personList = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
 
-	@Override
-	public void register(Person person) {
-		if (!personList.contains(person)) {
-			personList.add(person);
-			person.setMediator(this);
-		}
-	}
+    @Override
+    public void register(Person person) {
+        if (!personList.contains(person)) {
+            personList.add(person);
+            person.setMediator(this);
+        }
+    }
 
-	@Override
-	public void send(String from, String message) {
-		System.out.println(from + "发送消息：" + message);
-		for (Person person : personList) {
-			String name = person.getName();
-			if (!name.equals(from)) {
-				person.receive(message);
-			}
-		}
-	}
+    @Override
+    public void send(String from, String message) {
+        System.out.println(from + "发送消息：" + message);
+        for (Person person : personList) {
+            String name = person.getName();
+            if (!name.equals(from)) {
+                person.receive(message);
+            }
+        }
+    }
 }
 ```
 
@@ -2290,20 +2290,20 @@ public class HouseMediator extends Mediator {
 ```java
 public class Person {
 
-	private String name;
-	private Mediator mediator;
+    private String name;
+    private Mediator mediator;
 
-	public Person(String name) {
-		this.name = name;
-	}
+    public Person(String name) {
+        this.name = name;
+    }
 
-	public void send(String message) {
-		mediator.send(this.name, message);
-	}
+    public void send(String message) {
+        mediator.send(this.name, message);
+    }
 
-	public void receive(String message) {
-		System.out.println(name + "收到消息：" + message);
-	}
+    public void receive(String message) {
+        System.out.println(name + "收到消息：" + message);
+    }
 }
 ```
 
@@ -2311,16 +2311,16 @@ public class Person {
 
 ```java
 public class ZTest {
-	public static void main(String[] args) {
-		HouseMediator houseMediator = new HouseMediator();
-		Person seller = new Person("卖方");
-		Person buyer = new Person("买方");
-		houseMediator.register(seller);
-		houseMediator.register(buyer);
-		buyer.send("价格多少");
-		seller.send("10万");
-		buyer.send("太贵了");
-	}
+    public static void main(String[] args) {
+        HouseMediator houseMediator = new HouseMediator();
+        Person seller = new Person("卖方");
+        Person buyer = new Person("买方");
+        houseMediator.register(seller);
+        houseMediator.register(buyer);
+        buyer.send("价格多少");
+        seller.send("10万");
+        buyer.send("太贵了");
+    }
 }
 
 // 输出：
@@ -2346,10 +2346,10 @@ public class ZTest {
 
 ```java
 public class Book {
-	private String name;
-	public Book(String name) {
-		this.name = name;
-	}
+    private String name;
+    public Book(String name) {
+        this.name = name;
+    }
 }
 ```
 
@@ -2357,29 +2357,29 @@ public class Book {
 
 ```java
 public interface Bookshelf {
-	void addBook(Book book);
-	void removeBook(Book book);
-	BookIterator iterator();
+    void addBook(Book book);
+    void removeBook(Book book);
+    BookIterator iterator();
 }
 
 public class BookshelfImpl implements Bookshelf {
 
-	private List<Book> bookList = new ArrayList<>();
+    private List<Book> bookList = new ArrayList<>();
 
-	@Override
-	public void addBook(Book book) {
-		bookList.add(book);
-	}
+    @Override
+    public void addBook(Book book) {
+        bookList.add(book);
+    }
 
-	@Override
-	public void removeBook(Book book) {
-		bookList.remove(book);
-	}
+    @Override
+    public void removeBook(Book book) {
+        bookList.remove(book);
+    }
 
-	@Override
-	public BookIterator iterator() {
-		return new BookIterator(bookList);
-	}
+    @Override
+    public BookIterator iterator() {
+        return new BookIterator(bookList);
+    }
 }
 ```
 
@@ -2387,28 +2387,28 @@ public class BookshelfImpl implements Bookshelf {
 
 ```java
 public interface Iterator<E> {
-	E next();
-	boolean hasNext();
+    E next();
+    boolean hasNext();
 }
 
 public class BookIterator implements Iterator<Book> {
 
-	private List<Book> bookList;
-	private int position = 0;
+    private List<Book> bookList;
+    private int position = 0;
 
-	public BookIterator(List<Book> bookList) {
-		this.bookList = bookList;
-	}
+    public BookIterator(List<Book> bookList) {
+        this.bookList = bookList;
+    }
 
-	@Override
-	public Book next() {
-		return bookList.get(position++);
-	}
+    @Override
+    public Book next() {
+        return bookList.get(position++);
+    }
 
-	@Override
-	public boolean hasNext() {
-		return position < bookList.size();
-	}
+    @Override
+    public boolean hasNext() {
+        return position < bookList.size();
+    }
 }
 ```
 
@@ -2460,21 +2460,21 @@ while (iterator.hasNext()) {
 ```java
 public interface Archive {
     // 接受访问者
-	void accept(Visitor visitor);
+    void accept(Visitor visitor);
 }
 
 public class PublicArchive implements Archive {
-	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
-	}
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
 
 public class SecretArchive implements Archive {
-	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
-	}
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
 ```
 
@@ -2483,39 +2483,39 @@ public class SecretArchive implements Archive {
 ```java
 public interface Visitor {
     // 访问公开档案
-	void visit(PublicArchive publicArchive);
+    void visit(PublicArchive publicArchive);
     // 访问加密档案
-	void visit(SecretArchive secretArchive);
+    void visit(SecretArchive secretArchive);
 }
 ```
 
 ```java
 public class DepartManager implements Visitor {
 
-	@Override
-	public void visit(PublicArchive publicArchive) {
-		System.out.println("所有公开档案");
-	}
+    @Override
+    public void visit(PublicArchive publicArchive) {
+        System.out.println("所有公开档案");
+    }
 
-	@Override
-	public void visit(SecretArchive secretArchive) {
-		System.out.println("三级以下权限的加密档案");
-	}
+    @Override
+    public void visit(SecretArchive secretArchive) {
+        System.out.println("三级以下权限的加密档案");
+    }
 }
 ```
 
 ```java
 public class President implements Visitor {
 
-	@Override
-	public void visit(PublicArchive publicArchive) {
-		System.out.println("所有公开档案");
-	}
+    @Override
+    public void visit(PublicArchive publicArchive) {
+        System.out.println("所有公开档案");
+    }
 
-	@Override
-	public void visit(SecretArchive secretArchive) {
-		System.out.println("所有加密档案");
-	}
+    @Override
+    public void visit(SecretArchive secretArchive) {
+        System.out.println("所有加密档案");
+    }
 }
 ```
 
@@ -2524,24 +2524,24 @@ public class President implements Visitor {
 ```java
 public class Company {
 
-	private List<Archive> archives = new ArrayList<>();
+    private List<Archive> archives = new ArrayList<>();
 
     // 接收档案
-	void add(Archive archive) {
-		archives.add(archive);
-	}
+    void add(Archive archive) {
+        archives.add(archive);
+    }
 
     // 移除档案
-	void remove(Archive archive) {
-		archives.remove(archive);
-	}
+    void remove(Archive archive) {
+        archives.remove(archive);
+    }
 
     // 接待访问者
-	void accept(Visitor visitor) {
-		for (Archive archive : archives) {
-			archive.accept(visitor);
-		}
-	}
+    void accept(Visitor visitor) {
+        for (Archive archive : archives) {
+            archive.accept(visitor);
+        }
+    }
 
 }
 ```
@@ -2584,8 +2584,8 @@ company.accept(new President());
 
 ```java
 public class Article {
-	private String title;
-	private String content;
+    private String title;
+    private String content;
 }
 ```
 
@@ -2595,20 +2595,20 @@ public class Article {
 // 备忘录对象
 public class Memorandum {
 
-	private String title;
-	private String content;
-	private Date createTime;
+    private String title;
+    private String content;
+    private Date createTime;
 
     // 根据目标对象来创建备忘录对象
-	public Memorandum(Article article) {
-		this.title = article.getTitle();
-		this.content = article.getContent();
-		this.createTime = new Date();
-	}
+    public Memorandum(Article article) {
+        this.title = article.getTitle();
+        this.content = article.getContent();
+        this.createTime = new Date();
+    }
 
-	public Article toArticle() {
-		return new Article(this.title, this.content);
-	}
+    public Article toArticle() {
+        return new Article(this.title, this.content);
+    }
 
 }
 ```
@@ -2618,24 +2618,24 @@ public class Memorandum {
 ```java
 public class GitRepository {
 
-	private List<Memorandum> repository = new ArrayList<>();
+    private List<Memorandum> repository = new ArrayList<>();
 
     // 保存当前数据
-	public void save(Article article) {
-		Memorandum memorandum = new Memorandum(article);
-		repository.add(memorandum);
-	}
+    public void save(Article article) {
+        Memorandum memorandum = new Memorandum(article);
+        repository.add(memorandum);
+    }
 
     // 获取指定版本类的数据
-	public Article get(int version) {
-		Memorandum memorandum = repository.get(version);
-		return memorandum.toArticle();
-	}
+    public Article get(int version) {
+        Memorandum memorandum = repository.get(version);
+        return memorandum.toArticle();
+    }
 
     // 撤销当前操作
-	public Article back() {
-		return repository.get(repository.size() - 1).toArticle();
-	}
+    public Article back() {
+        return repository.get(repository.size() - 1).toArticle();
+    }
 }
 ```
 

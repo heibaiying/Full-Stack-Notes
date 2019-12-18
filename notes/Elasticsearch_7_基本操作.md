@@ -327,13 +327,13 @@ POST _bulk
 
 ```json
 {
-	"script": {
-		"source": "ctx._source.user+=params.user",
-		"lang": "painless",
-		"params": {
-			"user": " Cat"
-		}
-	}
+    "script": {
+        "source": "ctx._source.user+=params.user",
+        "lang": "painless",
+        "params": {
+            "user": " Cat"
+        }
+    }
 }
 ```
 

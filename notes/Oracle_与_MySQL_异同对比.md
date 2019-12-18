@@ -713,19 +713,19 @@ drop user youUsername cascade;
 ```sql
 -- mysql
 create table 【if not exists】 表名(
-	字段名 字段类型 【约束】,
-	字段名 字段类型 【约束】,
-	...
-	字段名 字段类型 【约束】 
+    字段名 字段类型 【约束】,
+    字段名 字段类型 【约束】,
+    ...
+    字段名 字段类型 【约束】 
 
 )
 
 -- oracle
 CREATE TABLE [schema.]表名(
     字段名 字段类型 【约束】
-	字段名 字段类型 【约束】,
-	...
-	字段名 字段类型 【约束】 
+    字段名 字段类型 【约束】,
+    ...
+    字段名 字段类型 【约束】 
 );
 
 ```
@@ -897,11 +897,11 @@ insert into 表1(column1,column2,column3) select column1x,column2x,column3x from
 
 ```sql
 create table 表名(
-	字段名 字段类型 not null,#非空
-	字段名 字段类型 primary key,#主键
-	字段名 字段类型 unique,#唯一
-	字段名 字段类型 default 值,#默认
-	constraint 约束名 foreign key(字段名) references 主表（被引用列）
+    字段名 字段类型 not null,#非空
+    字段名 字段类型 primary key,#主键
+    字段名 字段类型 unique,#唯一
+    字段名 字段类型 default 值,#默认
+    constraint 约束名 foreign key(字段名) references 主表（被引用列）
 )
 
 ```
@@ -929,8 +929,8 @@ create table 表名(
         -- 删除默认
         alter table 表名 modify column 字段名 字段类型 ;
    -- oracle
-	-- 添加默认
-	alter table 表名 modify 字段名 default 默认值;
+    -- 添加默认
+    alter table 表名 modify 字段名 default 默认值;
         -- 删除默认
         alter table 表名 modify 字段名 ;
 
@@ -965,7 +965,7 @@ create table 表名(
 ```sql
 -- 创建表时设置自增长列
 create table 表(
-	字段名 字段类型 约束 auto_increment
+    字段名 字段类型 约束 auto_increment
 )
 
 -- 修改表时设置自增长列
@@ -1204,7 +1204,7 @@ SHOW TRIGGERS [FROM schema_name];
 ```sql
 DELIMITER //
 CREATE PROCEDURE  过程名([[IN|OUT|INOUT] 参数名 数据类型],...)
-	BEGIN
+    BEGIN
       过程体
     END
 DELIMITER ; 
@@ -1322,7 +1322,7 @@ end if;
 
 ```sql
 【名称:】while 循环条件 do
-		循环体
+        循环体
 end while 【名称】;
 ```
 
@@ -1331,7 +1331,7 @@ end while 【名称】;
 
 ```sql
 【名称：】loop
-		循环体
+        循环体
 end loop 【名称】;
 ```
 
@@ -1339,7 +1339,7 @@ end loop 【名称】;
 
 ```sql
 【名称:】repeat
-		循环体
+        循环体
 until 结束条件 
 end repeat 【名称】;
 ```

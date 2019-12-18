@@ -105,11 +105,11 @@ db.user.insertMany([
 
 # 此时会返回新插入的数据的ObjectId
 {
-	"acknowledged" : true,
-	"insertedIds" : [
-		ObjectId("5d3d0489ad38cd3becc7b03b"),
-		ObjectId("5d3d0489ad38cd3becc7b03c")
-	]
+    "acknowledged" : true,
+    "insertedIds" : [
+        ObjectId("5d3d0489ad38cd3becc7b03b"),
+        ObjectId("5d3d0489ad38cd3becc7b03c")
+    ]
 }
 ```
 

@@ -461,7 +461,7 @@ chmod +x /etc/keepalived/haproxy_check.sh
 
 ```yaml
 global_defs {
-   # 路由id,主备节点不能相同	
+   # 路由id,主备节点不能相同    
    router_id node2  
 
 }

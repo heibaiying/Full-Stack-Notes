@@ -204,8 +204,8 @@ lang = lang + "Script";
 
 ```javascript
 var a = null;
-a.toString()	// Uncaught TypeError: Cannot read property 'toString' of null
-String(a)	// "null"
+a.toString()    // Uncaught TypeError: Cannot read property 'toString' of null
+String(a)    // "null"
 ```
 
 **3. 常用的字符串操作**
@@ -227,24 +227,24 @@ slice，substring，substr 等方法在传入正数参数时，其行为比较�
 var stringValue = "hello world";
 
 // 只接收一个参数时
-alert(stringValue.slice(3)); 			// "lo world"
-alert(stringValue.substring(3));		// "lo world"
-alert(stringValue.substr(3));			// "lo world"
+alert(stringValue.slice(3));             // "lo world"
+alert(stringValue.substring(3));        // "lo world"
+alert(stringValue.substr(3));            // "lo world"
 
 // 接收两个参数时候
-alert(stringValue.slice(3, 7));			// "lo w"
-alert(stringValue.substring(3,7));		// "lo w"
-alert(stringValue.substr(3, 7));		// "lo worl"
+alert(stringValue.slice(3, 7));            // "lo w"
+alert(stringValue.substring(3,7));        // "lo w"
+alert(stringValue.substr(3, 7));        // "lo worl"
 
 // 当第一个参数为负值时
-alert(stringValue.slice(-3)); 			// "rld"          按照规则等价于： slice(8)
-alert(stringValue.substring(-3));		// "hello world"  按照规则等价于： substring(0)
-alert(stringValue.substr(-3));			// "rld"          按照规则等价于： substr(8)
+alert(stringValue.slice(-3));             // "rld"          按照规则等价于： slice(8)
+alert(stringValue.substring(-3));        // "hello world"  按照规则等价于： substring(0)
+alert(stringValue.substr(-3));            // "rld"          按照规则等价于： substr(8)
 
 // 当第二个参数为负值时
-alert(stringValue.slice(3, -4));		// "lo w"         按照规则等价于： slice(3,7)
-alert(stringValue.substring(3, -4));		// "hel"          按照规则等价于： substring(3,0)
-alert(stringValue.substr(3, -4)); 		// ""（空字符串）  按照规则等价于： substr(3,0)
+alert(stringValue.slice(3, -4));        // "lo w"         按照规则等价于： slice(3,7)
+alert(stringValue.substring(3, -4));        // "hel"          按照规则等价于： substring(3,0)
+alert(stringValue.substr(3, -4));         // ""（空字符串）  按照规则等价于： substr(3,0)
 ```
 
 ### 2.3 基本类型检测
@@ -301,9 +301,9 @@ var colors = ["red", "blue", "green"];
 ```javascript
 var colors = ["red", "blue", "green"]; 
 
-colors.length = 2;			// ["red", "blue"]
-colors[colors.length] = "green";	// ["red", "blue", "green"]
-colors[10] = "black";			// ["red", "blue", "green", empty × 7, "black"]
+colors.length = 2;            // ["red", "blue"]
+colors[colors.length] = "green";    // ["red", "blue", "green"]
+colors[10] = "black";            // ["red", "blue", "green", empty × 7, "black"]
 ```
 
 数组的其他常用方法如下：
@@ -333,9 +333,9 @@ ECMAScript 的数组提供了类似栈的特性，能够实现后进先出：
 ```javascript
 var colors = ["red", "blue", "green"];
 
-colors.push("black");	// ["red", "blue", "green", "black"]
-colors.pop()		// "black"
-colors			// ["red", "blue", "green"]
+colors.push("black");    // ["red", "blue", "green", "black"]
+colors.pop()        // "black"
+colors            // ["red", "blue", "green"]
 ```
 
 **4. 队列方法**
@@ -353,7 +353,7 @@ colors                               // ["blue", "green", "black", "yellow"]
 ```javascript
 var values = [1, 2, 3, 4, 5];
 values.reverse();
-values	// [5, 4, 3, 2, 1]
+values    // [5, 4, 3, 2, 1]
 
 // 支持传入排序函数进行自定义排序
 function compare(value1, value2) {
@@ -366,7 +366,7 @@ function compare(value1, value2) {
     }
 }
 values.sort(compare)
-values	// [1, 2, 3, 4, 5]
+values    // [1, 2, 3, 4, 5]
 ```
 
 **6. 操作方法**
@@ -377,8 +377,8 @@ values	// [1, 2, 3, 4, 5]
 var colors = ["red", "green", "blue"];
 var colors2 = colors.concat("yellow", ["black", "brown"]);
 
-colors		// ["red", "green", "blue"]
-colors2		// ["red", "green", "blue", "yellow", "black", "brown"]
+colors        // ["red", "green", "blue"]
+colors2        // ["red", "green", "blue", "yellow", "black", "brown"]
 ```
 
 **slice()** 用于截取数组并返回新的数组，它接收两个参数，分别代表截取的开始位置和结束位置，它是一个前开后闭的区间：
@@ -386,8 +386,8 @@ colors2		// ["red", "green", "blue", "yellow", "black", "brown"]
 ```javascript
 var colors = ["red", "green", "blue", "yellow", "purple"];
 
-var colors2 = colors.slice(1);		// ["green", "blue", "yellow", "purple"]
-var colors3 = colors.slice(0,2);	// ["red", "green"]
+var colors2 = colors.slice(1);        // ["green", "blue", "yellow", "purple"]
+var colors3 = colors.slice(0,2);    // ["red", "green"]
 ```
 
 **splice()** 用于删除并在删除位置新增数据项，它接收任意个参数，其中第一个参数为删除的开始位置，第二个参数为删除多少个数据项，之后可以接任意个参数，用于表示待插入的数据项：
@@ -409,10 +409,10 @@ colors                              // ["red", "black", "green", "yellow"]
 ```shell
 var colors = ["red", "green", "blue", "yellow", "green", "blue"];
 
-colors.indexOf("green");			// 1
-colors.indexOf("green", 3);			// 4
-colors.lastIndexOf("green");			// 4
-colors.lastIndexOf("green", 3);			// 1
+colors.indexOf("green");            // 1
+colors.indexOf("green", 3);            // 4
+colors.lastIndexOf("green");            // 4
+colors.lastIndexOf("green", 3);            // 1
 ```
 
 **8. 迭代方法**
@@ -430,17 +430,17 @@ var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 
 numbers.every(function (value, index, array) {
     return value > 3;
-});			
+});            
 // false
 
 numbers.some(function (value, index, array) {
     return value > 3;
-});			
+});            
 // true
 
 numbers.filter(function (value, index, array) {
     return value > 3;
-});			
+});            
 // [4, 5, 4]
 
 numbers.forEach(function (value, index, array) {
@@ -449,7 +449,7 @@ numbers.forEach(function (value, index, array) {
 
 numbers.map(function (value, index, array) {
     return value * 10;
-});			
+});            
 // [10, 20, 30, 40, 50, 40, 30, 20, 10]
 ```
 
@@ -461,11 +461,11 @@ ECMAScript 5 提供了两个归并数组的方法： **reduce()** 和 **reduceRi
 var values = [1, 2, 3, 4, 5];
 var sum01 = values.reduce(function (prev, cur, index, array) {
     return prev + cur;
-});	// 15
+});    // 15
 
 var sum02 = values.reduceRight(function (prev, cur, index, array) {
     return prev + cur;
-});	// 15
+});    // 15
 ```
 
 ### 3.3 Date 类型
@@ -474,10 +474,10 @@ var sum02 = values.reduceRight(function (prev, cur, index, array) {
 
 ```java
 var now = new Date();
-now.toLocaleString()		// 2019-9-14 9:53:59 AM
+now.toLocaleString()        // 2019-9-14 9:53:59 AM
     
 var date = new Date(2018, 7, 8, 8, 30, 20);
-date.toLocaleString();		// 2018-8-8 8:30:20 AM
+date.toLocaleString();        // 2018-8-8 8:30:20 AM
 ```
 
 如果你只想知道当前时间的毫秒数，可以直接使用 Date 对象的静态方法：
@@ -496,9 +496,9 @@ Date.now()
 ```javascript
 var date = new Date(2018, 7, 8, 8, 30, 20);
 
-console.log(date.toLocaleString());		// 2018-8-8 8:30:20 AM
-console.log(date.toString());			// Wed Aug 08 2018 08:30:20 GMT+0800 (GMT+08:00)
-console.log(date.valueOf());			// 1533688220000
+console.log(date.toLocaleString());        // 2018-8-8 8:30:20 AM
+console.log(date.toString());            // Wed Aug 08 2018 08:30:20 GMT+0800 (GMT+08:00)
+console.log(date.valueOf());            // 1533688220000
 ```
 
 由于 **valueOf()** 返回的是日期的时间戳格式，所以对于 date 对象，可以直接使用比较运算符来比较其大小：
@@ -507,8 +507,8 @@ console.log(date.valueOf());			// 1533688220000
 var date01 = new Date(2018, 7, 8, 8, 30, 20);
 var date02 = new Date(2016, 7, 8, 8, 30, 20);
 
-console.log(date01 > date02); 			// true
-console.log(date01 < date02);			// flase
+console.log(date01 > date02);             // true
+console.log(date01 < date02);            // flase
 ```
 
 **2. 常用方法**
@@ -533,9 +533,9 @@ ECMAScript 使用 function 关键字来声明函数，但和其他语言不同�
 function test(first, second) {
     console.log("first:" + first + ",second:" + second);
 }
-test(1)		// first:1,second:undefined
-test(1,2)	// first:1,second:2
-test(1,2,3)	// first:1,second:2
+test(1)        // first:1,second:undefined
+test(1,2)    // first:1,second:2
+test(1,2,3)    // first:1,second:2
 ```
 
 之所以能实现这样的效果，是因为 ECMAScript 在函数内部使用了一个数组 arguments  来维护所有参数，函数接收到的始终都是这个数组，而在实际使用时指向的也是这个数组中的具体元素，所以以上的函数等价于下面的函数：
@@ -650,7 +650,7 @@ function test() {
 age  // age is not defined
 
 if (true) {
-	var name = "heibaiying";
+    var name = "heibaiying";
 }
 name  // heibaiying
 ```

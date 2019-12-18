@@ -404,25 +404,25 @@ Java 语言中的顺序语义可以分为以下四类：
 编译器和处理器出于性能考虑，通常会改变代码的实际执行顺序，这种情况就称为重排序，具体分为以下两类：
 
 <table>
-	<tr>
-    	<th>重排序类型</th>
-    	<th>重排序表现</th>
-    	<th>重排序主体(原因)</th>
- 	</tr>
-	<tr>
-		<td rowspan = "2">指令重排序</td>
-    	<td>程序顺序和源代码顺序不一致</td>
-    	<td>编译器</td>
- 	</tr>
-	<tr>
-    	<td>执行顺序和程序顺序不一致</td>
-    	<td>JIT 编译器、处理器</td>
- 	</tr>
     <tr>
-		<td>存储子系统重排序 <br/> （内存重排序）</td>
-    	<td>源代码顺序、程序顺序和执行顺序这三者保持一致，<br/> 但是感知顺序与执行顺序不一致</td>
-    	<td>高速缓存、写缓冲器</td>
- 	</tr>
+        <th>重排序类型</th>
+        <th>重排序表现</th>
+        <th>重排序主体(原因)</th>
+     </tr>
+    <tr>
+        <td rowspan = "2">指令重排序</td>
+        <td>程序顺序和源代码顺序不一致</td>
+        <td>编译器</td>
+     </tr>
+    <tr>
+        <td>执行顺序和程序顺序不一致</td>
+        <td>JIT 编译器、处理器</td>
+     </tr>
+    <tr>
+        <td>存储子系统重排序 <br/> （内存重排序）</td>
+        <td>源代码顺序、程序顺序和执行顺序这三者保持一致，<br/> 但是感知顺序与执行顺序不一致</td>
+        <td>高速缓存、写缓冲器</td>
+     </tr>
 </table>
 
 ### 5.3 貌似串行语义
@@ -1525,7 +1525,7 @@ public class J2_ScheduledTask {
 public ThreadPoolExecutor(int corePoolSize,                      //核心线程数量
                           int maximumPoolSize,                   //最大线程数量   
                           long keepAliveTime,                    //超过核心线程数的线程的存活时间
-                          TimeUnit unit,					   //存活时间的单位							
+                          TimeUnit unit,                       //存活时间的单位                            
                           BlockingQueue<Runnable> workQueue,     //任务队列
                           ThreadFactory threadFactory,           //线程工厂
                           RejectedExecutionHandler handler)      //拒绝策略

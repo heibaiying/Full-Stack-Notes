@@ -55,9 +55,9 @@ $ ./configure   \
 --prefix=/usr/app/nginx-1.16.1  \
 --with-pcre=/usr/app/pcre-8.42  \
 --with-zlib=/usr/app/zlib-1.2.11 \
---with-http_ssl_module \ 	# 启用HTTPS支持
---with-stream  \ 		# 启用TCP和UDP代理功能
---with-mail=dynamic 		# 启用邮件代理功能
+--with-http_ssl_module \     # 启用HTTPS支持
+--with-stream  \         # 启用TCP和UDP代理功能
+--with-mail=dynamic         # 启用邮件代理功能
 
 $ make
 $ sudo make install

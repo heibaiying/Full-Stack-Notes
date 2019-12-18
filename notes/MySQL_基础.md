@@ -45,6 +45,7 @@ InnoDB 是 MySQL 5.5 之后默认的存储引擎，它兼具高可靠和高性�
 
 
 <div align="center"> <img src="../pictures/innodb-architecture.png"/> </div>
+
 ### 1.2 MyISAM
 
 MyISAM 是 MySQL 5.5 之前默认的存储引擎。创建 MyISAM 表时会创建两个同名的文件：
@@ -298,6 +299,7 @@ InnoDB 存储引擎完全支持 ACID 模型：
 在同一个事务的两次读取之间，由于其他事务对数据进行了修改，导致第二次读取到第一次不存在数据，或第一次原本存在的数据，第二次却读取不到，就好像之前的读取是 “幻觉” 一样：
 
 <div align="center"> <img src="../pictures/mysql-幻读.png"/> </div>
+
 ### 4.4 隔离级别
 
 想要解决以上问题，可以通过设置隔离级别来实现：InnoDB 支持以下四个等级的隔离级别，默认隔离级别为可重复读：

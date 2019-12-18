@@ -52,6 +52,7 @@ slaveof{newMasterIp} {newMasterPort}
 哨兵模式的主要作用在于它能够自动完成故障发现和故障转移，并通知客户端，从而实现高可用。哨兵模式通常由一组 Sentinel 节点和一组（或多组）主从复制节点组成，架构如下：
 
 <div align="center"> <img src="../pictures/redis哨兵模式.png"/> </div>
+
 ### 2.1 架构说明
 
 #### 1. Sentinel 与 Redis Node

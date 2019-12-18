@@ -275,6 +275,7 @@ docker run -it  -p 8080:8080 spring-boot-base-java
 这里为了观察到启动效果，所以使用交互的方式启动，实际部署时可以使用`-d`参数来后台启动，输出如下：
 
 <div align="center"> <img src="../pictures/dockerfile01.png"/> </div>
+
 ### 5.2 基于 JDK 镜像部署 Spring Boot 项目
 
 上面的项目我们是基于最基础的 Centos 镜像开始构建，但由于 Docker Hub 上已经提供了 JDK 的镜像，我们也可以选择从 JDK 镜像开始构建，此时构建过程更加简单。构建步骤和上面的完全一致，只是 Dockerfile 的内容有所不同，如下：

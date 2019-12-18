@@ -98,6 +98,7 @@ chown -R heibaiying:heibaiying /usr/app/elasticsearch-7.2.0/
 想要验证是否启动成功，可以使用 `jps` 命令查看 `Elasticsearch` 进程是否启动，也可以访问`9200`端口，出现如下页面则代表启动成功：
 
 <div align="center"> <img src="../../pictures/elk-web-ui.png"/> </div>
+
 ## 二、Kibana 安装
 
 ### 2.1 修改配置
@@ -137,6 +138,7 @@ nohup ./kibana  &
 kibana Web UI 的访问端口号为`5601`，出现以下页面则代表启动成功：
 
 <div align="center"> <img src="../../pictures/kibana-web-ui.png"/> </div>
+
 ### 2.4 界面汉化
 
 kibana 7.0 的界面支持中文显示，可以在 `conf/kibana.yml` 中增加如下选项来进行配置：

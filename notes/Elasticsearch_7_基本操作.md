@@ -117,9 +117,7 @@ PUT weibo/_doc/1
 `_version` 为文档版本号，基于它可以实现乐观锁的效果，需要配合 `version_type` 使用，`version_type` 有以下可选值：
 
 + **interna** ：当给定的版本号与文档版本号相同时候，才执行对应的操作；
-
 + **external 或 external_gt** ：如果给定版本号大于存储文档的版本或者原文档不存在时，才执行对应的操作，给定的版本号将用作新的版本；
-
 + **external_gte** ：和上一条类似，等价于 `gt + equal` ，即给定版本号大于或等于存储文档的版本或者原文档不存在时，才执行对应的操作。
 
 使用示例：`PUT weibo/_doc/1?version=2&version_type=external { ... }`
@@ -128,9 +126,9 @@ PUT weibo/_doc/1
 
 输出结果中的 `_shards` 节点下有三个参数，其含义分别如下：
 
-- **total** ：操作涉及到的分片总数，这里由于创建 `weibo` 索引时指定主分片数量和副本系数都是 1，所以 只有 1 个 primary 分片和 1 个 replica 分片，故总数为 2； 
-- **successful** ：这里我采用的是单节点的 ES , replica 分片实际上是不存在的。因为按照 ES 的规则，primary 分片及其对应的 replica 分片不能处于同一台主机上，因为处于同一台主机上时无法达到容错的效果。所以这里只有 primary 分片写入数据成功，故值为 1；
-- **failed** ：执行复制操作失败的 replica 分片的数量，这里由于 replica 分片本生就不存在所以值为 0 。
++ **total** ：操作涉及到的分片总数，这里由于创建 `weibo` 索引时指定主分片数量和副本系数都是 1，所以 只有 1 个 primary 分片和 1 个 replica 分片，故总数为 2； 
++ **successful** ：这里我采用的是单节点的 ES , replica 分片实际上是不存在的。因为按照 ES 的规则，primary 分片及其对应的 replica 分片不能处于同一台主机上，因为处于同一台主机上时无法达到容错的效果。所以这里只有 primary 分片写入数据成功，故值为 1；
++ **failed** ：执行复制操作失败的 replica 分片的数量，这里由于 replica 分片本生就不存在所以值为 0 。
 
 ### 4. routing
 

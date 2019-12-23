@@ -51,7 +51,7 @@
 
 在 2017 年 JDK 9 发布后，Oracle 公司宣布从此以后 JDK 将会在每年的 3 月和 9 月各发布一个大版本，即半年发行一个大版本，目的是为了避免众多功能被捆绑到一个 JDK 版本上而引发的无法交付的风险。
 
- 在 JDK 11 发布后，Oracle 调整了 JDK 的商业授权，宣布从 JDK 11 起将以前的商业特性全部开源给 OpenJDK ，这样 OpenJDK 11 和 OracleJDK 11 的代码和功能，在本质上就是完全相同的。同时 Oracle 还宣布以后都会发行两个版本的 JDK ：
+ 在 JDK 11 发布后，Oracle 同步调整了 JDK 的商业授权，宣布从 JDK 11 起将以前的商业特性全部开源给 OpenJDK ，这样 OpenJDK 11 和 OracleJDK 11 的代码和功能，在本质上就完全相同了。同时还宣布以后都会发行两个版本的 JDK ：
 
 + 一个是在 GPLv2 + CE 协议下由 Oracle 开源的 OpenJDK；
 + 一个是在 OTN 协议下正常发行的 OracleJDK。

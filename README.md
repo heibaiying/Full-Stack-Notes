@@ -3,7 +3,7 @@
 + [Java 反射与注解](notes/Java_反射与注解.md)
 + [Java 并发编程](notes/Java_并发编程.md)
 + [Java 设计模式](notes/Java_设计模式.md)
-+ [深入理解 Java 虚拟机](notes/Java_虚拟机.md)
++ [Java 虚拟机](notes/Java_虚拟机.md)
 
 
 

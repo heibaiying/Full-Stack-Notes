@@ -59,7 +59,7 @@ console.log(0x38);   // 56
 
 **2. 浮点数值**
 
-ECMAScript 的数值类型同样支持浮点数，但是由于保存浮点数值需要的内存空间是保存整数值的两倍，因此 ECMAScript 会尽量将浮点数值转换为整数值存储。
+ECMAScript 的数值类型同样支持浮点数，但是由于保存浮点数值需要的内存空间是保存整数值的两倍，因此 ECMAScript 会尽量将浮点数值转换为整数值存储：
 
 ```javascript
 var a = 10.0;
@@ -113,7 +113,7 @@ parseInt("blue");       // NaN  NaN用于表示一个本来要返回数值的操
 1.3333335.toFixed(6) // 1.333333 错误
 ```
 
-想要解决这个问题，可以通过判断最后一位是否大于或等于5来决定是否需要进位，重写 toFixed 方法的具体代码如下：
+想要解决这个问题，需要重写 toFixed 方法并通过判断最后一位是否大于或等于5来决定是否需要进位，具体代码如下：
 
 ```javascript
 // toFixed兼容方法
@@ -205,7 +205,7 @@ lang = lang + "Script";
 ```javascript
 var a = null;
 a.toString()    // Uncaught TypeError: Cannot read property 'toString' of null
-String(a)    // "null"
+String(a)       // "null"
 ```
 
 **3. 常用的字符串操作**
@@ -217,7 +217,7 @@ String(a)    // "null"
 + **indexOf() \ lastIndexOf()** ：均接收两个参数，分别代表待查找的字符串和查找的开始位置；
 + **trim()** ：用于去除字符串前后的空格。
 
-slice，substring，substr 等方法在传入正数参数时，其行为比较好预期，但传递参数是负数时，其具体的行为表现如下:
+slice，substring，substr 等方法在传入正数参数时，其行为比较好预期，但传递参数是负数时，则具体的行为表现如下:
 
 + **slice()** ：会将传入的负值与字符串的长度相加；
 + **substring()** ：方法会把所有负值参数都转换为 0 ；
@@ -227,24 +227,24 @@ slice，substring，substr 等方法在传入正数参数时，其行为比较�
 var stringValue = "hello world";
 
 // 只接收一个参数时
-alert(stringValue.slice(3));             // "lo world"
-alert(stringValue.substring(3));        // "lo world"
-alert(stringValue.substr(3));            // "lo world"
+alert(stringValue.slice(3));              // "lo world"
+alert(stringValue.substring(3));          // "lo world"
+alert(stringValue.substr(3));             // "lo world"
 
 // 接收两个参数时候
 alert(stringValue.slice(3, 7));            // "lo w"
-alert(stringValue.substring(3,7));        // "lo w"
-alert(stringValue.substr(3, 7));        // "lo worl"
+alert(stringValue.substring(3,7));         // "lo w"
+alert(stringValue.substr(3, 7));           // "lo worl"
 
 // 当第一个参数为负值时
-alert(stringValue.slice(-3));             // "rld"          按照规则等价于： slice(8)
-alert(stringValue.substring(-3));        // "hello world"  按照规则等价于： substring(0)
-alert(stringValue.substr(-3));            // "rld"          按照规则等价于： substr(8)
+alert(stringValue.slice(-3));              // "rld"          按照规则等价于： slice(8)
+alert(stringValue.substring(-3));          // "hello world"  按照规则等价于： substring(0)
+alert(stringValue.substr(-3));             // "rld"          按照规则等价于： substr(8)
 
 // 当第二个参数为负值时
-alert(stringValue.slice(3, -4));        // "lo w"         按照规则等价于： slice(3,7)
-alert(stringValue.substring(3, -4));        // "hel"          按照规则等价于： substring(3,0)
-alert(stringValue.substr(3, -4));         // ""（空字符串）  按照规则等价于： substr(3,0)
+alert(stringValue.slice(3, -4));           // "lo w"         按照规则等价于： slice(3,7)
+alert(stringValue.substring(3, -4));       // "hel"          按照规则等价于： substring(3,0)
+alert(stringValue.substr(3, -4));          // ""（空字符串）  按照规则等价于： substr(3,0)
 ```
 
 ### 2.3 基本类型检测
@@ -301,9 +301,9 @@ var colors = ["red", "blue", "green"];
 ```javascript
 var colors = ["red", "blue", "green"]; 
 
-colors.length = 2;            // ["red", "blue"]
+colors.length = 2;                  // ["red", "blue"]
 colors[colors.length] = "green";    // ["red", "blue", "green"]
-colors[10] = "black";            // ["red", "blue", "green", empty × 7, "black"]
+colors[10] = "black";               // ["red", "blue", "green", empty × 7, "black"]
 ```
 
 数组的其他常用方法如下：
@@ -334,8 +334,8 @@ ECMAScript 的数组提供了类似栈的特性，能够实现后进先出：
 var colors = ["red", "blue", "green"];
 
 colors.push("black");    // ["red", "blue", "green", "black"]
-colors.pop()        // "black"
-colors            // ["red", "blue", "green"]
+colors.pop()             // "black"
+colors                   // ["red", "blue", "green"]
 ```
 
 **4. 队列方法**
@@ -377,7 +377,7 @@ values    // [1, 2, 3, 4, 5]
 var colors = ["red", "green", "blue"];
 var colors2 = colors.concat("yellow", ["black", "brown"]);
 
-colors        // ["red", "green", "blue"]
+colors         // ["red", "green", "blue"]
 colors2        // ["red", "green", "blue", "yellow", "black", "brown"]
 ```
 
@@ -387,7 +387,7 @@ colors2        // ["red", "green", "blue", "yellow", "black", "brown"]
 var colors = ["red", "green", "blue", "yellow", "purple"];
 
 var colors2 = colors.slice(1);        // ["green", "blue", "yellow", "purple"]
-var colors3 = colors.slice(0,2);    // ["red", "green"]
+var colors3 = colors.slice(0,2);      // ["red", "green"]
 ```
 
 **splice()** 用于删除并在删除位置新增数据项，它接收任意个参数，其中第一个参数为删除的开始位置，第二个参数为删除多少个数据项，之后可以接任意个参数，用于表示待插入的数据项：
@@ -410,9 +410,9 @@ colors                              // ["red", "black", "green", "yellow"]
 var colors = ["red", "green", "blue", "yellow", "green", "blue"];
 
 colors.indexOf("green");            // 1
-colors.indexOf("green", 3);            // 4
-colors.lastIndexOf("green");            // 4
-colors.lastIndexOf("green", 3);            // 1
+colors.indexOf("green", 3);         // 4
+colors.lastIndexOf("green");        // 4
+colors.lastIndexOf("green", 3);     // 1
 ```
 
 **8. 迭代方法**
@@ -496,9 +496,9 @@ Date.now()
 ```javascript
 var date = new Date(2018, 7, 8, 8, 30, 20);
 
-console.log(date.toLocaleString());        // 2018-8-8 8:30:20 AM
+console.log(date.toLocaleString());      // 2018-8-8 8:30:20 AM
 console.log(date.toString());            // Wed Aug 08 2018 08:30:20 GMT+0800 (GMT+08:00)
-console.log(date.valueOf());            // 1533688220000
+console.log(date.valueOf());             // 1533688220000
 ```
 
 由于 **valueOf()** 返回的是日期的时间戳格式，所以对于 date 对象，可以直接使用比较运算符来比较其大小：
@@ -508,7 +508,7 @@ var date01 = new Date(2018, 7, 8, 8, 30, 20);
 var date02 = new Date(2016, 7, 8, 8, 30, 20);
 
 console.log(date01 > date02);             // true
-console.log(date01 < date02);            // flase
+console.log(date01 < date02);             // flase
 ```
 
 **2. 常用方法**
@@ -534,7 +534,7 @@ function test(first, second) {
     console.log("first:" + first + ",second:" + second);
 }
 test(1)        // first:1,second:undefined
-test(1,2)    // first:1,second:2
+test(1,2)      // first:1,second:2
 test(1,2,3)    // first:1,second:2
 ```
 

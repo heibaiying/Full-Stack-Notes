@@ -74,7 +74,7 @@ public Constructor<T> getConstructor(Class<?>... parameterTypes)
 public Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)
 ```
 
-获取指定的构造器后，可以使用 `newInstance` 方法来创建其实例，实例如下：
+获取指定的构造器后，可以使用 `newInstance` 方法来创建其实例，示例如下：
 
 ```java
 class Test {
@@ -287,8 +287,11 @@ public @interface Override {
 ```java
 // 获取所有注解
 public Annotation[] getAnnotations()
+// 获取本元素上直接声明的所有注解，忽略inherited来的
 public Annotation[] getDeclaredAnnotations()
+// 获取指定类型的注解，如果不存在则返回null
 public <T extends Annotation> T getAnnotation(Class<T> annotationClass) 
+// 判断是否有指定类型的注解
 public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) 
 ```
 
@@ -310,7 +313,8 @@ class Test {
         /*当只有一个值并且其对应的方法名为value时候，可以省略value = */
         @Json("姓名")
         private String name;
-        @Json(value = "出生日期", format = "yyyy-MM-dd HH:mm:ss")
+        
+		@Json(value = "出生日期", format = "yyyy-MM-dd HH:mm:ss")
         private Date birthday;
         ......
     }

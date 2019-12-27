@@ -233,11 +233,11 @@ list.forEach(function (func) {
 ```javascript
 let msg = "Hello world!";
 console.log(msg.startsWith("Hello")); // true
-console.log(msg.endsWith("!")); // true
-console.log(msg.includes("o")); // true
-console.log(msg.startsWith("o", 4)); // true
-console.log(msg.endsWith("o", 8)); // true
-console.log(msg.includes("o", 8)); // false
+console.log(msg.endsWith("!"));       // true
+console.log(msg.includes("o"));       // true
+console.log(msg.startsWith("o", 4));  // true
+console.log(msg.endsWith("o", 8));    // true
+console.log(msg.includes("o", 8));    // false
 ```
 
 **2. 复制字符串**
@@ -257,10 +257,10 @@ console.log("hello".repeat(2));
 
 ```javascript
 'x'.padStart(5, 'ab');  // 'ababx'
-'x'.padEnd(5, 'ab');  // 'xabab'
+'x'.padEnd(5, 'ab');    // 'xabab'
 
 'xxx'.padStart(2, 'ab');  // 'xxx'
-'x'.padStart(4); // '   x'
+'x'.padStart(4);          // '   x'
 ```
 
 ### 2.2 模板字面量
@@ -286,14 +286,14 @@ console.log(message02); // "10 items cost $2.50."
 let message03 = `Multiline
 string`;
 console.log(message03);      // Hello,
-                           // string
+                             // string
 
 // 4.多行字符串与模板嵌套
 let fullName = "Nicholas",
     message04 = `Hello, 
     my name is ${fullName}.`;
 console.log(message04);     // Hello,
-                          // my name is Nicholas.
+                            // my name is Nicholas.
 ```
 
 
@@ -310,10 +310,10 @@ function request(url, timeout = 2000, callback = function() {}) {
     callback();
 }
 
-request("GitHub"); // url: GitHub, timeout: 2000
-request("GitHub", undefined); // url: GitHub, timeout: 2000
-request("GitHub", null); // url: GitHub, timeout: null
-request("GitHub", 5000);  // url: GitHub, timeout: 5000
+request("GitHub");             // url: GitHub, timeout: 2000
+request("GitHub", undefined);  // url: GitHub, timeout: 2000
+request("GitHub", null);       // url: GitHub, timeout: null
+request("GitHub", 5000);       // url: GitHub, timeout: 5000
 request("GitHub", 5000, () => console.log("超时异常")); // url: GitHub, timeout: 5000 超时异常
 ```
 
@@ -483,24 +483,24 @@ var person = {
 在 ES5 之前，我们通常使用 `===` 进行相等性判断，它能满足大多数的使用场景，但也会出现一些不准确的结果：
 
 ```java
--0 === +0 //true
+-0 === +0   //true
 NaN === NaN //false
 ```
 
 大多数时候，我们并不需要区分出正负零，但在有的计算中是有必要进行区分的，如下分别使用正负零得到的是完全相反的结果：
 
 ```javascript
-1/0 // Infinity
+1/0  // Infinity
 1/-0 // -Infinity
 ```
 
 为了满足这种需求，ES6 引入了 `Object.is()` ，它在效果上类似于 `===` 运算符，但能准确的区分正负零和 NaN 的等值比较：
 
 ```javascript
-Object.is(+0, -0) // false
+Object.is(+0, -0)   // false
 Object.is(NaN, NaN) // true
-Object.is(5, 5) // true
-Object.is(5, "5") // false
+Object.is(5, 5)     // true
+Object.is(5, "5")   // false
 ```
 
 ### 4.3 属性复制
@@ -647,7 +647,7 @@ let person = {
 };
 let {name, age} = person;
 console.log(name); // "heibaiying"
-console.log(age); // "18"
+console.log(age);  // "18"
 ```
 
 ES6 还支持为待解构的变量传入默认值：
@@ -695,7 +695,7 @@ console.log(teacherName); //  "heibai"
 ```java
 let colors = ["red", "green", "blue"];
 let [firstColor, secondColor] = colors;
-console.log(firstColor); // "red"
+console.log(firstColor);  // "red"
 console.log(secondColor); // "green"
 
 let colors = ["red", "green", "blue"];
@@ -708,13 +708,13 @@ console.log(thirdColor); // "blue
 ```java
 // 设置默认值
 let [firstColor, secondColor = "green"] = ["red"];
-console.log(firstColor); // "red"
+console.log(firstColor);  // "red"
 console.log(secondColor); // "green"
 
 // 嵌套解构
 let colors = ["red", ["green", "lightgreen"], "blue"];
 let [firstColor, [secondColor]] = colors;
-console.log(firstColor); // "red"
+console.log(firstColor);  // "red"
 console.log(secondColor); // "green"
 ```
 
@@ -1007,8 +1007,8 @@ map01.clear();
 // 2.由数组初始化map
 let map02 = new Map([["name", "Nicholas"], ["age", 25]]);
 console.log(map02.get("name")); // "Nicholas"
-console.log(map02.get("age")); // 25
-console.log(map02.size); // 2
+console.log(map02.get("age"));  // 25
+console.log(map02.size);        // 2
 
 // 3.进行遍历
 let map03 = new Map([["name", "Nicholas"], ["age", 25]]);
@@ -1263,10 +1263,10 @@ ES6 支持对象代理，你可以通过 `new Proxy(target)` 来基于目标对�
 let target = {};
 let proxy = new Proxy(target, {});
 proxy.name = "proxy";
-console.log(proxy.name); // "proxy"
+console.log(proxy.name);  // "proxy"
 console.log(target.name); // "proxy"
 target.name = "target";
-console.log(proxy.name); // "target"
+console.log(proxy.name);  // "target"
 console.log(target.name); // "target"
 ```
 
@@ -1413,7 +1413,7 @@ export { sum as add };
 // 对导入名称进行重命名
 import { add as sum } from "./example.js";
 console.log(typeof add); // "undefined"
-console.log(sum(1, 2)); // 3
+console.log(sum(1, 2));  // 3
 ```
 
 ### 12.5 导入导出默认值

@@ -241,7 +241,7 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 
 ### 6.1 server.xml
 
-这里新增一个 Mycat 用户，并定义其管理的逻辑数据库为 ec_shop，另外使用 fakeMySQLVersion 来定义你所需要模拟的 MySQL 数据库的版本。如果没有特殊需求， Mycat 自带的 server.xml 中的其他配置可不做更改。
+这里新增一个 Mycat 用户，并定义其管理的逻辑数据库为 ec_shop，另外使用 fakeMySQLVersion 来定义你所需要模拟的 MySQL 数据库的版本。如果没有特殊需求， Mycat 自带的 server.xml 中的其他配置可不做更改：
 
 ```xml
 <system>
@@ -259,7 +259,7 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 
 ### 6.2 schema.xml
 
-这里使用 childTable 来将订单表和订单明细表定义为 ER 表，避免跨分片查询。并将地址表 area_info 使用 `type="global"` 声明为全局，同样也是为了避免跨分片查询。
+这里使用 childTable 来将订单表和订单明细表定义为 ER 表，避免跨分片查询。并将地址表 area_info 使用 `type="global"` 声明为全局，同样也是为了避免跨分片查询：
 
 ```xml
 <?xml version="1.0"?>

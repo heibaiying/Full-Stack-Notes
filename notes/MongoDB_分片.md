@@ -290,7 +290,7 @@ db.runCommand({ addshard : "rs1/hadoop001:37018,hadoop002:37018,hadoop003:37018"
 
 #### 1. 开启分片功能
 
-连接到 mongos ，对 testdb 数据库开启分片功能，同时设置集合 users 的分片键为用户 id，后面的`1`表示范围分片，如果想要采用哈希分片，则对应的写法为： `{uid:"hashed"}` 。
+连接到 mongos ，对 testdb 数据库开启分片功能，同时设置集合 users 的分片键为用户 id，后面的 `1` 表示范围分片，如果想要采用哈希分片，则对应的写法为： `{uid:"hashed"}` 。
 
 ```shell
 db.runCommand({ enablesharding : "testdb" })

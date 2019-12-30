@@ -322,7 +322,7 @@ server node1 hadoop001:5672 check inter 5000 rise 2 fall 3 weight 1
 haproxy -f /etc/haproxy/haproxy.cfg
 ```
 
-启动后可以在监控页面进行查看，端口为设置的 8100，完整地址为：http://hadoop001:8100/stats，页面情况如下：
+启动后可以在监控页面进行查看，端口为设置的 8100，完整地址为：http://hadoop001:8100/stats ，页面情况如下：
 
 <div align="center"> <img src="../pictures/rabbitmq-haproxy.png"/> </div>
 所有节点都为绿色，代表节点健康。此时证明 HAProxy 搭建成功，并已经对 RabbitMQ 集群进行监控。

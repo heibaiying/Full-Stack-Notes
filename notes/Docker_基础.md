@@ -209,7 +209,7 @@ ADD 指令的常用格式为：`COPY  <src>... <dest>`，作用与 COPY 指令�
 
 RUN 指令会在前一条命令创建出的镜像基础上再创建一个容器，并在容器中运行命令，在命令结束后提交该容器为新的镜像。它支持以下两种格式：
 
-- `RUN <command>` （shell 格式）
+- `RUN <command>` （*shell* 格式）
 - `RUN ["executable", "param1", "param2"]` (*exec* 格式)
 
 使用 shell 格式时候，命令通过 `/bin/sh -c` 运行，而当使用 exec 格式时，命令是直接运行的，容器不调用 shell 程序，这意味着不会发生正常的 shell 处理。例如，`RUN ["echo","$HOME"]` 不会对 `$HOME` 执行变量替换，此时正确的格式应为：`RUN ["sh","-c","echo $HOME"]`。下面的 CMD 指令也存在同样的问题。

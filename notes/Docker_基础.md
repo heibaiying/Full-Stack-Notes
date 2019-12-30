@@ -104,7 +104,7 @@ run 是 docker 中最为核心的一个命令，用于新建并启动容器，�
 + **--name** ：指定容器启动容器的名字，如果不指定，则由 docker 随机分配；
 + **-c** ：用于给运行在容器中的所有进程分配 CPU 的 shares 值，这是一个相对权重，实际的处理速度与宿主机的 CPU 相关；
 + **-m** ：用于限制为容器中所有进程分配的内存总量，以 B、K、M、G 为单位；
-+ **-v** ：用于挂载数据卷 volume，可以用多个 `-v` 参数同时挂载多个 volume。volume 的格式为：`[host-dir]:[container-dir]:[rw:ro]` ，`[rw:ro]` 用于指定数据卷的模式，`rw` 代表读写模式，`ro` 代表只读模式。
++ **-v** ：挂载数据卷 volume，可以用多个 `-v` 参数同时挂载多个 volume。volume 的格式为：`[host-dir]:[container-dir]:[rw:ro]` ，`[rw:ro]` 用于指定数据卷的模式，`rw` 代表读写模式，`ro` 代表只读模式。
 + **-p** ：用于将容器的端口暴露给宿主机的端口，格式为：`hostPort:containerPort` ，通过端口的暴露，可以让外部主机能够访问容器内的应用。
 
 #### 2. docker ps [OPTIONS]

@@ -211,11 +211,11 @@ mysqlpump 的使用和 mysqldump 基本一致，这里不再进行赘述。以�
 
 + **--parallel-schemas=[N:]db_list**
 
-  用于并行备份多个数据库：db_list 是一个或多个以逗号分隔的数据库名称列表；N 为使用的线程数，如果没有设置，则使用 --default-parallelism 参数的值。
+  用于并行备份多个数据库：db_list 是一个或多个以逗号分隔的数据库名称列表；N 为使用的线程数，如果没有设置，则使用 `--default-parallelism` 参数的值。
 
 + **--users**
 
-  将用户信息备份为 CREATE USER 语句和 GRANT语句 。如果想要只备份用户信息，则可以使用下面的命令：
+  将用户信息备份为 CREATE USER 语句和 GRANT 语句 。如果想要只备份用户信息，则可以使用下面的命令：
 
   ```shell
   mysqlpump --exclude-databases=% --users
@@ -266,7 +266,7 @@ xtrabackup --backup  --user=root --password --parallel=3  --target-dir=/data/bac
 
 以上进行的是整个数据库实例的备份，如果需要备份指定数据库，则可以使用 --databases 进行指定。
 
-另外一个容易出现的异常是：Xtrabackup 在进行备份时，默认会去 `/var/lib/mysql/mysql.sock` 文件里获取数据库的 socket 信息，如果你修改了数据库的 socket 配置，则需要使用 --socket 参数进行重新指定，否则会抛出找不到连接的异常。备份完整后需要立即执行的另外一个操作是 prepare 。
+另外一个容易出现的异常是：Xtrabackup 在进行备份时，默认会去 `/var/lib/mysql/mysql.sock` 文件里获取数据库的 socket 信息，如果你修改了数据库的 socket 配置，则需要使用 --socket 参数进行重新指定，否则会抛出找不到连接的异常。备份完整后需要立即执行的另外一个操作是 prepare （准备备份）。
 
 #### 2. 准备备份
 
@@ -290,7 +290,7 @@ rm -rf /usr/app/mysql-8.0.17/data/*
 xtrabackup --copy-back --target-dir=/data/backups/
 ```
 
-copy-back 命令只需要指定备份文件的位置，不需要指定 MySQL 数据目录的位置，因为 Xtrabackup 会自动从 `/etc/my.cnf` 上获取 MySQL 的相关信息，包括数据目录的位置。如果不需要保留备份文件，可以直接使用 `--move-back` 命令，代表直接将备份文件移动到数据目录下。通常此时数据目录的所有者为执行命令的用户，需要更改为 mysql 用户，命令如下：
+copy-back 命令只需要指定备份文件的位置，不需要指定 MySQL 数据目录的位置，因为 Xtrabackup 会自动从 `/etc/my.cnf` 上获取 MySQL 的相关信息，包括数据目录的位置。如果不需要保留备份文件，可以直接使用 `--move-back` 命令，代表直接将备份文件移动到数据目录下。此时数据目录的所有者通常为执行命令的用户，需要更改为 mysql 用户，命令如下：
 
 ```shell
 chown -R mysql:mysql /usr/app/mysql-8.0.17/data
@@ -310,14 +310,14 @@ chown -R mysql:mysql /usr/app/mysql-8.0.17/data
 xtrabackup  --user=root --password --backup  --target-dir=/data/backups/base/
 ```
 
-之后修改库中任意数据，然后进行第一次增量备份，此时需要使用 incremental-basedir 指定基础目录为全备目录：
+之后修改库中任意数据，然后进行第一次增量备份，此时需要使用 `incremental-basedir` 指定基础目录为全备目录：
 
 ```shell
 xtrabackup  --user=root --password --backup  --target-dir=/data/backups/inc1 \
 --incremental-basedir=/data/backups/base
 ```
 
-再修改库中任意数据，然后进行第二次增量备份，此时需要使用 incremental-basedir 指定基础目录为上一次增备目录：
+再修改库中任意数据，然后进行第二次增量备份，此时需要使用 `incremental-basedir` 指定基础目录为上一次增备目录：
 
 ```shell
 xtrabackup  --user=root --password --backup  --target-dir=/data/backups/inc2 \
@@ -346,7 +346,7 @@ xtrabackup --prepare --target-dir=/data/backups/base \
 --incremental-dir=/data/backups/inc2
 ```
 
-在准备备份时候，除了最后一次增备外，其余的准备命令都需要加上 `--apply-log-only` 选项来阻止事务的回滚，因为备份时未提交的事务可能正在进行，并可能在下一次增量备份中提交。如全备中的某些事务可能在第一次备份中才会提交，如果不进行阻止，那么增量备份将没有任何意义。
+在准备备份时候，除了最后一次增备外，其余的准备命令都需要加上 `--apply-log-only` 选项来阻止事务的回滚，因为备份时未提交的事务可能正在进行，并可能在下一次增量备份中提交，如果不进行阻止，那么增量备份将没有任何意义。
 
 #### 3. 恢复备份
 

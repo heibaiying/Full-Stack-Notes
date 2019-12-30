@@ -74,7 +74,7 @@ options 代表可选操作，常用的可选参数如下：
 
 + **--password[=password]， -p[password]**
 
-  指定密码。通常无需在命令行中明文指定，按照提示输出即可。
+  指定密码。通常无需在命令行中明文指定，按照提示输入即可。
 
 + **--default-character-set=charset_name**
 
@@ -102,7 +102,7 @@ options 代表可选操作，常用的可选参数如下：
 
 + **--lock-all-tables， -x**
 
-  锁定所有数据库中的所有表，从而保证备份数据的一致性。此选项自动关闭 --single-transaction 和 --lock-tables。
+  锁定所有数据库中的所有表，从而保证备份数据的一致性。此选项自动关闭 `--single-transaction` 和 `--lock-tables`。
 
 + **--lock-tables， -l**
 
@@ -112,7 +112,7 @@ options 代表可选操作，常用的可选参数如下：
 
   此选项会将事务隔离模式设置为 REPEATABLE READ 并开启一个事务，从而保证备份数据的一致性。主要用于事务表，如 InnoDB 表。 但是此时仍然不能在备份表上执行 ALTER TABLE， CREATE TABLE， DROP TABLE， RENAME TABLE， TRUNCATE TABLE 等操作，因为 REPEATABLE READ 并不能隔离这些操作。
 
-  另外需要注意的是 --single-transaction 选项与 --lock-tables 选项是互斥的，因为 LOCK TABLES 会导致任何正在挂起的事务被隐式提交。转储大表时，可以将 --single-transaction 选项与 --quick 选项组合使用 。
+  另外需要注意的是 `--single-transaction` 选项与 `--lock-tables` 选项是互斥的，因为 LOCK TABLES 会导致任何正在挂起的事务被隐式提交。转储大表时，可以将 `--single-transaction` 选项与 `--quick` 选项组合使用 。
 
 + **--quick， -q**
 
@@ -120,11 +120,11 @@ options 代表可选操作，常用的可选参数如下：
 
 + **--flush-logs, -F**
 
-  在开始备份前刷新 MySQL 的日志文件。此选项需要 RELOAD 权限。如果此选项与 --all-databases 配合使用，则会在每个数据库开始备份前都刷新一次日志。如果配合 --lock-all-tables，--master-data 或 --single-transaction 使用，则只会在锁定所有表或者开启事务时刷新一次。
+  在开始备份前刷新 MySQL 的日志文件。此选项需要 RELOAD 权限。如果此选项与 `--all-databases` 配合使用，则会在每个数据库开始备份前都刷新一次日志。如果配合 `--lock-all-tables`，`--master-data` 或 `--single-transaction` 使用，则只会在锁定所有表或者开启事务时刷新一次。
 
 + **--master-data[=*value*]**
 
-  可以通过配置此参数来控制生成的备份文件是否包含 CHANGE MASTER 语句，该语句中包含了当前时间点二进制日志的信息。该选项有两个可选值：1 和 2 ，设置为 1 时 CHANGE MASTER 语句正常生成，设置为 2 时以注释的方式生成。--master-data 选项还会自动关闭 --lock-tables 选项，而且如果你没有指定 --single-transaction 选项，那么它还会启用 --lock-all-tables选项，在这种情况下，会在备份开始时短暂内获取全局读锁。
+  可以通过配置此参数来控制生成的备份文件是否包含 CHANGE MASTER 语句，该语句中包含了当前时间点二进制日志的信息。该选项有两个可选值：1 和 2 ，设置为 1 时 CHANGE MASTER 语句正常生成，设置为 2 时以注释的方式生成。`--master-data` 选项还会自动关闭 `--lock-tables` 选项，而且如果你没有指定 `--single-transaction` 选项，那么它还会启用 `--lock-all-tables` 选项，在这种情况下，会在备份开始时短暂内获取全局读锁。
 
 ### 2.2 全量备份
 
@@ -290,7 +290,7 @@ rm -rf /usr/app/mysql-8.0.17/data/*
 xtrabackup --copy-back --target-dir=/data/backups/
 ```
 
-copy-back 命令只需要指定备份文件的位置，不需要指定 MySQL 数据目录的位置，因为 Xtrabackup 会自动从 `/etc/my.cnf` 上获取 MySQL 的相关信息，包括数据目录的位置。如果不需要保留备份文件，可以直接使用 --move-back 命令，代表直接将备份文件移动到数据目录下。通常此时数据目录的所有者为执行命令的用户，需要更改为 mysql 用户，命令如下：
+copy-back 命令只需要指定备份文件的位置，不需要指定 MySQL 数据目录的位置，因为 Xtrabackup 会自动从 `/etc/my.cnf` 上获取 MySQL 的相关信息，包括数据目录的位置。如果不需要保留备份文件，可以直接使用 `--move-back` 命令，代表直接将备份文件移动到数据目录下。通常此时数据目录的所有者为执行命令的用户，需要更改为 mysql 用户，命令如下：
 
 ```shell
 chown -R mysql:mysql /usr/app/mysql-8.0.17/data

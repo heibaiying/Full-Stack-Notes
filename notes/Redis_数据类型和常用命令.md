@@ -108,7 +108,7 @@ Redis 5 支持以下多种数据类型：
 - **numkeys**： 需要做交集计算键的个数。
 - **key[key...]**： 需要做交集计算的键。 
 - **weights weight[weight...]**： 每个键的权重， 在做交集计算时， 每个键中的每个 member 会将自己分数乘以这个权重， 每个键的权重默认是1。
-- **aggregate sum|min|max**： 计算成员交集后， 分值可以按照sum（和）、 min（最小值）、 max（最大值）做汇总， 默认值是 sum。 
+- **aggregate sum|min|max**： 计算成员交集后， 分值可以按照sum（和）、min（最小值）、max（最大值）做汇总， 默认值是 sum 。 
 
 ### 2.7 全局命令
 

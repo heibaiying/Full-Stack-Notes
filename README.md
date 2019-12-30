@@ -51,6 +51,18 @@
 
 ##  :books: 常用技术栈
 
+
+### RabbitMQ
+
++ [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
++ [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
++ [HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
+
+### Nginx
+
++ [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
+
+
 ### Kafka
 
 + [Kafka 简介](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka简介.md)
@@ -59,11 +71,6 @@
 + [Kafka 消费者详解](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka消费者详解.md)
 + [深入理解 Kafka 副本机制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka深入理解分区副本机制.md)
 
-### RabbitMQ
-
-+ [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
-+ [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
-+ [HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
 
 ### ZooKeeper 
 
@@ -72,11 +79,6 @@
 + [ZooKeeper 常用 Shell 命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper常用Shell命令.md)
 + [ZooKeeper Java 客户端](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_Java客户端Curator.md)
 + [ZooKeeper  ACL 权限控制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_ACL权限控制.md)
-
-### Nginx
-
-- [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
-
 
 
 ##  :hammer: 软件安装

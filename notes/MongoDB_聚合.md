@@ -211,9 +211,7 @@ $unwind 将文档按照数组中的每一个元素进行拆分，类似于大多
 ```
 
 + **path**：用于展开的数组字段；
-
 + **includeArrayIndex**：用于显示对应元素在原数组的位置信息；
-
 + **preserveNullAndEmptyArrays**：如果用于展开的字段值为 null 或空数组时，则对应的文档不会被输出到下一阶段。如果想要输出到下一阶段则需要将该属性设置为 true。示例语句如下：
 
 ```shell
@@ -623,7 +621,6 @@ db.titles.distinct("title")
 
 + 官方文档：[Aggregation](https://docs.mongodb.com/manual/aggregation/)、[Map-Reduce](https://docs.mongodb.com/manual/core/map-reduce/)
 + 所有聚合管道总览：https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
-
 + 聚合管道中所有可选操作符：https://docs.mongodb.com/manual/reference/operator/aggregation/
 
   

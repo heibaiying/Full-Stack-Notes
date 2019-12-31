@@ -2,7 +2,7 @@
 
 <div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
 
->  :four_leaf_clover: 一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！
+> 一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！
 
 # :coffee: JAVA
 

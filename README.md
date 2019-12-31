@@ -2,7 +2,7 @@
 
 <div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
 
-> 一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！
+<div align="center">一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！ </div>
 
 # :coffee: JAVA
 

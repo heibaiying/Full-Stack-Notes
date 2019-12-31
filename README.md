@@ -3,8 +3,8 @@
 <div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
 <br/>
 <div align="center">
-    <img src="pictures/芽.png" style='vertical-align:middle; display:inline-block;'/>
-    <span style='vertical-align:middle; display:inline-block;'>一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！</span>
+    <img src="pictures/芽.png"/>
+    <strong>一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！</strong>
 </div>
 
 # :coffee: JAVA

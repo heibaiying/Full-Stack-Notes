@@ -1,4 +1,6 @@
-<div align="center"> <img width="300px" src="pictures/full-stack-notes-logo.png"/> </div>
+# Full-Stack-Notes
+
+<div align="center"> <img width="376px" src="pictures/full-stack-notes-logo.png"/> </div>
 
 # :coffee: JAVA
 

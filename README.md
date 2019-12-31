@@ -1,6 +1,12 @@
 # Full-Stack-Notes
 
 <div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
+
+<div align="center">
+	<img src="pictures/芽.png"/>
+	一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！ 
+</div>
+
 # :coffee: JAVA
 
 + [Java 反射与注解](notes/Java_反射与注解.md)
@@ -95,7 +101,6 @@
 
 <br>
 
-<div align="center"> <img width="300px" src="pictures/blog-logo.png"/> </div>
-<br>
+<div align="center"> <img width="200px" src="pictures/blog-logo.png"/> </div>
 
 <div align="center"> <a  href = "">欢迎关注我的博客：https://blog.csdn.net/m0_37809146</a> </div>

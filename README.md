@@ -1,6 +1,6 @@
 # Full-Stack-Notes
 
-<div align="center"> <img width="376px" src="pictures/full-stack-notes-logo.png"/> </div>
+<div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
 
 # :coffee: JAVA
 

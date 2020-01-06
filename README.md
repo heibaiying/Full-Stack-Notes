@@ -39,7 +39,7 @@
 + [Redis 基本数据类型和常用命令](notes/Redis_数据类型和常用命令.md)
 + [Redis AOF 和 RDB 持久化策略原理](notes/Redis_持久化.md)
 + [Redis 哨兵模式](notes/Redis_哨兵模式.md)
-+ [Reids 集群模式](notes/Redis_集群模式.md)
++ [Redis 集群模式](notes/Redis_集群模式.md)
 
 ### MongoDB
 

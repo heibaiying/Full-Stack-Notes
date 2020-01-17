@@ -21,7 +21,8 @@
 - [JavaScript 基础](notes/JavaScript_基础.md)
 - [ECMAScript 6.0 基础](notes/ES6_基础.md)
 
-
+## :globe_with_meridians: 网络基础
++ [计算机网络模型](notes/计算机网络.md)
 
 ## 💾 数据库
 

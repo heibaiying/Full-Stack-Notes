@@ -366,7 +366,7 @@ public class J1_ThreadUnsafe {
 在 Java 语言中，保证可见性的典型实现是 volatile 关键字，它在 Java 语言中一共有三种作用：
 
 + **保证可见性**：Java 虚拟机（JIT 编译器）会在 volatile 变量写操作之后插入一个通用的 StoreLoad 屏障，它可以充当存储屏障来清空执行处理器的写缓冲器；同时 JIT 编译器还会在变量的读操作前插入一个加载屏障来清空无效化队列。
-+ **禁止指令重排序**：通过内存屏障， Java 虚拟机可以 volatile 变量之前的任何读写操作都先于这个 volatile 写操作之前被提交，而 volatile 变量的读操作先于之后任何变量的读写操作被提交。
++ **禁止指令重排序**：通过内存屏障， Java 虚拟机可以保证 volatile 变量之前的任何读写操作都先于这个 volatile 写操作之前被提交，而 volatile 变量的读操作先于之后任何变量的读写操作被提交。
 +  除了以上两类语义外，Java 虚拟机规范还特别规定了对于使用 volatile 修饰的 64 的 long 类型和 double 类型的变量的读写操作具有原子性。
 
 除了 volatile 外，synchronized 和 final 关键字都能保证可见性：

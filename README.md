@@ -55,6 +55,7 @@
 ## 📟 操作系统
 
 + [Linux 常用 Shell 命令](notes/Linux_常用Shell命令.md)
++ [Sehll 脚本编程基础](notes/Shell_基础.md)
 + [Docker 基础](notes/Docker_基础.md)
 
 

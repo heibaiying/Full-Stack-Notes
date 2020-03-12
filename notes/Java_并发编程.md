@@ -576,7 +576,7 @@ public class J4_SynchronizedSafe {
         @Override
         public void run() {
             for (int j = 0; j < 100000; j++) {
-                // 虽然调用的是不同的 IncreaseTask() 示例，但锁住的仍然是同一个对象，此时也是线程安全的
+                // 虽然调用的是不同的 IncreaseTask() 实例，但锁住的仍然是同一个对象，此时也是线程安全的
                 synchronized (s) {
                     i++;
                 }

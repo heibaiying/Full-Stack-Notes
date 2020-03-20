@@ -60,7 +60,7 @@
 
 ### 1.3 HotSpot VM
 
-它是 Sun/Oracle JDK 和 OpenJDK 中默认的虚拟机，也是目前使用最为广泛的虚拟机。最初由 Longview Technologies 公司设计发明，该公司在 1997 年被 Sun 公司收购，随后 Sun 公司在 2006 年开源 SunJDK 时也将 HotSpot 虚拟机一并进行了开源。之后 Oracle 收购 Sun 以后，建立了 HotRockit 项目，用于将其收购的另外一家公司（BEA）的 JRockit 虚拟机中的优秀特性集成到 HotSpot 中。HotSpot 在这个过程里面移除掉永久代，并吸收了 JRockit 的 Java Mission Control 监控工具等功能。到 JDK 8 发行时，采用的就是集两者之长的 HotSpot VM 。
+它是 Sun/Oracle JDK 和 OpenJDK 中默认的虚拟机，也是目前使用最为广泛的虚拟机。最初由 Longview Technologies 公司设计发明，该公司在 1997 年被 Sun 公司收购，随后 Sun 公司在 2006 年开源 SunJDK 时也将 HotSpot 虚拟机一并进行了开源。之后 Oracle 收购 Sun 以后，建立了 HotRockit 项目，并将其收购的另外一家公司（BEA）的 JRockit 虚拟机中的优秀特性集成到 HotSpot 中。HotSpot 在这个过程里面移除掉永久代，并吸收了 JRockit 的 Java Mission Control 监控工具等功能。到 JDK 8 发行时，采用的就是集两者之长的 HotSpot VM 。
 
 我们可以在自己的电脑上使用 `java -version` 来获得 JDK 的信息：
 
@@ -154,7 +154,7 @@ Java 堆（Java Heap）是虚拟机所管理的最大一块的内存空间，它
 
 即我们在程序代码中定义的各种类型的字段的内容，无论是从父类继承而来，还是子类中定义的都需要记录。
 
-**3. 对其填充 (Padding)** 
+**3. 对齐填充 (Padding)** 
 
 主要起占位符的作用。HotSpot 虚拟机要求对象起始地址必须是 8 字节的整倍数，即间接要求了任何对象的大小都必须是 8 字节的整倍数。对象头部分在设计上就是 8 字节的整倍数，如果对象的实例数据不是 8 字节的整倍数，则由对齐填充进行补全。
 

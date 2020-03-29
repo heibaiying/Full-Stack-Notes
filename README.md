@@ -42,7 +42,7 @@
 
 12. Tomcat 架构解析
 
-
+<br/>
 
 ## :globe_with_meridians: 计算机与网络基础
 
@@ -58,7 +58,7 @@
 
 5. 计算机组成原理
 
-   
+ <br/>  
 
 ## :computer: 前端基础
 
@@ -76,9 +76,9 @@
 
 4. JavaScript 设计模式
 
+<br/>
 
-
-## :dolphin: ​数据库
+## :dolphin: 数据库
 
 ### MySQL
 
@@ -137,7 +137,7 @@
 
    分片副本集配置、配置副本集配置、路由服务配置
 
-
+<br/>
 
 ## :whale: 系统与容器
 
@@ -151,7 +151,7 @@
 
    核心概念（镜像、容器、仓库）、Docker 常用命令、DockerFile 常用指令
 
-
+<br/>
 
 ##  :package: 常用技术栈
 
@@ -193,7 +193,7 @@
 
 TODO
 
-
+<br/>
 
 ## :rocket: 测试与运维
 
@@ -201,9 +201,9 @@ TODO
 2. 性能测试之 LoadRunner
 3. Jenkins 持续交付与自动化部署
 
+<br/>
 
-
-## :bullettrain_side: ​微服务与分布式
+## :bullettrain_side: 微服务与分布式
 
 1. 分布式锁的实现
 2. 分布式选举算法
@@ -211,7 +211,7 @@ TODO
 4. 分布式全局 ID 的生成
 5. CAP 理论和 BASE 理论
 
-
+<br/>
 
 ##  :hammer_and_wrench: 常用软件安装
 

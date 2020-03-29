@@ -133,36 +133,36 @@
 
 ### Nginx
 
-+ [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
+1. [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
 
 
 ### Kafka
 
-+ [Kafka 简介](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka简介.md)
-+ [基于 Zookeeper 搭建 Kafka 高可用集群](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/基于Zookeeper搭建Kafka高可用集群.md)
-+ [Kafka 生产者详解](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka生产者详解.md)
-+ [Kafka 消费者详解](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka消费者详解.md)
-+ [深入理解 Kafka 副本机制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka深入理解分区副本机制.md)
+1. [Kafka 简介](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka简介.md)
+2. [基于 Zookeeper 搭建 Kafka 高可用集群](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/基于Zookeeper搭建Kafka高可用集群.md)
+3. [Kafka 生产者详解](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka生产者详解.md)
+4. [Kafka 消费者详解](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka消费者详解.md)
+5. [深入理解 Kafka 副本机制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Kafka深入理解分区副本机制.md)
 
 
 ### ZooKeeper 
 
-+ [ZooKeeper 简介及核心概念](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper简介及核心概念.md)
-+ [ZooKeeper 单机环境和集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Zookeeper单机环境和集群环境搭建.md) 
-+ [ZooKeeper 常用 Shell 命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper常用Shell命令.md)
-+ [ZooKeeper Java 客户端](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_Java客户端Curator.md)
-+ [ZooKeeper  ACL 权限控制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_ACL权限控制.md)
+1. [ZooKeeper 简介及核心概念](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper简介及核心概念.md)
+2. [ZooKeeper 单机环境和集群环境搭建](https://github.com/heibaiying/BigData-Notes/blob/master/notes/installation/Zookeeper单机环境和集群环境搭建.md) 
+3. [ZooKeeper 常用 Shell 命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper常用Shell命令.md)
+4. [ZooKeeper Java 客户端](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_Java客户端Curator.md)
+5. [ZooKeeper  ACL 权限控制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_ACL权限控制.md)
 
 
 
 ##  :hammer: 软件安装
 
-+ [Redis 单机环境安装](notes/installation/Redis单机环境搭建.md)
-+ [RabbitMQ 单机环境安装](notes/installation/RabbitMQ单机环境搭建.md)
-+ [Nginx 单机环境安装](notes/installation/Nginx编译方式安装.md)
-+ [MySQL 单机环境安装](notes/installation/MySQL单机环境搭建.md)
-+ [MongoDB 单机环境安装](notes/installation/MongoDB单机环境搭建.md)
-+ [ElasticSearch + Kibana 单机环境安装](notes/installation/ElasticSearch+Kibana单机环境搭建.md)
+1. [Redis 单机环境安装](notes/installation/Redis单机环境搭建.md)
+2. [RabbitMQ 单机环境安装](notes/installation/RabbitMQ单机环境搭建.md)
+3. [Nginx 单机环境安装](notes/installation/Nginx编译方式安装.md)
+4. [MySQL 单机环境安装](notes/installation/MySQL单机环境搭建.md)
+5. [MongoDB 单机环境安装](notes/installation/MongoDB单机环境搭建.md)
+6. [ElasticSearch + Kibana 单机环境安装](notes/installation/ElasticSearch+Kibana单机环境搭建.md)
 
 <br>
 

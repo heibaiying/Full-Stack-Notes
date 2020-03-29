@@ -7,7 +7,8 @@
     <strong>一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！</strong>
 </div>
 
-# :coffee: JAVA
+
+## :coffee: JAVA
 
 1. [Java 反射与注解](notes/Java_反射与注解.md)
 
@@ -24,8 +25,42 @@
 4. [Java 虚拟机](notes/Java_虚拟机.md)
 
    Java 内存区域、垃圾收集算法、经典垃圾收集器、双亲委派模型、分层编译、热点代码探测、方法内联、逃逸分析
+   
+5. Jvm 监控工具
 
-## 💻 前端基础
+6. Java 8 函数式编程
+
+7. 静态代理与动态代理
+
+8. IO、NIO、AIO
+
+9. Socket 网络编程系列
+
+10. 高性能网络框架 Netty
+
+11. Java 集合类源码解析
+
+12. Tomcat 架构解析
+
+
+
+## :globe_with_meridians: 计算机与网络基础
+
+1. [计算机网络模型](notes/计算机网络.md)
+
+   四层、五层、七层计算机网络模型、信道复用、PPP 协议、ARP 协议、划分子网与构成超网、TCP 三次握手与四次挥手
+
+2. HTTP 协议详解
+
+3. HTTPS 协议详解
+
+4. 抓包神器 Wireshark
+
+5. 计算机组成原理
+
+   
+
+## :computer: 前端基础
 
 1. [JavaScript 基础](notes/JavaScript_基础.md)
 
@@ -34,17 +69,16 @@
 2. [ECMAScript 6.0 基础](notes/ES6_基础.md)
 
    变量声明、对象字面量、对象解构、Symbol、迭代器与生成器、类、代理与反射、模块化
+   
+3. CSS 基础
 
-## :globe_with_meridians: 网络基础
-1. [计算机网络模型](notes/计算机网络.md)
+   选择器、非局部样式、布局样式、效果属性、CSS 动画
 
-   四层、五层、七层计算机网络模型、信道复用、PPP 协议、ARP 协议、划分子网与构成超网、TCP 三次握手与四次挥手
+4. JavaScript 设计模式
 
-2. HTTP协议详解
 
-3. HTTPS协议详解
 
-## 💾 数据库
+## :dolphin: ​数据库
 
 ### MySQL
 
@@ -61,8 +95,6 @@
    基于二进制日志的复制、基于 GTID 的复制、半同步复制、高可用架构 MMM 和 MHA 
 
 4. [MySQL 高可用架构之 PXC 集群](notes/MySQL_PXC集群.md)
-
-   Percona XtraDB Cluster 集群搭建
 
 5. [MyCat 读写分离与分库分表](notes/MySQL_Mycat中间件.md)
 
@@ -81,6 +113,9 @@
 4. [Redis 集群模式](notes/Redis_集群模式.md)
 
    数据分区、节点通信、请求路由、故障发现与恢复、集群扩容与缩容
+   
+5. 使用 Redis 实现分布式锁
+
 
 ### MongoDB
 
@@ -104,7 +139,7 @@
 
 
 
-## 📟 系统与容器
+## :whale: 系统与容器
 
 1. [Linux 常用 Shell 命令](notes/Linux_常用Shell命令.md)
 
@@ -116,24 +151,24 @@
 
    核心概念（镜像、容器、仓库）、Docker 常用命令、DockerFile 常用指令
 
-##  :books: 常用技术栈
+
+
+##  :package: 常用技术栈
 
 
 ### RabbitMQ
 
 1. [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
 
-   AMQP 协议、RabbitMQ 模型架构、交换器分类、死信队列
-
 2. [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
 
 3. [HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
 
-   镜像队列配置、负载均衡和自动故障转移
-
 ### Nginx
 
 1. [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
+2. HTTP 模块详解
+3. Nginx 性能优化
 
 
 ### Kafka
@@ -152,10 +187,33 @@
 3. [ZooKeeper 常用 Shell 命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper常用Shell命令.md)
 4. [ZooKeeper Java 客户端](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_Java客户端Curator.md)
 5. [ZooKeeper  ACL 权限控制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_ACL权限控制.md)
+6. 使用 ZooKeeper 实现分布式锁
+
+## ElasticSearch
+
+TODO
 
 
 
-##  :hammer: 软件安装
+## :rocket: 测试与运维
+
+1. 性能测试之 Jmeter
+2. 性能测试之 LoadRunner
+3. Jenkins 持续交付与自动化部署
+
+
+
+## :bullettrain_side: ​微服务与分布式
+
+1. 分布式锁的实现
+2. 分布式选举算法
+3. 分布式事务实现原理
+4. 分布式全局 ID 的生成
+5. CAP 理论和 BASE 理论
+
+
+
+##  :hammer_and_wrench: 常用软件安装
 
 1. [Redis 单机环境安装](notes/installation/Redis单机环境搭建.md)
 2. [RabbitMQ 单机环境安装](notes/installation/RabbitMQ单机环境搭建.md)

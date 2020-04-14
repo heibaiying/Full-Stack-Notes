@@ -14,14 +14,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-FilterChain">4.4 FilterChain</a><br/>
 <a href="#五请求流程">五、请求流程</a><br/>
 <a href="#六启动流程">六、启动流程</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-startupsh--catalinash">1. startup.sh & catalina.sh</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Bootstrap">2. Bootstrap</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina">3. Catalina</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-startupsh--catalinash">1. startup.sh & catalina.sh</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Bootstrap">2. Bootstrap</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina">3. Catalina</a><br/>
 <a href="#七类加载器">七、类加载器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-Web-App-Class-Loader">1. Web App Class Loader</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Shared-Class-Loader">2. Shared Class Loader</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina-Class-Loader">3. Catalina Class Loader</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-Common-Class-Loader">4. Common Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-Web-App-Class-Loader">1. Web App Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Shared-Class-Loader">2. Shared Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina-Class-Loader">3. Catalina Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-Common-Class-Loader">4. Common Class Loader</a><br/>
 </nav>
 
 
@@ -319,7 +319,7 @@ Catalina 通过 Digester 解析 server.xml 来创建所有的服务组件。Dige
 
 Tomcat 并没有完全沿用 JVM 默认的类加载机制，为了保证 Web 应用之间的隔离性和加载的灵活性，其采用了下图所示的类加载机制：
 
-<div align="center"> <img src="..\pictures\tomcat_类加载器.jpg"/> </div>
+<div align="center"> <img width="600px" src="..\pictures\tomcat_类加载器.jpg"/> </div>
 
 
 #### 1. Web App Class Loader

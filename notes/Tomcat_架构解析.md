@@ -14,11 +14,16 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-FilterChain">4.4 FilterChain</a><br/>
 <a href="#五请求流程">五、请求流程</a><br/>
 <a href="#六启动流程">六、启动流程</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-startupsh--catalinash">1. startup.sh & catalina.sh</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Bootstrap">2. Bootstrap</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina">3. Catalina</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-startupsh--catalinash">1. startup.sh & catalina.sh</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Bootstrap">2. Bootstrap</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina">3. Catalina</a><br/>
 <a href="#七类加载器">七、类加载器</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-Web-App-Class-Loader">1. Web App Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-Shared-Class-Loader">2. Shared Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-Catalina-Class-Loader">3. Catalina Class Loader</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-Common-Class-Loader">4. Common Class Loader</a><br/>
 </nav>
+
 
 
 ## 一、Tomcat 简介
@@ -36,7 +41,8 @@ Tomcat 是目前主流的基于 Java 语言的轻量级应用服务器，它是�
 
 Tomcat 的整体架构如下：
 
-![Tomcat架构](D:\Full-Stack-Notes\pictures\tomcat_架构.png)
+<div align="center"> <img src="..\pictures\tomcat_架构.png"/> </div>
+
 
 + **Server**：表示整个 Servlet 容器，在整个 Tomcat 运行环境中只有唯一一个 Server 实例。一个 Server 包含多个 Service，每个 Service 互相独立，但共享一个 JVM 以及系统类库。
 + **Service**：一个 Service 负责维护多个 Connector 和一个 Engine。其中 Connector 负责开启 Socket 并监听客户端请求，返回响应数据；Engine 负责具体的请求处理。
@@ -54,7 +60,8 @@ Tomcat 的整体架构如下：
 
 连接器的主要功能是将 Socket 的输入转换为 Request 对象，并交由容器进行处理；之后再将容器处理完成的 Response 对象写到输出流。连接器的内部组件如下：
 
-![tomcat连接器组件](D:\Full-Stack-Notes\pictures\tomcat连接器组件.png)
+<div align="center"> <img src="..\pictures\tomcat连接器组件.png"/> </div>
+
 
 ### 3.1 ProtocolHandler
 
@@ -79,7 +86,8 @@ EndPoint 会启动线程来监听服务器端口，并负责处理来自客户�
 
 ProtocolHandler 通过组合不同类型的 Endpoint 和 Processor 来实现针对具体协议的处理功能。按照不同的协议（HTTP 和 AJP）和不同的 I/O 方式（NIO，NIO2，AJP）进行组合，其有以下六个具体的实现类：
 
-![tomcat_AbstractProtocol](D:\Full-Stack-Notes\pictures\tomcat_AbstractProtocol.png)
+<div align="center"> <img src="..\pictures\tomcat_AbstractProtocol.png"/> </div>
+
 
 **4. 协议升级**
 
@@ -89,7 +97,8 @@ ProtocolHandler 通过组合不同类型的 Endpoint 和 Processor 来实现针�
 
 Tomcat 设计者希望连接器是一个单独的组件，能够脱离 Servlet 规范而独立存在，以便增加其使用场景，因此 Process 对输入流封装后得到的 Request 不是一个 Servlet Request，该 Request 的全限定命名为：org.apache.coyote.Request 。因此在这里需要使用适配器模式（具体实现类是 CoyoteAdapter）将其转换为 org.apache.catalina.connector.Request，它才是标准的 ServletRequest 的实现：
 
-![tomcat_request](D:\Full-Stack-Notes\pictures\tomcat_request.png)
+<div align="center"> <img src="..\pictures\tomcat_request.png"/> </div>
+
 
 ### 3.3 Mapper 和 MapperListener
 
@@ -107,7 +116,8 @@ Tomcat 中的所有容器都实现了 Container 接口，它定义了容器共�
 
 
 
-![tomcat_container](D:\Full-Stack-Notes\pictures\tomcat_container.png)
+<div align="center"> <img src="..\pictures\tomcat_container.png"/> </div>
+
 
 
 
@@ -120,7 +130,8 @@ Tomcat 之所以采用分层的结构，主要是为了更好的灵活性和可�
 + **Context**：表示一个具体的 Web 应用程序，一个虚拟主机可以包含多个 Context；
 + **Wrapper**：是 Tomcat 对 Servlet 的包装，一个 Context 中可以有多个 Wrapper。
 
-![tomcat_分层结构](D:\Full-Stack-Notes\pictures\tomcat_分层结构.png)
+<div align="center"> <img src="..\pictures\tomcat_分层结构.png"/> </div>
+
 
 Tomcat 容器的分层结构在其 conf 目录下的 `server.xml` 配置文件中也有体现：
 
@@ -139,7 +150,8 @@ Tomcat 容器的分层结构在其 conf 目录下的 `server.xml` 配置文件�
 
 ### 4.3 Pipeline 和 Valve
 
-![Tomcat多层容器](D:\Full-Stack-Notes\pictures\tomcat_多层容器.jpg)
+<div align="center"> <img src="..\pictures\tomcat_多层容器.jpg"/> </div>
+
 
 由连接器发过来的请求会最先发送到 Engine，最终逐层传递，直至我们编写的 Servlet，这种传递主要通过 Pipeline 和 Valve 来实现。每层容器都有自己的 Pipeline，Pipeline 相当于处理管道；每个 Pipeline 中有一个 Valve 链，每个 Valve 可以看做一个独立的处理单元，用于对请求进行处理。最基础的 Valve 叫做 Basic Valve，新增的 Valve 会位于已有的 Valve 之前。Pipeline 和 Valve 的接口定义如下：
 
@@ -284,7 +296,8 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 
 Tomcat 整体的启动流程如下图所示：
 
-![tomcat启动流程](D:\Full-Stack-Notes\pictures\tomcat启动流程.png)
+<div align="center"> <img src="..\pictures\tomcat启动流程.png"/> </div>
+
 
 
 
@@ -306,7 +319,8 @@ Catalina 通过 Digester 解析 server.xml 来创建所有的服务组件。Dige
 
 Tomcat 并没有完全沿用 JVM 默认的类加载机制，为了保证 Web 应用之间的隔离性和加载的灵活性，其采用了下图所示的类加载机制：
 
-![tomcat_类加载器](D:\Full-Stack-Notes\pictures\tomcat_类加载器.jpg)
+<div align="center"> <img src="..\pictures\tomcat_类加载器.jpg"/> </div>
+
 
 #### 1. Web App Class Loader
 

@@ -284,8 +284,7 @@ protected void service(HttpServletRequest req, HttpServletResponse resp) throws 
 
 这里对前面的连接器和容器章节进行总结，Tomcat 对客户端请求的完整处理流程如下：
 
-![tomcat启动请求处理流程](C:\Users\ciic\Downloads\tomcat启动请求处理流程.jpg)
-
+<div align="center"> <img src="..\pictures\tomcat启动请求处理流程"/> </div>
 
 
 ## 六、启动流程

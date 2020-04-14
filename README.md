@@ -26,21 +26,27 @@
 
    Java 内存区域、垃圾收集算法、经典垃圾收集器、双亲委派模型、分层编译、热点代码探测、方法内联、逃逸分析
    
-5. Jvm 监控工具
+5. [JVM 性能监控之命令行工具](notes/JVM_性能监控之命令行工具.md)
 
-6. Java 8 函数式编程
+   jps 命令、jstat 命令、jinfo 命令、jmap 命令、jhat 命令、jstack 命令
 
-7. 静态代理与动态代理
+6. [JVM 性能监控之可视化工具](notes/JVM_性能监控之可视化工具.md)
 
-8. IO、NIO、AIO
+   JConsole、VisualVM 、监控本地进程、监控远程进程
 
-9. Socket 网络编程系列
+7. IO、NIO、AIO
 
-10. 高性能网络框架 Netty
+8. Socket 网络编程系列
 
-11. Java 集合类源码解析
+9. 高性能网络框架 Netty
 
-12. Tomcat 架构解析
+10. Java 集合类源码解析
+
+11. [Tomcat 架构解析](notes/Tomcat_架构解析.md)
+
+    核心组件、连接器、多层容器、请求处理流程、程序启动过程、类加载器
+
+12. 函数式编程
 
 <br/>
 

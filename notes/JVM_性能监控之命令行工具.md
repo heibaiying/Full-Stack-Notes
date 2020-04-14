@@ -1,5 +1,15 @@
 # JVM 性能监控之命令行工具
 
+<nav>
+<a href="#一简介">一、简介</a><br/>
+<a href="#二jps">二、jps</a><br/>
+<a href="#三jstat">三、jstat</a><br/>
+<a href="#四jinfo">四、jinfo</a><br/>
+<a href="#五jmap">五、jmap</a><br/>
+<a href="#六jhat">六、jhat</a><br/>
+<a href="#七jstack">七、jstack</a><br/>
+</nav>
+
 ## 一、简介
 
 在 JDK 安装目录的 `bin` 文件夹下，除了提供有 `javac` 、`java` 这两个常用的编译和运行工具外，还提供了一系列命令行工具用于 JVM 的性能监控和故障诊断，常用的命令如下：

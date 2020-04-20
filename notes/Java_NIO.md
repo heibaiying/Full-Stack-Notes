@@ -33,20 +33,20 @@ Java NIO 是 JDK 1.4 中引入的新的 IO 方式，它主要包含 Buffer、Cha
 
  <table>
   <tr>
-    <th>NIO</th>
-    <th>IO</th>
+    <th width='430px'>NIO</th>
+    <th width='430px'>IO</th>
   </tr>
   <tr>
-    <td>面向缓冲</td>
-    <td>面向流</td>
+    <td align="center">面向缓冲</td>
+    <td align="center">面向流</td>
   </tr>
   <tr>
-    <td>同步非阻塞</td>
-    <td>同步阻塞</td>
+    <td align="center">同步非阻塞</td>
+    <td align="center">同步阻塞</td>
   </tr>
   <tr>
-    <td>多路复用（选择器）</td>
-    <td>无</td>
+    <td align="center">多路复用（选择器）</td>
+    <td align="center">无</td>
   </tr>
 </table>
 

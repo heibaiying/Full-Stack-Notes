@@ -34,19 +34,19 @@
 
    JConsole、VisualVM 、监控本地进程、监控远程进程
 
-7. IO、NIO、AIO
+7. [Java NIO 核心组件详解](notes/Java_NIO.md)
 
-8. Socket 网络编程系列
+   缓冲区 Buffer、通道 Channel、选择器 Selector、实现多人聊天室 
 
-9. 高性能网络框架 Netty
+8. 高性能网络框架 Netty
+
+9. [Tomcat 架构解析](notes/Tomcat_架构解析.md)
+
+   核心组件、连接器、多层容器、请求处理流程、程序启动过程、类加载器
 
 10. Java 集合类源码解析
 
-11. [Tomcat 架构解析](notes/Tomcat_架构解析.md)
-
-    核心组件、连接器、多层容器、请求处理流程、程序启动过程、类加载器
-
-12. 函数式编程
+11. 函数式编程
 
 <br/>
 

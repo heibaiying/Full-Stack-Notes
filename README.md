@@ -11,28 +11,19 @@
 
 <br/>
 
-<p align="right"><a href="../CREADME.md">点击切换详细目录</a></p>
+<p align="right"><a href="../master/CREADME.md">点击切换详细目录</a></p>
 
 ## :coffee: JAVA
 
 1. [Java 反射与注解](notes/Java_反射与注解.md)
-
 2. [Java 并发编程](notes/Java_并发编程.md)
-
 3. [Java NIO 核心组件详解](notes/Java_NIO.md)
-
 4. [Java 函数式编程](notes/Java_函数式编程.md)
-
 5. [Java 设计模式](notes/Java_设计模式.md)
-
 6. [Java 虚拟机](notes/Java_虚拟机.md)
-
 7. [JVM 性能监控之命令行工具](notes/JVM_性能监控之命令行工具.md)
-
 8. [JVM 性能监控之可视化工具](notes/JVM_性能监控之可视化工具.md)
-
 9. [Tomcat 架构解析](notes/Tomcat_架构解析.md)
-
 10. Java 集合类源码解析
 
 <br/>
@@ -40,10 +31,8 @@
 ## :globe_with_meridians: 网络基础
 
 1. [计算机网络模型](notes/计算机网络.md)
-
-3. HTTPS 与 通信安全
-
-4. 抓包神器 Wireshark
+2. HTTPS 与 通信安全
+3. 抓包神器 Wireshark
 
 
  <br/>  
@@ -51,11 +40,8 @@
 ## :computer: 前端基础
 
 1. [JavaScript 基础](notes/JavaScript_基础.md)
-
 2. [ECMAScript 6.0 基础](notes/ES6_基础.md)
-
 3. CSS 基础
-
 4. JavaScript 设计模式
 
 <br/>
@@ -65,27 +51,18 @@
 ### MySQL
 
 1. [MySQL 核心概念](notes/MySQL_基础.md)
-
 2. [MySQL 备份详解](notes/MySQL_备份.md)
-
 3. [MySQL 复制详解](notes/MySQL_复制.md)
-
 4. [MySQL 高可用架构之 PXC 集群](notes/MySQL_PXC集群.md)
-
 5. [MyCat 读写分离与分库分表](notes/MySQL_Mycat中间件.md)
-
 6. [MySQL 查询性能分析之 Explain](notes/MySQL_EXPLAIN.md)
 
 ### Redis
 
 1. [Redis 基本数据类型和常用命令](notes/Redis_数据类型和常用命令.md)
-
 2. [Redis AOF 和 RDB 持久化策略原理](notes/Redis_持久化.md)
-
 3. [Redis 哨兵模式](notes/Redis_哨兵模式.md)
-
 4. [Redis 集群模式](notes/Redis_集群模式.md)
-
 5. [Redis 分布式锁原理](notes/Redis_分布式锁原理.md)
 
 
@@ -102,9 +79,7 @@
 ## :whale: 系统与容器
 
 1. [Linux 常用 Shell 命令](notes/Linux_常用Shell命令.md)
-
 2. [Sehll 脚本编程基础](notes/Shell_基础.md)
-
 3. [Docker 基础](notes/Docker_基础.md)
 
 <br/>
@@ -115,9 +90,7 @@
 ### RabbitMQ
 
 1. [RabbitMQ 核心概念](notes/RabbitMQ_基础.md)
-
 2. [RabbitMQ 客户端开发](notes/RabbitMQ_客户端开发.md)
-
 3. [HAProxy + KeepAlived 搭建 RabbitMQ 高可用集群](notes/RabbitMQ_高可用集群架构.md)
 
 ### Nginx

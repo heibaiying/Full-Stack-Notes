@@ -2,43 +2,64 @@
 
 <div align="center"> <img width="380px" src="pictures/full-stack-notes-logo.png"/> </div>
 <br/>
-
 <div align="center">
     <img src="pictures/芽.png"/>
     <strong>一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！</strong>
 </div>
-<br/>
 
-<div align="right">
-    <a href="">点击切换详细目录</a>
-</div>
 
 ## :coffee: JAVA
 
 1. [Java 反射与注解](notes/Java_反射与注解.md)
+
+   反射机制、自定义注解、@Target 与 @Retention、注解的继承
+
 2. [Java 并发编程](notes/Java_并发编程.md)
-3. [Java 设计模式](notes/Java_设计模式.md)
-4. [Java 虚拟机](notes/Java_虚拟机.md)
-5. [JVM 性能监控之命令行工具](notes/JVM_性能监控之命令行工具.md)
-6. [JVM 性能监控之可视化工具](notes/JVM_性能监控之可视化工具.md)
-7. [Java NIO 核心组件详解](notes/Java_NIO.md)
-8. 函数式编程
+
+   非原子性协定、计算机多级高速缓存、缓存一致性协议、写缓冲与无效化队列、内存屏障、锁机制、无锁 CAS、线程池
+
+3. [Java NIO 核心组件详解](notes/Java_NIO.md)
+
+   缓冲区 Buffer、通道 Channel、选择器 Selector、实现多人聊天室 
+
+4. [Java 函数式编程](notes/Java_函数式编程.md)
+
+   Lambda 表达式、函数式接口、流、收集器、并行流
+
+5. [Java 设计模式](notes/Java_设计模式.md)
+
+   软件设计原则、单例模式（使用序列化和反射破坏单例、防御序列化和反射攻击、枚举类单例）等 23 种设计模式
+
+6. [Java 虚拟机](notes/Java_虚拟机.md)
+
+   Java 内存区域、垃圾收集算法、经典垃圾收集器、双亲委派模型、分层编译、热点代码探测、方法内联、逃逸分析
+
+7. [JVM 性能监控之命令行工具](notes/JVM_性能监控之命令行工具.md)
+
+   jps 命令、jstat 命令、jinfo 命令、jmap 命令、jhat 命令、jstack 命令
+
+8. [JVM 性能监控之可视化工具](notes/JVM_性能监控之可视化工具.md)
+
+   JConsole、VisualVM 、监控本地进程、监控远程进程
+
 9. [Tomcat 架构解析](notes/Tomcat_架构解析.md)
+
+   核心组件、连接器、多层容器、请求处理流程、程序启动过程、类加载器
+
 10. Java 集合类源码解析
 
 <br/>
 
-## :globe_with_meridians: 计算机与网络基础
+## :globe_with_meridians: 网络基础
 
 1. [计算机网络模型](notes/计算机网络.md)
 
-2. HTTP 协议详解
+   四层、五层、七层计算机网络模型、信道复用、PPP 协议、ARP 协议、划分子网与构成超网、TCP 三次握手与四次挥手
 
-3. HTTPS 协议详解
+3. HTTPS 与 通信安全
 
 4. 抓包神器 Wireshark
 
-5. 计算机组成原理
 
  <br/>  
 
@@ -46,9 +67,15 @@
 
 1. [JavaScript 基础](notes/JavaScript_基础.md)
 
+   基本数据类型、引用类型、内置对象（Global 与 window）、作用域与闭包、对象设计
+
 2. [ECMAScript 6.0 基础](notes/ES6_基础.md)
 
+   变量声明、对象字面量、对象解构、Symbol、迭代器与生成器、类、代理与反射、模块化
+   
 3. CSS 基础
+
+   选择器、非局部样式、布局样式、效果属性、CSS 动画
 
 4. JavaScript 设计模式
 
@@ -60,9 +87,15 @@
 
 1. [MySQL 核心概念](notes/MySQL_基础.md)
 
+   B+ Tree 树、聚集索引和非聚集索引、共享锁与排他锁、意向共享锁与意向排它锁、一致性锁定读与一致性非锁定读
+
 2. [MySQL 备份详解](notes/MySQL_备份.md)
 
+   备份类型、mysqldump 备份、mysqlpump 备份、Xtrabackup 备份、二进制日志备份
+
 3. [MySQL 复制详解](notes/MySQL_复制.md)
+
+   基于二进制日志的复制、基于 GTID 的复制、半同步复制、高可用架构 MMM 和 MHA 
 
 4. [MySQL 高可用架构之 PXC 集群](notes/MySQL_PXC集群.md)
 
@@ -78,9 +111,15 @@
 
 3. [Redis 哨兵模式](notes/Redis_哨兵模式.md)
 
+   复制机制、哨兵模式架构说明、哨兵模式搭建
+
 4. [Redis 集群模式](notes/Redis_集群模式.md)
 
-5. 使用 Redis 实现分布式锁
+   数据分区、节点通信、请求路由、故障发现与恢复、集群扩容与缩容
+   
+5.  [Redis 分布式锁原理](notes/Redis_分布式锁原理.md)
+
+   分布式锁原理、单机模式下的分布式锁、集群模式下的分布式锁、RedLock 原理、Redisson
 
 
 ### MongoDB
@@ -89,11 +128,19 @@
 
 2. [MongoDB 索引](notes/MongoDB_索引.md)
 
+   单字段索引、复合索引、多键索引、哈希所有、地理空间索引、文本索引；唯一索引、稀疏索引、部分索引、TTL 索引
+
 3. [MongoDB 聚合](notes/MongoDB_聚合.md)
+
+   常用聚合管道、单用途聚合方法、MapReduce
 
 4. [MongoDB 复制](notes/MongoDB_复制.md)
 
+   复制功能、故障发现、优先选举、投票成员、副本集搭建
+
 5. [MongoDB 分片](notes/MongoDB_分片.md)
+
+   分片副本集配置、配置副本集配置、路由服务配置
 
 <br/>
 
@@ -103,7 +150,11 @@
 
 2. [Sehll 脚本编程基础](notes/Shell_基础.md)
 
+   创建脚本、分支语句、循环语句、处理用户输入、处理用户输出、创建函数、处理信号、定时作业
+
 3. [Docker 基础](notes/Docker_基础.md)
+
+   核心概念（镜像、容器、仓库）、Docker 常用命令、DockerFile 常用指令
 
 <br/>
 
@@ -122,7 +173,6 @@
 
 1. [Nginx 基础之静态网站部署，负载均衡，动静分离](notes/Nginx_基础.md)
 2. HTTP 模块详解
-3. Nginx 性能优化
 
 
 ### Kafka
@@ -141,29 +191,23 @@
 3. [ZooKeeper 常用 Shell 命令](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper常用Shell命令.md)
 4. [ZooKeeper Java 客户端](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_Java客户端Curator.md)
 5. [ZooKeeper  ACL 权限控制](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Zookeeper_ACL权限控制.md)
-6. 使用 ZooKeeper 实现分布式锁
+6. [ZooKeeper 分布式锁原理](notes/ZooKeeper_分布式锁原理.md)
 
 ## ElasticSearch
 
 TODO
 
-<br/>
 
-## :rocket: 测试与运维
 
-1. 性能测试之 Jmeter
-2. 性能测试之 LoadRunner
-3. Jenkins 持续交付与自动化部署
+
 
 <br/>
 
 ## :bullettrain_side: 微服务与分布式
 
-1. 分布式锁的实现
-2. 分布式选举算法
-3. 分布式事务实现原理
-4. 分布式全局 ID 的生成
-5. CAP 理论和 BASE 理论
+1. [CAP 理论 和 BASE 理论](notes/CAP理论和BASE理论.md)
+
+
 
 <br/>
 

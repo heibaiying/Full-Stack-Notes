@@ -1,10 +1,20 @@
 # Java 函数式编程
 
+<nav>
+<a href="#一Lambda">一、Lambda</a><br/>
+<a href="#二函数式接口">二、函数式接口</a><br/>
+<a href="#三创建流">三、创建流</a><br/>
+<a href="#四操作流">四、操作流</a><br/>
+<a href="#五收集器">五、收集器</a><br/>
+<a href="#六并行流">六、并行流</a><br/>
+</nav>
+
+
 ## 一、Lambda
 
 ### 1.1 格式
 
-Java 从 1.8 版本开始支持 Lambda 表达式，通过 Lambda 表达式我们可以将一个函数作为参数传入方法中。在 JDK 1.8 之前，我们只能通过匿名表达式来完成类似的功能，但是匿名表达式比较繁琐，存在大量的冗余代码，不利于将行为参数化，而采用 Lamdba 则能很好的解决这个问题。Lambda 表达式的基本语法如下：
+JDK 从 1.8 版本开始支持 Lambda 表达式，通过 Lambda 表达式我们可以将一个函数作为参数传入方法中。在 JDK 1.8 之前，我们只能通过匿名表达式来完成类似的功能，但是匿名表达式比较繁琐，存在大量的模板代码，不利于将行为参数化，而采用 Lamdba 则能很好的解决这个问题。Lambda 表达式的基本语法如下：
 
 ```java
 (parameters) -> expression
@@ -18,8 +28,8 @@ Java 从 1.8 版本开始支持 Lambda 表达式，通过 Lambda 表达式我们
 
 Lambda 表达式具有如下特点：
 
-- **可选的参数：**不需要声明参数类型，编译器会从上下文自动进行推断；
-- **可选的参数圆括号：**当且仅当只有一个参数时，圆括号可以省略； 
+- **可选的参数：**不需要声明参数类型，编译器会依靠上下文进行自动推断；
+- **可选的参数圆括号：**当且仅当只有一个参数时，包裹参数的圆括号可以省略； 
 - **可选的花括号：**如果主体只有一个表达式，则无需使用花括号； 
 - **可选的返回关键字：**如果主体只有一个表达式，则该表达式的值就是整个 Lambda 表达式的返回值，此时不需要使用 return 关键字进行显式的返回。
 
@@ -34,7 +44,7 @@ Lambda 表达式具有如下特点：
  */
 @FunctionalInterface
 public interface CustomPredicate<T> {
-	boolean test(T t);
+    boolean test(T t);
 }
 ```
 
@@ -47,12 +57,12 @@ public interface CustomPredicate<T> {
  * @return 满足条件的元素的集合
  */
 public static <T> List<T> filter(List<T> list, CustomPredicate<T> predicate) {
-	ArrayList<T> result = new ArrayList<>();
-	for (T t : list) {
+    ArrayList<T> result = new ArrayList<>();
+    for (T t : list) {
         // 将满足条件的元素添加到返回集合中
-		if (predicate.test(t)) result.add(t);
-	}
-	return result;
+        if (predicate.test(t)) result.add(t);
+    }
+    return result;
 }
 
 ```
@@ -64,9 +74,9 @@ List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
 filter(integers, x -> x % 2 == 0);  // 过滤出所有偶数
 
 List<Employee> employees = Arrays.asList(
-	new Employee("张某", 21, true),
-	new Employee("李某", 30, true),
-	new Employee("王某", 45, false));
+    new Employee("张某", 21, true),
+    new Employee("李某", 30, true),
+    new Employee("王某", 45, false));
 filter(employees, employee -> employee.getAge() > 25); // 过滤出所有年龄大于25的员工
 ```
 
@@ -76,7 +86,7 @@ filter(employees, employee -> employee.getAge() > 25); // 过滤出所有年龄�
 
 ```java
 new Thread(() -> {
-	System.out.println("hello");
+    System.out.println("hello");
 });
 ```
 
@@ -148,10 +158,10 @@ public interface Predicate<T> {
 }
 ```
 
-其他函数式接口都是这四种基本类型的延伸和扩展。以 BiFunction 和 BinaryOperator 接口为例：
+其他函数式接口都是这四种基本类型的扩展和延伸。以 BiFunction 和 BinaryOperator 接口为例：
 
 + **BiFunction<T, U, R>**：是函数型接口 Function<T, R> 的扩展，Function 只能接收一个入参；而 BiFunction 可以用于接收两个不同类型的入参；
-+ **BinaryOperator\<T>**：是 BiFunction 的一种特殊化情况，即两个入参和返回值的类型均相同，通常用于二元运算：
++ **BinaryOperator\<T>**：是 BiFunction 的一种特殊化情况，即两个入参和返回值的类型均相同，通常用于二元运算。定义如下：
 
 ```java
 @FunctionalInterface
@@ -165,24 +175,23 @@ public interface BinaryOperator<T> extends BiFunction<T,T,T> {
 }
 ```
 
-使用示例如下：
+下面演示一下 BinaryOperator 的用法：
 
 ```java
-public static void main(String[] args) {
-	List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
-	reduce(integers, 0, (a, b) -> a + b); // 求和  输出：15
-	reduce(integers, 1, (a, b) -> a * b); // 求积  输出：120
-}
-
-
 /**
  * 执行归约操作
  */
 public static <T> T reduce(List<T> list, T initValue, BinaryOperator<T> binaryOperator) {
-	for (T t : list) {
-		initValue = binaryOperator.apply(initValue, t);
-	}
-	return initValue;
+    for (T t : list) {
+        initValue = binaryOperator.apply(initValue, t);
+    }
+    return initValue;
+}
+
+public static void main(String[] args) {
+    List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+    reduce(integers, 0, (a, b) -> a + b); // 求和  输出：15
+    reduce(integers, 1, (a, b) -> a * b); // 求积  输出：120
 }
 ```
 
@@ -190,7 +199,7 @@ public static <T> T reduce(List<T> list, T initValue, BinaryOperator<T> binaryOp
 
 ## 三、创建流
 
-JDK 1.8 中最主要的变化是引入了流，通过流、Lamda 表达式以及函数式接口，可以高效地完成数据的处理。创建流通常有以下四种方法：
+JDK 1.8 中另一个大的改进是引入了流，通过流、Lamda 表达式以及函数式接口，可以高效地完成数据的处理。创建流通常有以下四种方法：
 
 **1. 由值创建**
 
@@ -216,7 +225,7 @@ List<String> strings = Arrays.asList("a", "b ", "c", "d");
 Stream<String> stream = strings.stream();
 ```
 
-`stream()` 方法定义在 `Collection` 接口中，它是一个默认方法，因此大多数的集合都可以通过该方法转换为流：
+`stream()` 方法定义在 `Collection` 接口中，它是一个默认方法，因此大多数的集合都可以通过该方法来创建流：
 
 ```java
 public interface Collection<E> extends Iterable<E> {
@@ -230,9 +239,9 @@ public interface Collection<E> extends Iterable<E> {
 
 ```java
 try (Stream<String> lines = Files.lines(Paths.get("pom.xml"), StandardCharsets.UTF_8)) {
-	lines.forEach(System.out::println);
+    lines.forEach(System.out::println);
 } catch (IOException e) {
-	e.printStackTrace();
+    e.printStackTrace();
 }
 ```
 
@@ -240,10 +249,10 @@ try (Stream<String> lines = Files.lines(Paths.get("pom.xml"), StandardCharsets.U
 
 除了以上方法外，还可以通过 `Stream.iterate()` 和 `Stream.generate()` 方法来来创建无限流：
 
-+ `Stream.iterate()` 接受两个参数：第一个是初始值，第二个参数是一个输入值和输出值相同的函数型接口。它主要用于迭代式的产生新的元素，示例如下：
++ `Stream.iterate()` 接受两个参数：第一个是初始值；第二个参数是一个输入值和输出值相同的函数型接口，主要用于迭代式地产生新的元素，示例如下：
 
   ```java
-  // 依次输出1到9
+  // 依次输出0到9
   Stream.iterate(0, x -> x + 1).limit(10).forEach(System.out::print);
   ```
 
@@ -258,26 +267,26 @@ try (Stream<String> lines = Files.lines(Paths.get("pom.xml"), StandardCharsets.U
 
 ### 4.1 基本操作
 
-当流创建后，便可以利用 Stream 类的各种方法对其上数据进行各种处理，常用的方法如下：
+当流创建后，便可以利用 Stream 类上的各种方法对流中的数据进行处理，常用的方法如下：
 
-| 操作      | 作用                           | 返回类型     | 使用的类型/函数式接口  |
-| --------- | ------------------------------ | ------------ | ---------------------- |
-| filter    | 过滤符合条件的元素             | Stream\<T>   | Predicate\<T>          |
-| distinct  | 过滤重复元素                   | Stream\<T>   |                        |
-| skip      | 跳过指定数量的元素             | Stream\<T>   | long                   |
-| limit     | 限制元素的数量                 | Stream\<T>   | long                   |
-| map       | 对元素执行特定转换操作         | Stream\<T>   | Function<T,R>          |
-| flatMap   | 将元素扁平化后执行特定转换操作 | Stream\<T>   | Function<T,Stream\<R>> |
-| sorted    | 对元素进行排序                 | Stream\<T>   | Comparator\<T>         |
-| anyMatch  | 是否存在指定元素满足特定条件   | boolean      | Predicate\<T>          |
-| noneMatch | 是否所有元素都不满足特定条件   | boolean      | Predicate\<T>          |
-| allMatch  | 是否所有元素都满足特定条件     | boolean      | Predicate\<T>          |
-| findAny   | 返回任意一个满足指定条件的元素 | Optional\<T> |                        |
-| findFirst | 返回第一个满足指定条件的元素   | Optional\<T> |                        |
-| forEach   | 对所有元素执行特定的操作       | void         | Cosumer\<T>            |
-| collect   | 对所有元素指定特定的收集操作   | R            | Collector<T, A, R>     |
-| reduce    | 对元素依次执行归约操作         | Optional\<T> | BinaryOperator\<T>     |
-| count     | 计算流中元素的数量             | long         |                        |
+| 操作      | 作用                               | 返回类型     | 使用的类型/函数式接口  |
+| --------- | ---------------------------------- | ------------ | ---------------------- |
+| filter    | 过滤符合条件的元素                 | Stream\<T>   | Predicate\<T>          |
+| distinct  | 过滤重复元素                       | Stream\<T>   |                        |
+| skip      | 跳过指定数量的元素                 | Stream\<T>   | long                   |
+| limit     | 限制元素的数量                     | Stream\<T>   | long                   |
+| map       | 对元素执行特定转换操作             | Stream\<T>   | Function<T,R>          |
+| flatMap   | 将元素扁平化后执行特定转换操作     | Stream\<T>   | Function<T,Stream\<R>> |
+| sorted    | 对元素进行排序                     | Stream\<T>   | Comparator\<T>         |
+| anyMatch  | 是否存在任意一个元素能满足指定条件 | boolean      | Predicate\<T>          |
+| noneMatch | 是否所有元素都不满足指定条件       | boolean      | Predicate\<T>          |
+| allMatch  | 是否所有元素都满足指定条件         | boolean      | Predicate\<T>          |
+| findAny   | 返回任意一个满足指定条件的元素     | Optional\<T> |                        |
+| findFirst | 返回第一个满足指定条件的元素       | Optional\<T> |                        |
+| forEach   | 对所有元素执行特定的操作           | void         | Cosumer\<T>            |
+| collect   | 使用收集器                         | R            | Collector<T, A, R>     |
+| reduce    | 执行归约操作                       | Optional\<T> | BinaryOperator\<T>     |
+| count     | 计算流中元素的数量                 | long         |                        |
 
 > 注：上表中返回类型为 Stream\<T> 的操作都是中间操作，代表还可以继续调用其它方法对流进行处理。返回类型为其它的操作都是终止操作，代表处理过程到此为止。
 
@@ -285,11 +294,11 @@ try (Stream<String> lines = Files.lines(Paths.get("pom.xml"), StandardCharsets.U
 
 ```java
 Stream.iterate(0, x -> x + 1)       // 构建流
-	.limit(20)    					// 限制元素的个数
-	.skip(10)    					// 跳过前10个元素
-	.filter(x -> x % 2 == 0) 		// 过滤出所有偶数
-	.map(x -> "偶数:" + x) 		   // 对元素执行转换操作
-	.forEach(System.out::println);	// 打印出所有元素
+    .limit(20)                        // 限制元素的个数
+    .skip(10)                        // 跳过前10个元素
+    .filter(x -> x % 2 == 0)         // 过滤出所有偶数
+    .map(x -> "偶数:" + x)            // 对元素执行转换操作
+    .forEach(System.out::println);    // 打印出所有元素
 ```
 
 输出结果如下：
@@ -302,18 +311,18 @@ Stream.iterate(0, x -> x + 1)       // 构建流
 偶数:18
 ```
 
- 上表的 `flatMap()` 方法接收一个参数，它是一个函数型接口 `Function<? super T, ? extends Stream<? extends R>> mapper`，该接口用于将流中的元素转换为 `Stream` ，从而可以将原有的元素进行扁平化：
+ 上表的 `flatMap()` 方法接收一个参数，该参数是一个函数型接口 `Function<? super T, ? extends Stream<? extends R>> mapper`，主要用于将流中的元素转换为 `Stream` ，从而可以将原有的元素进行扁平化，示例如下：
 
 ```java
 String[] strings = {"hello", "world"};
 
 Arrays.stream(strings)
-	.map(x -> x.split(""))     		 // 拆分得到: ['h','e','l','l','o'],['w','o','r','l','d']
-	.flatMap(x -> Arrays.stream(x))  // 进行扁平化处理得到：'h','e','l','l','o','w','o','r','l','d'
-	.forEach(System.out::println);
+    .map(x -> x.split(""))              // 拆分得到: ['h','e','l','l','o'],['w','o','r','l','d']
+    .flatMap(x -> Arrays.stream(x))  // 将每个数组进行扁平化处理得到：'h','e','l','l','o','w','o','r','l','d'
+    .forEach(System.out::println);
 ```
 
-上表的 `reduce()` 方法接收两个参数：第一个参数表示执行归约操作的初始值；第二个参数是上文我们介绍过的函数式接口 `BinaryOperator<T>` ，使用示例如下：
+而上表的 `reduce()` 方法则接收两个参数：第一个参数表示执行归约操作的初始值；第二个参数是上文我们介绍过的函数式接口 `BinaryOperator<T>` ，使用示例如下：
 
 ```java
 Stream.iterate(0, x -> x + 1).limit(10)
@@ -322,7 +331,7 @@ Stream.iterate(0, x -> x + 1).limit(10)
 
 ### 4.2 数值流
 
-上面的代码等效于对 Stream 中的所有元素执行了求和操作，因此我们还可以调用简便方法 `sum()` 来进行实现，但是需要注意的是上面 `Stream.iterate()` 生成流中的元素类型都是包装类型：
+上面的代码等效于对 Stream 中的所有元素执行了求和操作，因此我们还可以调用简便方法 `sum()` 来进行实现，但是需要注意的是 `Stream.iterate()` 生成流中的元素类型都是包装类型：
 
 ```java
 Stream<Integer> stream = Stream.iterate(0, x -> x + 1); //包装类型Integer
@@ -345,7 +354,7 @@ Stream<Integer> boxed = intStream.boxed();
 
 ## 五、收集器
 
-Stream 中最强大一个终止操作是 `collect()` ，它接收一个收集器 Collector 作为参数，可以将流中的元素收集到集合中，或进行分组、分区等操作。Java 中内置了多种收集器的实现，可以通过 Collectors 类的静态方法进行调用，常用的如下：
+Stream 中最强大一个终止操作是 `collect()` ，它接收一个收集器 Collector 作为参数，可以将流中的元素收集到集合中，或进行分组、分区等操作。Java 中内置了多种收集器的实现，可以通过 Collectors 类的静态方法进行调用，常用的收集器如下：
 
 | 工厂方法          | 返回类型              | 用于                                                         |
 | ----------------- | --------------------- | ------------------------------------------------------------ |
@@ -355,12 +364,12 @@ Stream 中最强大一个终止操作是 `collect()` ，它接收一个收集器
 | counting          | Long                  | 计算流中所有元素的个数                                       |
 | summingInt        | Integer               | 将流中所有元素转换为整数，并计算其总和                       |
 | averagingInt      | Double                | 将流中所有元素转换为整数，并计算其平均值                     |
-| summarizingInt    | IntSummaryStatistics  | 将流中所有元素转换为整数，并返回值统计值，包含最大值、最小值、<br/>总和与平均值等信息 |
+| summarizingInt    | IntSummaryStatistics  | 将流中所有元素转换为整数，并返回统计结果，包含最大值、最小值、<br/>总和与平均值等信息 |
 | joining           | String                | 将流中所有元素转换为字符串，并使用给定连接符进行连接         |
 | maxBy             | Optional\<T>          | 查找流中最大元素的 Optional                                  |
 | minBy             | Optional\<T>          | 查找流中最小元素的 Optional                                  |
 | reducing          | 规约操作产生的类型    | 对流中所有元素执行归约操作                                   |
-| collectingAndThen | 转换返回的类型        | 把流中所有元素收集到指定的集合中，再对集合执行特定转换操作   |
+| collectingAndThen | 转换返回的类型        | 先把流中所有元素收集到指定的集合中，再对集合执行特定的操作   |
 | groupingBy        | Map<K,List\<T>>       | 对流中所有元素执行分组操作                                   |
 | partitionBy       | Map<Boolean,List\<T>> | 对流中所有元素执行分区操作                                   |
 
@@ -379,7 +388,7 @@ stream.collect(Collectors.reducing(1, (a, b) -> a * b)); // 等效于 stream.red
 collect(Collectors.collectingAndThen(Collectors.toSet(), Set::size)); // 先把所有元素收集到Set中，再计算Set的大小
 ```
 
-> 注意：以上每个终止操作只能单独演示，因为对一个流只能执行一次终止操作。并且执行完终止操作后，就不能再对这个流执行任何操作，否则将抛出 `java.lang.IllegalStateException: stream has already been operated upon or closed` 异常。
+> 注意：以上每个终止操作只能单独演示，因为对一个流只能执行一次终止操作。并且执行完终止操作后，就不能再对这个流进行任何操作，否则将抛出 `java.lang.IllegalStateException: stream has already been operated upon or closed` 的异常。
 
 ### 5.2 分组
 
@@ -387,22 +396,22 @@ collect(Collectors.collectingAndThen(Collectors.toSet(), Set::size)); // 先把�
 
 ```java
 Stream<Employee> stream = Stream.of(new Employee("张某", "男", "A公司", 20),
-	new Employee("李某", "女", "A公司", 30),
-	new Employee("王某", "男", "B公司", 40),
-	new Employee("田某", "女", "B公司", 50));
+    new Employee("李某", "女", "A公司", 30),
+    new Employee("王某", "男", "B公司", 40),
+    new Employee("田某", "女", "B公司", 50));
 ```
 
 ```java
 public class Employee {
-	
-	private String name;
-	private String gender;
-	private String company;
-	private int age;
-	
-	@Override
-	public String toString() {return "Employee{" + "name='" + name + '\'' + '}';
-	}
+    
+    private String name;
+    private String gender;
+    private String company;
+    private int age;
+    
+    @Override
+    public String toString() {return "Employee{" + "name='" + name + '\'' + '}';
+    }
 }
 ```
 
@@ -435,7 +444,7 @@ stream.collect(Collectors.groupingBy(Employee::getCompany, Collectors.counting()
 ```java
 stream.collect(Collectors.groupingBy(Employee::getCompany, Collectors.groupingBy(Employee::getGender)));
 
-对应的分组结果如下：
+先按照公司分组，再按照性别分组，结果如下：
 { 
    B公司={女=[Employee{name='田某'}], 男=[Employee{name='王某'}]}, 
    A公司={女=[Employee{name='李某'}], 男=[Employee{name='张某'}]}
@@ -446,13 +455,13 @@ stream.collect(Collectors.groupingBy(Employee::getCompany, Collectors.groupingBy
 
 ```java
 Map<String, List<Employee>> collect = stream.collect(Collectors.groupingBy(employee -> {
-	if (employee.getAge() <= 30) {
-		return "青年员工";
-	} else if (employee.getAge() < 50) {
-		return "中年员工";
-	} else {
-		return "老年员工";
-	}
+    if (employee.getAge() <= 30) {
+        return "青年员工";
+    } else if (employee.getAge() < 50) {
+        return "中年员工";
+    } else {
+        return "老年员工";
+    }
 }));
 
 对应的分组结果如下：
@@ -465,7 +474,7 @@ Map<String, List<Employee>> collect = stream.collect(Collectors.groupingBy(emplo
 
 ### 5.3 分区
 
-分区是分组的一种特殊情况，即将满足指定条件的分为一组，将不满足指定条件的分为另外一组，两者在使用上基本类似，示例如下：
+分区是分组的一种特殊情况，即将满足指定条件的元素分为一组，将不满足指定条件的元素分为另一组，两者在使用上基本类似，示例如下：
 
 ```java
 stream.collect(Collectors.partitioningBy(x -> "A公司".equals(x.getCompany())));
@@ -489,7 +498,7 @@ stream.parallel();
 
 此时流中的所有元素会被均匀的分配到多个线程上进行处理。并行流内部使用的是 ForkJoinPool 线程池，它默认的线程数量就是处理器数量，可以通过 `Runtime.getRuntime().availableProcessors()` 来查看该值，通常不需要更改。
 
-同时当前也无法为某个具体的流指定线程数量，只能通过修改系统属性 `java.util.concurrent.ForkJoinPool.common.parallelism` 的值来改变线程池大小，进而改变所有并行流的线程大小，示例如下：
+当前也没有办法为某个具体的流指定线程数量，只能通过修改系统属性 `java.util.concurrent.ForkJoinPool.common.parallelism` 的值来改变所有并行流使用的线程数量，示例如下：
 
 ```java
 System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism","12"); 
@@ -505,6 +514,6 @@ stream.sequential();
 
 
 
-## 参考文档
+## 参考资料
 
  厄马(Raoul-Gabriel Urma) / 弗斯科(Mario Fusco) / 米克罗夫特(Alan Mycroft) .**《Java 8实战》**. 人民邮电出版社 . 2016-04-01

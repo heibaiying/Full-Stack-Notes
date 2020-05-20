@@ -236,7 +236,7 @@ top 命令执行结果的前5行为系统整体的统计信息，其所代表的
 
 pidof 命令用于查询某个指定服务进程的 PID 值，格式为：pidof \[参数][服务名称]。 
 
-### 9. kilL
+### 9. kill
 
 kill 命令用于终止某个指定 PID 的服务进程，格式为：kill \[参数][进程 PID]。 
 
@@ -331,7 +331,7 @@ cat 命令用于查看内容较少的纯文本文件，格式为：cat \[选项]
 
 more 命令用于查看内容较多的纯文本文件，格式为：more [选项]文件。可以使用空格键或回车键向下翻页。 
 
-### 3.head
+### 3. head
 
 head 命令用于查看纯文本文档的前N行，格式为：head \[选项][文件]。 
 
@@ -728,4 +728,4 @@ Vim编辑器有三种状态模式：
 
 ## 参考资料
 
-[《Linux 就该这么学》刘遄](https://www.linuxprobe.com/chapter-00.html)
+[《Linux 就该这么学》刘遄](https://www.linuxprobe.com/chapter-00.html) 

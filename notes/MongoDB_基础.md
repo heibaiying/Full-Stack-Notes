@@ -33,7 +33,7 @@
 | Undefined               | “undefined”           | 该数据类型已经废弃                                           |
 | ObjectId                | “objectId”            | 对象 id                                                      |
 | Boolean                 | “bool”                | 布尔值                                                       |
-| Date                    | “date”                | 日志类型                                                     |
+| Date                    | “date”                | 日期类型                                                     |
 | Null                    | “null”                | 空                                                           |
 | Regular Expression      | “regex”               | 正则表达式                                                   |
 | DBPointer               | “dbPointer”           | 该数据类型已经废弃                                           |

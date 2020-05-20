@@ -27,6 +27,8 @@ Mycat 是一个开源的数据库中间件，可以解决分布式数据库环�
 - 支持使用 zookeeper 来协调主从切换、统一管理配置数据以及使用 zookeeper 来生成全局唯一 ID。( 1.6+ )
 - 提供了 Web 监控界面，来对 Mycat、MySQL 以及服务器的状态进行监控。
 
+
+
 ## 二、Mycat 核心概念
 
 在引入 Mycat 后，所有的客户端请求需要经过中间件进行转发上，此时客户端直接面向的是 Mycat 上的逻辑库或逻辑表：
@@ -48,7 +50,25 @@ Mycat 是一个开源的数据库中间件，可以解决分布式数据库环�
 
 将表按照分片键进行分片后，一个表中的所有数据就会被分发到不同的数据库上，这些数据库节点就称为分片节点。
 
+
+
 ## 三、Mycat 安装
+
+Mycat 所有版本的安装包都可以从 http://dl.mycat.io/ 上进行下载，下载后进行解压即可，其主要文件目录如下：
+
+```shell
+mycat
+├── bin
+│   ├── mycat   #mycat程序的执行脚本，如 mycat start 用于启动mycat服务，mycat stop用于停止mycat服务
+├── conf
+│   ├── rule.xml 
+│   ├── schema.xml
+│   ├── server.xml
+├── logs          #日志存放目录
+└── version.txt   #版本信息
+```
+
+
 
 ## 四、Mycat 基本配置
 
@@ -187,6 +207,8 @@ rule.xml 文件中定义的是分片规则，主要包含以下标签：
 
 Mycat 内置支持十几种分片算法，如 取模分片，枚举分片，范围分片，字符串 hash 分片，一致性 hash 分片，日期分片等。关于这些分片算法的详细说明可以参考官方文档：[Mycat 官方指南](http://www.mycat.io/document/mycat-definitive-guide.pdf)
 
+
+
 ## 五、Mycat 读写分离
 
 Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeHost 和 readHost 就可以实现，示例如下：
@@ -225,6 +247,8 @@ Mycat 读写分离的配置非常简单，只需要通过配置 balance，writeH
 + 第二你很难确定哪个节点该作为备用的主节点，在上面的配置中我们设置 Slave 3 为备用节点，但在主节点宕机后，可能 Slave 1 和 Slave 2 的复制偏移量都要大于 Slave 3，显然它们更适合成为新的主节点。 
 
 基于以上两个原因，如果想要实现高可用，并不建议配置多个 writeHost ，而是配置一个 writeHost ，但其指向的是虚拟的读  IP 地址，此时复制架构由 MMM 或者 MHA 架构来实现，并由它们来提供虚拟机的读 IP。
+
+
 
 ## 六、Mycat 分库分表
 

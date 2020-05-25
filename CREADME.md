@@ -3,7 +3,7 @@
 <div align="center"> <img width="380px" src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/full-stack-notes-logo.png"/> </div>
 <br/>
 <div align="center">
-    <img src="pictures/芽.png"/>
+    <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/芽.png"/>
     <strong>一个处于萌芽阶段的知识库，用于持续分享自己的所见、所学、所思！</strong>
 </div>
 

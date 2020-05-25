@@ -12,7 +12,7 @@
 
 下载地址为： https://www.mongodb.com/download-center/community ，选择所需版本的 MongoDB 后进行下载：
 
-<div align="center"> <img src="../../pictures/mongodb-version-select.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-version-select.png"/> </div>
 这里我下载的版本为 `4.0.10`  , 安装环境为 `RHEL 7.0`，下载后进行解压：
 
 ```shell

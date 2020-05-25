@@ -17,7 +17,7 @@ JDK 原生的锁可以让不同**线程**之间以互斥的方式来访问共享
 
 ### 1.1 临时节点方案
 
-<div align="center"> <img src="../pictures/zookeeper_分布式锁_临时节点方法.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/zookeeper_分布式锁_临时节点方法.png"/> </div>
 
 
 临时节点方案的原理如下：
@@ -37,7 +37,7 @@ JDK 原生的锁可以让不同**线程**之间以互斥的方式来访问共享
 
 ### 1.2 临时有序节点方案
 
-<div align="center"> <img src="../pictures/zookeeper_分布式锁_临时有序节点方案.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/zookeeper_分布式锁_临时有序节点方案.png"/> </div>
 
 
 采用临时有序节点时，对应的流程如下：
@@ -69,7 +69,7 @@ JDK 原生的锁可以让不同**线程**之间以互斥的方式来访问共享
 + 对于读锁节点而言，其只需要关心前一个写锁节点的释放。如果前一个写锁释放了，则多个读锁节点对应的线程可以并发地读取数据；
 + 对于写锁节点而言，其只需要关心前一个节点的释放，而不需要关心前一个节点是写锁节点还是读锁节点。因为为了保证有序性，写操作必须要等待前面的读操作或者写操作执行完成。
 
-<div align="center"> <img src="../pictures/zookeeper_分布式读写锁.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/zookeeper_分布式读写锁.png"/> </div>
 
 
 
@@ -125,7 +125,7 @@ client.close();
 
 之后就可以启动多个程序进程来进行测试，此时 ZooKeeper 上的数据结构如下：
 
-<div align="center"> <img src="../pictures/zookeeper_分布式锁_cli.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/zookeeper_分布式锁_cli.png"/> </div>
 
 
 在我们指定的路径下，会依次创建多个临时有序节点，而当业务逻辑处理完成后，这些节点就会被移除。这里我们使用的是单机版本的 ZooKeeper ，而集群环境下也是一样，和 Redis 主从模式下的延迟复制会导致数据不一致的情况不同，ZooKeeper 集群各个节点上的数据一致性可以由其自身来进行保证。

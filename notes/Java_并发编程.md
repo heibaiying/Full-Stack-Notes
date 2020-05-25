@@ -151,7 +151,7 @@ Java 线程的生命周期分为以下五类状态：
 
 各个状态之间的转换关系如下图：
 
-<div align="center"> <img src="../pictures/线程完整生命周期.jpg"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/线程完整生命周期.jpg"/> </div>
 
 
 ### 1.4 线程终止
@@ -322,7 +322,7 @@ public class J1_ThreadUnsafe {
 
 现代处理器一般具有多个层次的高速缓存，如：一级缓存（L1 Cache）、二级缓存（L2 Cache）、三级缓存（L3 Cache）等。其中一级缓存通常包含两部分，其中一部分用于存储指令（L1i），另外一部分用于存储数据（L1d）。距离处理器越近的高速缓存，其存储速率越快，制造成本越高，因此其容量也越小。在 Linux 系统中，可以使用 `lscpu` 命令查看其高速缓存的情况：
 
-<div align="center"> <img src="../pictures/cahce.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/cahce.png"/> </div>
 
 
 ### 4.3 缓存一致性协议
@@ -383,7 +383,7 @@ public class J1_ThreadUnsafe {
 
 线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中的变量；不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递需要通过主内存来完成。
 
-<div align="center"> <img src="../pictures/java内存模型.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/java内存模型.png"/> </div>
 
 
 

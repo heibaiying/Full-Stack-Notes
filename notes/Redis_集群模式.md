@@ -31,13 +31,13 @@ HASH_SLOT = CRC16(key) mod 16384
 
 假设现在有一个 6 个节点的集群，分别有 3 个 Master 点和 3 个 Slave 节点，槽会尽量均匀的分布在所有 Master 节点上。数据经过散列后存储在指定的 Master 节点上，之后 Slave 节点会进行对应的复制操作。这里再次说明一下槽只是一个虚拟的概念，并不是数据存放的实际载体。
 
-<div align="center"> <img src="../pictures/redis-集群架构.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis-集群架构.png"/> </div>
 
 ### 1.2 节点通讯
 
 在 Redis 分布式架构中，每个节点都存储有整个集群所有节点的元数据信息，这是通过 P2P 的 Gossip 协议来实现的。集群中的每个节点都会单独开辟一个 TCP 通道，用于节点之间彼此通信，通信端口号在基础端口上加 10000；每个节点定期通过特定的规则选择部分节点发送 ping 消息，接收到 ping 信息的节点用 pong 消息作为响应，通过一段时间的彼此通信，最终所有节点都会达到一致的状态，每个节点都会知道整个集群全部节点的状态信息，从而到达集群状态同步的目的。
 
-<div align="center"> <img src="../pictures/redis节点通讯.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis节点通讯.png"/> </div>
 
 ### 1.3 请求路由
 
@@ -125,7 +125,7 @@ cluster-config-file nodes-6480.conf
 
 启动所有 Redis 节点，启动后使用 `ps -ef | grep redis` 查看进程，输出应如下：
 
-<div align="center"> <img src="../pictures/redis-cluster-ps-ef.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis-cluster-ps-ef.png"/> </div>
 接着需要使用以下命令创建集群，集群节点之间会开始进行通讯，并完成槽的分配：
 
 ```shell
@@ -135,7 +135,7 @@ redis-cli --cluster create 127.0.0.1:6479 127.0.0.1:6480 127.0.0.1:6481 \
 
 执行后输出如下：M 开头的表示持有槽的主节点，S 开头的表示从节点，每个节点都有一个唯一的 ID。最后一句输出表示所有的槽都已经分配到主节点上，此时代表集群搭建成功。
 
-<div align="center"> <img src="../pictures/redis-cluster-create.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis-cluster-create.png"/> </div>
 
 ### 2.3 集群完整性校验
 
@@ -171,7 +171,7 @@ redis-cli --cluster add-node 127.0.0.1:6485 127.0.0.1:6479
 redis-cli -h 127.0.0.1 -p 6479 cluster nodes
 ```
 
-<div align="center"> <img src="../pictures/redis-cluster-nodes.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis-cluster-nodes.png"/> </div>
 
 想要让新加入的节点能够进行读写操作，可以使用 `reshard` 命令为其分配槽，这里我们将其他三个主节点上的槽迁移一部分到 6485 节点上，这里一共迁移 4096 个槽，即 16384 除以 4 。 `cluster-from` 用于指明槽的源节点，可以为多个，`cluster-to` 为槽的目标节点，`cluster-slots` 为需要迁移的槽的总数：
 
@@ -184,7 +184,7 @@ redis-cli --cluster reshard 127.0.0.1:6479 \
 
 迁移后，再次使用 `cluster nodes` 命令可以查看到此时 6485 上已经有其他三个主节点上迁移过来的槽：
 
-<div align="center"> <img src="../pictures/redis-cluster-nodes2.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis-cluster-nodes2.png"/> </div>
 
 为保证高可用，可以为新加入的主节点添加从节点，命令如下。`add-node` 接收两个参数，第一个为需要添加的从节点，第二个参数为集群内任意节点，用于发现集群。`cluster-master-id` 参数用于指明作为哪个主节点的从节点，如果不加这个参数，则自动分配给从节点较少的主节点：
 

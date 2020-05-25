@@ -24,7 +24,7 @@ Percona XtraDB Cluster (简称 PXC) 是 Percona 公司开源的实现 MySQL 高�
 + 允许的最大事务大小由 wsrep_max_ws_rows 和 wsrep_max_ws_size 参数共同定义，因此超大型事务会被拆分为一系列小型事务，如加载大数据集 LOAD DATA INFILE。
 + 由于在集群级别采用乐观锁进行并发控制，所以事务在 COMMIT 阶段仍然有被中止的可能。如两个事务在不同的集群节点上提交对相同的行的写入，此时只有其中一个可以成功提交，另一个将被中止。
 
-<div align="center"> <img src="../pictures/pxc-cluster.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/pxc-cluster.png"/> </div>
 虽然 PXC 集群存在以上限制，但就目前而言，它仍然是解决数据一致性和高可用性的最好方案，其搭建步骤如下：
 
 ## 二、集群搭建

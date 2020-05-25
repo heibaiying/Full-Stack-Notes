@@ -26,19 +26,19 @@
 
 Wireshark 是一个网络抓包分析软件，下载地址为：https://www.wireshark.org/index.html#download ，下载后直接安装即可。启动后，进入主页面，需要先选择对应的抓包网络：
 
-<div align="center"> <img src="../pictures/wireshark_主界面.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_主界面.png"/> </div>
 
 
 
 
 这里我使用的是无线网络，因此选择 **WLAN**，双击后即可进入抓包页面。下面我们以 CSDN 的首页 `https://www.csdn.net` 为例，我们首先通过 ping 命令获取其 IP 地址：
 
-<div align="center"> <img src="../pictures/wireshark_ping.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_ping.png"/> </div>
 
 
 可以看到，其 IP 地址为 `47.95.164.112` 。为了避免浏览器上其他网站的干扰，我们先通过该 IP 地址进行过滤：
 
-<div align="center"> <img src="../pictures/wireshark_捕获信息.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_捕获信息.png"/> </div>
 
 
 输入过滤条件 `ip.addr == 47.95.164.112` 后，敲击回车键即可。可以看到 TCP 和 TLS 的握手消息都已经被过滤出来。
@@ -47,7 +47,7 @@ Wireshark 是一个网络抓包分析软件，下载地址为：https://www.wire
 
 这里首先以图片的方式回顾整个 HTTPS 的握手过程：
 
-<div align="center"> <img src="../pictures/https_tsl_v1.2_ECDHE.jpg"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/https_tsl_v1.2_ECDHE.jpg"/> </div>
 
 
 然后我们再逐步通过 WireShark 进行分析：
@@ -56,12 +56,12 @@ Wireshark 是一个网络抓包分析软件，下载地址为：https://www.wire
 
 首先 TLS/SSL 协议是基于 TCP/IP 协议的，因此需要先等待 TCP 三次握手完成：
 
-<div align="center"> <img src="../pictures/wireshark_三次握手.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_三次握手.png"/> </div>
 
 
 从上图被被捕获的记录中，可以很直观的看出整个握手过程与下图是完全匹配的：
 
-<div align="center"> <img src="../pictures/三次握手.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/三次握手.png"/> </div>
 
 
 该过程比较简单，这里就不再进行赘述了。
@@ -70,28 +70,28 @@ Wireshark 是一个网络抓包分析软件，下载地址为：https://www.wire
 
 整个 TLS/ SSL 的握手过程如下：
 
-<div align="center"> <img src="../pictures/wireshark_密钥交换过程.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_密钥交换过程.png"/> </div>
 
 
 ### 3.1 Client Hello
 
 TCP 握手完成后，客户端首先发起一个 `Client Hello` 请求，里面包含客户端版本号、所有支持的密码套件、以及一个随机数 `Client Random`：
 
-<div align="center"> <img src="../pictures/wireshark_client_hello.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_client_hello.png"/> </div>
 
 
 ### 3.2 Server Hello
 
 服务器收到该请求后，会返回一个 `Server Hello` 消息，里面包含选中的用于本次通信的密码套件，以及一个随机数 `Server Random`；
 
-<div align="center"> <img src="../pictures/wireshark_server_hello.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_server_hello.png"/> </div>
 
 
 ### 3.3 Server Hello 的详细过程
 
 接着服务器会在一次返回里面返回多组消息：
 
-<div align="center"> <img src="../pictures/wireshark_server_hello_done.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_server_hello_done.png"/> </div>
 
 
 这里分别对其进行解释：
@@ -100,7 +100,7 @@ TCP 握手完成后，客户端首先发起一个 `Client Hello` 请求，里面
 
 这里面包含的是证书信息：
 
-<div align="center"> <img src="../pictures/wireshark_certificate.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_certificate.png"/> </div>
 
 
 这里我将里面的部分内容复制了出来：
@@ -111,7 +111,7 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 可以看到，这就是在浏览器中使用的证书的：
 
-<div align="center"> <img src="../pictures/wireshark_csdn_证书.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_csdn_证书.png"/> </div>
 
 
 
@@ -120,7 +120,7 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 这一步主要是依据在线证书状态协议（OCSP，Online Certificate Status Protocol）对当前证书状态进行查询：
 
-<div align="center"> <img src="../pictures/wireshark_certifcate_status.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_certifcate_status.png"/> </div>
 
 
 
@@ -129,14 +129,14 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 这里面包含了进行 ECDHE 算法所需的各种参数 `Server Params` ：
 
-<div align="center"> <img src="../pictures/wireshark_server_key_exchange.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_server_key_exchange.png"/> </div>
 
 
 #### 4. Server Hello Done
 
 这个就是用于告知客户端服务器的整个 Hello 过程已经结束，并不包含任何内容：
 
-<div align="center"> <img src="../pictures/wireshark_server_hello_done_protocol.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_server_hello_done_protocol.png"/> </div>
 
 
 
@@ -145,12 +145,12 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 之后，客户端按照密码套件的要求，也生成一个 `Client Params`，并通过 `Client Key Exchange` 消息发送给服务器；
 
-<div align="center"> <img src="../pictures/wireshark_client_key_exchange.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_client_key_exchange.png"/> </div>
 
 
 `Client Key Exchange` 具体内容如下：
 
-<div align="center"> <img src="../pictures/wireshark_client_key_exchange_protocol.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_client_key_exchange_protocol.png"/> </div>
 
 
 ### 3.5 计算预主密钥和主密钥
@@ -183,7 +183,7 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 有了会话密钥后，客户端会发送一个 `Change Cipher Spec` 请求，告知服务器将加密方式由非对称加密转换为对称加密；
 
-<div align="center"> <img src="../pictures/wireshark_change_cipher_spec.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_change_cipher_spec.png"/> </div>
 
 
 
@@ -192,7 +192,7 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 紧接着，为了验证对称加密，客户端会将所有的握手消息（Handshake Message）进行加密，通过一个 `Encrypted Handshake Message` 请求发送给服务器；
 
-<div align="center"> <img src="../pictures/wireshark_handshake_message.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_handshake_message.png"/> </div>
 
 
 
@@ -205,7 +205,7 @@ Certificate: 308206873082056fa00302010202100b038a343b5b17ae92… (id-at-commonNa
 
 
 
-<div align="center"> <img src="../pictures/wireshark_new_session_ticket.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/wireshark_new_session_ticket.png"/> </div>
 
 
 

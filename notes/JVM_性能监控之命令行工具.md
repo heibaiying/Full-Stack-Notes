@@ -65,7 +65,7 @@ jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]
 jstat -gc 9492 3s 5 # 每3s输出一次，一共输出5次
 ```
 
-<div align="center"> <img src="..\pictures\jstat_gc.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jstat_gc.png"/> </div>
 
 
 输出信息中各个参数含义分别如下：
@@ -115,7 +115,7 @@ jinfo -flags 13604
 jinfo -flag CMSInitiatingOccupancyFraction 13604
 ```
 
-<div align="center"> <img src="..\pictures\jinfo.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jinfo.png"/> </div>
 
 
 
@@ -145,7 +145,7 @@ jmap [option] <pid>
 jmap -dump:format=b,file=test.bin 3260
 ```
 
-<div align="center"> <img src="..\pictures\jmap.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jmap.png"/> </div>
 
 
 
@@ -170,22 +170,22 @@ public class StackOverFlowTest {
 
 其最终会抛出 `java.lang.OutOfMemoryError: Java heap space` 异常，意味着在 JVM 堆上发生了内存溢出。在程序运行期间，我们可以使用上面的 jmap 命令生成堆转储快照，并使用 jhat 命令进行分析：
 
-<div align="center"> <img src="..\pictures\jhat.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jhat.png"/> </div>
 
 
 jhat 命令最终的分析结果会以网页的方式进行提供，端口为 7000，界面如下：
 
-<div align="center"> <img src="..\pictures\jhat_web.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jhat_web.png"/> </div>
 
 
 jhat 分析的结果并不够直观，因此我们还可以借助第三方工具来分析堆转储快照，这里以 JProfiler 为例，该软件可以直接从[官网](https://www.ej-technologies.com/products/jprofiler/overview.htm)下载并安装，安装完成后，点击 `session` 选项卡，并使用 `Open Snapshot` 打开 jmap 命令生成的堆转储快照：
 
-<div align="center"> <img src="..\pictures\jprofiler-1.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jprofiler-1.png"/> </div>
 
 
 之后程序会自动进行分析，分析结果如下：
 
-<div align="center"> <img src="..\pictures\jprofiler-2.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jprofiler-2.png"/> </div>
 
 
 通过以上可视化的统计结果，我们就可以很快定位到导致内存溢出的原因。
@@ -250,7 +250,7 @@ jstack 8112
 
 输出结果如下：
 
-<div align="center"> <img src="..\pictures\jstack.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jstack.png"/> </div>
 
 
 从输出中结果中可以看出，出现了一个死锁，该死锁由线程 Thread-0 和 Thread-1 导致，原因是 Thread-0 锁住了对象 `<0x00000000d6d8d610>` ，并尝试获取 `<0x00000000d6d8d640>` 对象的锁；但是 Thread-0 却恰恰相反，锁住了对象 `<0x00000000d6d8d640>` ，并尝试获取 `<0x00000000d6d8d610>`  对象的锁，由此导致死锁。

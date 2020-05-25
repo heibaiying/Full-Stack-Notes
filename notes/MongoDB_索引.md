@@ -112,7 +112,7 @@ db.user.find({}).sort({name:1})
 
 当前大多数数据库都支持双向遍历索引，这和存储结构有关 (如下图)。在 B-Tree 结构的叶子节点上，存储了索引键的值及其对应文档的位置信息，而每个叶子节点间则类似于双向链表，既可以从前往后遍历，也可以从后往前遍历：
 
-<div align="center"> <img src="../pictures/b-tree.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/b-tree.png"/> </div>
 
 ### 2.2 复合索引
 

@@ -598,7 +598,7 @@ userdel 命令用于删除用户，格式为：userdel [选项] 用户名。常�
 
 使用 `ll` 命令可以查看到文件的详细属性，各个属性的含义如下：
 
-<div align="center"> <img src="../pictures/文件属性信息.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/文件属性信息.png"/> </div>
 
 文件类型可以分为以下几类：
 
@@ -613,7 +613,7 @@ userdel 命令用于删除用户，格式为：userdel [选项] 用户名。常�
 
 chmod 用于设置文件或目录的权限，格式为：chmod [参数] 权限 文件或目录名称。 权限支持字符表示和数字表示两种形式，其对应关系如下：
 
-<div align="center"> <img src="../pictures/文件权限的字符与数字表示.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/文件权限的字符与数字表示.png"/> </div>
 示例如下：
 
 ```
@@ -664,7 +664,7 @@ Vim编辑器有三种状态模式：
 - 输入模式：正常的文本录入。
 - 末行模式：保存或退出文档，以及设置编辑环境。
 
-<div align="center"> <img src="../pictures/vim不同模式间的切换.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/vim不同模式间的切换.png"/> </div>
 命令模式中常用的命令如下：
 
 | 命令 | 作用                                               |

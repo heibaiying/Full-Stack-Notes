@@ -31,12 +31,12 @@ JConsole（Java Monitoring and Management Console）是一款基于 JMX（Java M
 
 打开位于 bin 目录下的 `jconsole` 程序后，它会自动扫描当前主机上的所有 JVM 进程：
 
-<div align="center"> <img src="..\pictures\jconsole-start.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-start.png"/> </div>
 
 
 选中需要监控的进程后，点击连接，即可进入监控界面。监控界面包含了 *概览*、*内存*、*线程*、*类*、*VM 概要*、*MBean* 六个选项卡。其中概览界面显示的是 *内存*、*线程*、*类* 等三个选项卡界面的概览信息，如下所示：
 
-<div align="center"> <img src="..\pictures\jconsole-概览.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-概览.png"/> </div>
 
 
 
@@ -45,7 +45,7 @@ JConsole（Java Monitoring and Management Console）是一款基于 JMX（Java M
 
 
 
-<div align="center"> <img src="..\pictures\jconsole-内存.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-内存.png"/> </div>
 
 
 
@@ -54,14 +54,14 @@ JConsole（Java Monitoring and Management Console）是一款基于 JMX（Java M
 
 
 
-<div align="center"> <img src="..\pictures\jconsole-检测死锁.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-检测死锁.png"/> </div>
 
 
 
 
 点击死锁选项卡则可以看到造成死锁的线程：
 
-<div align="center"> <img src="..\pictures\jconsole-死锁.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-死锁.png"/> </div>
 
 
 
@@ -70,7 +70,7 @@ JConsole（Java Monitoring and Management Console）是一款基于 JMX（Java M
 
 
 
-<div align="center"> <img src="..\pictures\jconsole-概要.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jconsole-概要.png"/> </div>
 
 
 
@@ -91,7 +91,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 打开位于 bin 目录下的 `jvisualvm` 程序， 它会自动扫描当前主机上的所有 JVM 进程：
 
-<div align="center"> <img src="..\pictures\jvisual.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual.png"/> </div>
 
 
 
@@ -100,7 +100,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 
 
-<div align="center"> <img src="..\pictures\jvisual-监视.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-监视.png"/> </div>
 
 
 
@@ -111,7 +111,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 
 
-<div align="center"> <img src="..\pictures\jvisual-堆dump.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-堆dump.png"/> </div>
 
 
 
@@ -120,7 +120,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 在线程界面可以查看所有线程的状态，如果出现死锁，该界面还会进行提示：
 
-<div align="center"> <img src="..\pictures\jvisual-线程.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-线程.png"/> </div>
 
 
 
@@ -129,7 +129,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 
 
-<div align="center"> <img src="..\pictures\jvisual-dump.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-dump.png"/> </div>
 
 
 
@@ -138,7 +138,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 在 Profiler 界面，可以进行 CPU 和 内存的性能分析。要开始性能分析，需要先选择 **CPU** 或 **内存** 按钮中的一个，VisualVM 将会开始记录应用程序执行过的所有方法：如果是进行的是 CPU 执行时间分析，将会统计每个方法的执行次数、执行耗时；如果是内存分析，则会统计每个方法关联的对象数以及这些对象所占的空间。想要结束性能分析，点击停止按钮即可：
 
-<div align="center"> <img src="..\pictures\jvisual-性能分析.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-性能分析.png"/> </div>
 
 
 
@@ -147,7 +147,7 @@ VisualVM（All-in-One Java Troubleshooting Tool）是 Oracle 提供的功能最�
 
 Visual GC 面板默认是不显示的，需要通过插件进行扩展。它会实时监控虚拟机的状态，在功能上类似于 jstat 命令：
 
-<div align="center"> <img src="..\pictures\jvisual-gc.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-gc.png"/> </div>
 
 
 
@@ -156,7 +156,7 @@ Visual GC 面板默认是不显示的，需要通过插件进行扩展。它会�
 
 在主界面，点击 **工具 => 插件** ，可以打开插件面板。右击插件选项或者点击安装按钮即可完成对应插件的安装：
 
-<div align="center"> <img src="..\pictures\jvisual-插件安装.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-插件安装.png"/> </div>
 
 
 
@@ -165,7 +165,7 @@ Visual GC 面板默认是不显示的，需要通过插件进行扩展。它会�
 
 
 
-<div align="center"> <img src="..\pictures\jvisual-插件中心.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-插件中心.png"/> </div>
 
 
 
@@ -174,7 +174,7 @@ Visual GC 面板默认是不显示的，需要通过插件进行扩展。它会�
 
 
 
-<div align="center"> <img src="..\pictures\jvisual-配置插件中心.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-配置插件中心.png"/> </div>
 
 
 
@@ -232,7 +232,7 @@ chown root:root /usr/local/jmxremote.password
 
 之后在使用 VisualVM 进行远程连接时，配置如下：
 
-<div align="center"> <img src="..\pictures\jvisual-连接远程主机.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\jvisual-连接远程主机.png"/> </div>
 
 
 需要注意的是这里的端口号是配置的 `Dcom.sun.management.jmxremote.port` 的值，而不是 Java 程序的端口号。连接完成后，即可查看到对应进程的监控状态。

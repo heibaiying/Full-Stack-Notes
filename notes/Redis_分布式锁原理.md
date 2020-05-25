@@ -73,7 +73,7 @@ jedis.set("lockKey", "lockValue", SetParams.setParams().nx().ex(3));
 
 此时一条命令就可以完成值和超时时间的设置，并且因为只有一条命令，因此其原子性也得到了保证。但因为引入了超时时间来避免死锁，同时也引出了其它两个问题：
 
-<div align="center"> <img src="../pictures/redis_分布式锁原理.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis_分布式锁原理.png"/> </div>
 
 
 + **问题一**：当业务处理的时间超过过期时间后（图中进程 A），由于锁已经被释放，此时其他进程就可以获得该锁（图中进程 B），这意味着有两个进程（A 和 B）同时进入了临界区，此时分布式锁就失效了；
@@ -206,7 +206,7 @@ redissonClient.shutdown();
 
 此时对应在 Redis 中的数据结构如下：
 
-<div align="center"> <img src="../pictures/redis_分布式锁_cli1.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis_分布式锁_cli1.png"/> </div>
 
 
 可以看到 key 就是代码中设置的锁名，而 value 值的类型是 hash，其中键 `9280e909-c86b-43ec-b11d-6e5a7745e2e9:13`  的格式为 `UUID + 线程ID` ；键对应的值为 1，代表加锁的次数。之所以要采用 hash 这种格式，主要是因为 Redisson 创建的锁是具有重入性的，即你可以多次进行加锁：
@@ -218,7 +218,7 @@ boolean isLock2 = lock.tryLock(0, 30, TimeUnit.SECONDS);
 
 此时对应的值就会变成 2，代表加了两次锁：
 
-<div align="center"> <img src="../pictures/redis_分布式锁_cli2.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis_分布式锁_cli2.png"/> </div>
 
 
 当然和其他重入锁一样，需要保证解锁的次数和加锁的次数一样，才能完全解锁：
@@ -284,7 +284,7 @@ redissonClient03.shutdown();
 
 此时每个 Redis 实例上锁的情况如下：
 
-<div align="center"> <img src="../pictures/redis_分布式锁_cli3.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/redis_分布式锁_cli3.png"/> </div>
 
 
 可以看到每个实例上都获得了锁。

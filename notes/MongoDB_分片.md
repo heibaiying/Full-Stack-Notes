@@ -29,7 +29,7 @@
 + **config servers** ：配置服务器，它是整个集群的核心，用于存储集群的元数据和配置信息 (如分片服务器上存储了哪些数据块以及这些块的数据范围) 。从 MongoDB 3.4 开始，必须将配置服务器部署为副本集。
 + **mongos** ：查询服务的路由器，它是集群对外提供服务的门户。mongos 从配置服务器获取数据块的相关信息，并将客户端请求路由到对应的分片服务器上。
 
-<div align="center"> <img src="../pictures/mongodb-分片模式.png"/> </div> 
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-分片模式.png"/> </div> 
 
 ### 1.2 分片键
 
@@ -55,11 +55,11 @@
 
 无论采用何种分片策略，数据最终都被存储到对应范围的数据块 (chunk) 上，每个块默认的大小都是 64 M。由于数据源源不断的加入，当块超过指定大小时，就会进行块拆分。需要强调的是块拆分是一个轻量级的操作，因为在本质上并没有任何数据的移动，只是由 config servers 更新关于块的元数据信息。
 
-<div align="center"> <img src="../pictures/mongodb-块拆分.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-块拆分.png"/> </div>
 
 当某个分片服务器上的数据过多时候，此时为了避免单服务器上 CPU 和 IO 操作的性能问题，就会发生块迁移，将块从一个分片迁移到另外一个分片，同时 config servers 也会更新相关块的元数据信息。 块迁移是由在后台运行的平衡器 (balancer) 所负责的，它在后台进行持续监控，如果最大和最小分片之间的块数量差异超过迁移阈值，平衡器则开始在群集中迁移块以确保数据的均匀分布。
 
-<div align="center"> <img src="../pictures/mongodb-块迁移.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-块迁移.png"/> </div>
 
 块的大小是可以手动进行配置修改，但需要注意权衡利弊：
 
@@ -70,19 +70,19 @@
 
 这里需要注意块的迁移不会对查询造成任何影响，MongoDB 集群和 Redis 集群的查询原理不同。对于 Redis Cluster 而言，数据的散列规则同时也是查询时的路由规则。但是对于 MongoDB 分片集群而言，查询需要先经过 mongos ，mongos 会从 config servers 上获取块的位置信息和数据范围，然后按照这些信息进行匹配后再路由到正确的分片上。因此，从本质上而言 MongoDB 的分片策略和路由规则没有任何关系，假设按照分片策略将某文档分发到 Shard A 的 Chunk01 上，之后 Chunk01 迁移到  Shard B , 由于配置服务器会更新 Chunk01 块的位置信息，所以仍然能够正确路由到。  
 
-<div align="center"> <img src="../pictures/mongodb-路由查询.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-路由查询.png"/> </div>
 
 ### 1.6  非分片集合
 
 以上的所有讲解都是针对分片集合的，而在实际开发中并非每个集合都需要进行分片，MongoDB 允许在同一数据库下混合使用分片和非分片集合。每个数据库都有自己的主分片，所有非分片集合统一存储在主分片上。需要特别说明的是主分片和复本集中的主节点没有任何关系，在新数据库创建时程序会自动选择当前集群中最少数据量的分片作为主分片。如下图所示： Shard A 为主分片，集合 Collection1 是分片集合，而集合 Collection2 是非分片集合。
 
-<div align="center"> <img src="../pictures/mongodb-非分片集合.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-非分片集合.png"/> </div>
 
 ## 二、集群搭建
 
 这里我只有三台服务器，为保证高可用，三台服务器上均部署 mongod 服务（每个服务器上使用不同端口部署两个 mongod 服务），形成两个分片副本集；同时三台服务器上均部署 config servers 服务，形成一个配置副本集：
 
-<div align="center"> <img src="../pictures/mongodb-分片集群.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-分片集群.png"/> </div>
 
 ### 2.1 分片副本集配置
 
@@ -284,7 +284,7 @@ db.runCommand({ addshard : "rs1/hadoop001:37018,hadoop002:37018,hadoop003:37018"
 
 务必注意，在添加分片副本集之前一定要切换到管理员角色，否则后面的添加操作会返回 `"ok" : 0` 的失败状态码，同时会提示 `addShard may only be run against the admin database.`  添加成功后，可以使用 `sh.status()` 查看集群状态，此时输出如下，可以看到两个分片副本集已经被成功添加。
 
-<div align="center"> <img src="../pictures/mongodb-分片集群状态.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-分片集群状态.png"/> </div>
 
 ### 2.8 测试分片
 
@@ -322,7 +322,7 @@ db.users.insertMany(arr);
 
 插入数据完成后，执行 `sh.status()` 命令可以查看分片情况，以及块的数据信息，部分输出如下：
 
-<div align="center"> <img src="../pictures/mongodb-分片测试.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-分片测试.png"/> </div>
 
 ## 参考资料
 

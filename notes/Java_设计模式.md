@@ -433,7 +433,7 @@ Exception in thread "main" java.lang.IllegalArgumentException: Cannot reflective
 
 ### 2.2 示例
 
-<div align="center"> <img src="../pictures/23_simple_factory.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/23_simple_factory.png"/> </div>
 
 
 
@@ -514,7 +514,7 @@ public Phone getPhone(Class<? extends Phone> phoneClass) {
 
 ### 3.2 示例
 
-<div align="center"> <img src="../pictures/23_factory_method.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/23_factory_method.png"/> </div>
 
 
 
@@ -597,7 +597,7 @@ public class ZTest {
 
 ### 4.2  示例
 
-<div align="center"> <img src="../pictures/23_abstract_factory.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/23_abstract_factory.png"/> </div>
 
 
 
@@ -691,7 +691,7 @@ public class ZTest {
 
 ### 5.2 示例
 
-<div align="center"> <img src="../pictures/23_builder.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/23_builder.png"/> </div>
 
 
 
@@ -1035,7 +1035,7 @@ service.compute();
 
 将 220V 的电流通过适配器转换为对应规格的电流给手机充电：
 
-<div align="center"> <img src="..\pictures\23_adapter.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_adapter.png"/> </div>
 
 
 
@@ -1110,7 +1110,7 @@ public class ZTest {
 
 将一个图形的形状和颜色进行分离，从而可以通过组合来实现的不同的效果：
 
-<div align="center"> <img src="..\pictures\23_bridge.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_bridge.png"/> </div>
 
 
 
@@ -1205,7 +1205,7 @@ new Round().setColor(new Yellow()).getDesc();
 
 模拟 Linux 文件系统：
 
-<div align="center"> <img src="..\pictures\23_composite.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_composite.png"/> </div>
 
 
 
@@ -1334,7 +1334,7 @@ nginx.cat();
 
 在购买手机后，你可能还会购买屏幕保护膜，手机壳等来进行装饰：
 
-<div align="center"> <img src="..\pictures\23_decorator.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_decorator.png"/> </div>
 
 
 
@@ -1455,7 +1455,7 @@ public class ZTest {
 
 模仿电商购物下单，此时内部需要调用支付子系统，仓储子系统，物流子系统，而这些细节对用户都是屏蔽的：
 
-<div align="center"> <img src="..\pictures\23_facade.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_facade.png"/> </div>
 
 
 
@@ -1542,7 +1542,7 @@ XXX手机已经发货，请注意查收...
 
 这里以创建 PPT 模板为例，相同类型的 PPT 模板不再重复创建：
 
-<div align="center"> <img src="..\pictures\23_flyweight.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_flyweight.png"/> </div>
 
 
 
@@ -1677,7 +1677,7 @@ public class ZTest {
 
 假设多个用户都关注某一个商家，当商家发出降价等通知时，所有用户都应该收到：
 
-<div align="center"> <img src="../pictures/23_observer.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/23_observer.png"/> </div>
 
 
 
@@ -1780,7 +1780,7 @@ business.notifyObservers("商品促销通知");
 
 假设一个正常的流程，根据请假天数的不同，需要不同的领导共同审批：
 
-<div align="center"> <img src="..\pictures\23_chain_of_responsibility.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_chain_of_responsibility.png"/> </div>
 
 
 
@@ -1894,7 +1894,7 @@ groupLeader.approval(new Application("婚假单", 10));
 
 手机一般都有电池，摄像头等模块，但不是所有手机都有 NFC 模块，如果采用模板模式构建，则相关代码如下：
 
-<div align="center"> <img src="..\pictures\23_template.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_template.png"/> </div>
 
 
 
@@ -1997,7 +1997,7 @@ smartPhone.assembling();
 
 假设公司需要根据营业额的不同来选择不同的员工激励策略：
 
-<div align="center"> <img src="..\pictures\23_strategy.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_strategy.png"/> </div>
 
 
 
@@ -2083,7 +2083,7 @@ public static void main(String[] args) {
 
 假设我们正在开发一个播放器，它有如下图所示四种基本的状态：播放状态，关闭状态，暂停状态，加速播放状态。这四种状态间可以相互转换，但存在一定的限制，比如在关闭或者暂停状态下，都不能加速视频，采用状态模式来实现该播放器的相关代码如下：
 
-<div align="center"> <img src="..\pictures\23_state.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_state.png"/> </div>
 
 
 
@@ -2449,7 +2449,7 @@ while (iterator.hasNext()) {
 
 通常不同级别的员工对于公司档案的访问权限是不同的，为方便理解，如下图所示假设只有公开和加密两种类型的档案，并且只有总经理和部门经理才能进入档案室：
 
-<div align="center"> <img src="..\pictures\23_visitor.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures\23_visitor.png"/> </div>
 
 
 

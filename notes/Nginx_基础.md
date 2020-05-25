@@ -45,7 +45,7 @@ Nginx 能够同时支持正向代理和反向代理，这两种代理模式的�
 + 正向代理发生在客户端，是客户端主动发起的代理。如我们不能直接访问某个服务器，但可以间接通过中间的代理服务器去进行访问，然后将访问结果再返回给我们。
 + 反向代理发生在服务端，客户端并不知道发生了代理，示例如下。用户只知道将请求发送给 Nginx，但是并不知道请求被转发了，也不知道被转发给了哪一台应用服务器。实际上对于用户来说，他也没必要知道，因为请求结果都是相同的。
 
-<div align="center"> <img src="../pictures/nginx-plus.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nginx-plus.png"/> </div>
 
 ## 二、基本命令
 

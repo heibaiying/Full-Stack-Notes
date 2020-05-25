@@ -24,7 +24,7 @@
 
 为保证数据安全，实现高可用，MongoDB 提供了复制功能，可以将主节点上的数据复制到多个从节点上，这样即便主节点出现异常，由于数据是以多副本的方式进行存储，仍然可以保证数据安全。一个标准的三节点副本集架构如下：
 
-<div align="center"> <img src="../pictures/mongodb-复制.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-复制.png"/> </div>
 
 复制过程如下：
 
@@ -46,7 +46,7 @@ MongoDB 按 namespace 或 document id 对每批操作进行分组，并使用不
 
 虽然仲裁者可以占用更少的服务器资源，但是由于其并不存储数据，所以对数据的安全性并不能起到帮助作用。因此应该尽量避免使用仲裁者，同时尽量保证最多只使用一个仲裁者，即如果节点数量恰好是偶数，则添加一个仲裁者，如果节点数量是奇数，那就不需要仲裁者。
 
-<div align="center"> <img src="../pictures/mongodb-仲裁者.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-仲裁者.png"/> </div>
 
 ## 二、故障发现与恢复
 
@@ -58,7 +58,7 @@ MongoDB 按 namespace 或 document id 对每批操作进行分组，并使用不
 
 MongoDB 的选举算法会尝试让高优先级的节点优先发起选举，从而更容易在选举中胜出。如果某一个优先级较低的节点在短时间内被选举为新的主节点，这时副本集仍然会继续发起选举，直至可用的最高优先级的节点成为新的主节点。需要特别注意的是在这个过程当中，优先级为 0 的成员不能寻求选举，也不能成为主节点。
 
-<div align="center"> <img src="../pictures/mongodb-故障恢复.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-故障恢复.png"/> </div>
 
 ### 2.3 投票成员
 
@@ -78,7 +78,7 @@ MongoDB 的选举算法会尝试让高优先级的节点优先发起选举，从
 
 如下示例是一个 9 个成员的副本集，包含 7 个投票成员和 2 个无投票成员：
 
-<div align="center"> <img src="../pictures/mongdb-vote.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongdb-vote.png"/> </div>
 
 ## 三、搭建副本集
 
@@ -88,7 +88,7 @@ MongoDB 的选举算法会尝试让高优先级的节点优先发起选举，从
 
 选择所需版本的 MongoDB 进行下载，下载地址为： https://www.mongodb.com/download-center/community 
 
-<div align="center"> <img src="../pictures/mongodb-version-select.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-version-select.png"/> </div>
 
 这里我下载的版本为 `4.0.10`  , 安装环境为 `RHEL 7.0`，下载后进行解压：
 
@@ -180,7 +180,7 @@ rs.initiate( {
 
 使用 `rs.status()` 命令查看副本集状态，部分输出如下。从输出中可以看到 hadoop001 为 PRIMARY 节点，而 hadoop002 和 hadoop003 均为 SECONDARY 节点，此时代表副本集已经搭建成功。
 
-<div align="center"> <img src="../pictures/mongodb-副本集状态.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mongodb-副本集状态.png"/> </div>
 
 ## 参考资料
 

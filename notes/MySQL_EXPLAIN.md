@@ -14,7 +14,7 @@ mysql> EXPLAIN SELECT * FROM employees;
 注：本篇文章的测试数据来源于 MySQL 官方提供的 [Employees Sample Database](https://dev.mysql.com/doc/employee/en/)，其数据库结构如下：
 
 
-<div align="center"> <img src="../pictures/employees-schema.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/employees-schema.png"/> </div>
 以下分别介绍 EXPLAIN 输出结果中各个字段的含义：
 
 

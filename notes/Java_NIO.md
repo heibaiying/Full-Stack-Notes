@@ -58,7 +58,7 @@ Java NIO 是 JDK 1.4 中引入的新的 IO 方式，它主要包含 Buffer、Cha
 
 传统 IO 的流都是单向的，因此它们需要分为 Input Stream 和 Output Stream。而 NIO 中的 Channel 则是双向的，数据可以从 Channel 读到 Buffer 中，也可以从 Buffer 写到 Channel：
 
-<div align="center"> <img src="../pictures/nio_channel_buffer.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_channel_buffer.png"/> </div>
 
 
 > 注意：从 Channel 写入到 Buffer 执行的是 read 方法，而从 Buffer 写出到 Channel 执行的是 write 方法。
@@ -69,7 +69,7 @@ Channel 可以设置为非阻塞模式，此时当 Channel 从 Buffer 中读取�
 
 Java NIO 通过 Reactor 模型实现了 IO 的多路复用，可以在一个线程上通过一个选择（Selector）使用轮询的方式去监听多个通道 Channel 上注册的事件，从而在一个线程上就能实现对多个 Channel 的处理：
 
-<div align="center"> <img src="../pictures/nio_selector.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_selector.png"/> </div>
 
 
 
@@ -78,7 +78,7 @@ Java NIO 通过 Reactor 模型实现了 IO 的多路复用，可以在一个线�
 
 ### 2.1 缓冲区属性
 
-<div align="center"> <img src="../pictures/nio_buffer.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_buffer.png"/> </div>
 
 
 所有缓冲区（ByteBuffer、FloatBuffer、IntBuffer、DoubleBuffer、ShortBuffer、LongBuffer、CharBuffer、MappedByteBuffer）都直接或间接继承自 Buffer 抽象类，Buffer 中定义了缓冲区的四个基本属性：
@@ -128,7 +128,7 @@ public abstract class CharBuffer extends Buffer implements Comparable<CharBuffer
 
 缓冲区创建完成后，它处于以下初始状态：
 
-<div align="center"> <img src="../pictures/buffer_init.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_init.png"/> </div>
 
 
 ### 2.3 操作缓冲区
@@ -150,7 +150,7 @@ put(char[] src, int offset, int length)
 
 当我们向 Buffer 中添加数据后，position 属性也会随之变动：
 
-<div align="center"> <img src="../pictures/buffer_put.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_put.png"/> </div>
 
 
 **2. get()**
@@ -184,12 +184,12 @@ buffer.clear();
 
 当使用 `filp()` 将 Buffer 由写模式切换到读模式后：position 属性会恢复到初始位置，代表从此处开始读取数据；limit 属性也会随之变动，代表我们所能读取数据的上界：
 
-<div align="center"> <img src="../pictures/buffer_flip.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_flip.png"/> </div>
 
 
 当我们再通过 `get()` 方法进行读取时，position 属性会随之移动，position 和 limit 之间就是待处理的数据：
 
-<div align="center"> <img src="../pictures/buffer_get.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_get.png"/> </div>
 
 
 **4. hasRemaining()**
@@ -200,7 +200,7 @@ buffer.clear();
 
 `clear()` 并不会真的清除缓冲区中的数据，它只是将 position 设置为 0，并将 limit 设置为 capacity 的大小，从而让缓冲区恢复到初始状态：
 
-<div align="center"> <img src="../pictures/buffer_clear.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_clear.png"/> </div>
 
 当有新的数据写入时，新的数据会覆盖原有位置上的数据。
 
@@ -208,12 +208,12 @@ buffer.clear();
 
 用于压缩缓冲区，即将数组中待处理的数据复制到头部。如下所示，会将未读取的 `LL0` 复制到头部：
 
-<div align="center"> <img src="../pictures/buffer_compact.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_compact.png"/> </div>
 
 
 需要注意的是这里执行的是复制操作，而不是移动操作，底层调用的是 `System.arraycopy` 方法，因此原有位置上的数据依然存在。但由于 position 会移动到未处理数据的下一个位置上，所以不用担心原有位置上的数据会被读取到，原因是你切换到读模式时，原有的 `LO` 数据仍处于 limit 之后：
 
-<div align="center"> <img src="../pictures/buffer_compact_flip.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_compact_flip.png"/> </div>
 
 **7. mark()**
 
@@ -239,14 +239,14 @@ public abstract CharBuffer slice();
 - 复制缓冲区的 mark、position、limit、capcaity 属性的初始值与复制时原缓冲区的 mark、position、limit、capcaity 的值相同，但这些属性与原缓冲区的属性相互独立，创建后就不再受原有缓冲区的影响；
 - 如果原缓冲区是只读缓冲区或直接缓冲区，则复制缓冲区也将继承这些属性。
 
-<div align="center"> <img src="../pictures/buffer_duplicate.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_duplicate.png"/> </div>
 
 
 `asReadOnlyBuffer()` 与 `duplicate()` 类似，但创建的复制缓冲区为只读缓冲区。
 
 `slice()` 也与 `duplicate()` 类似，但创建的复制缓冲区与原缓冲区只共享部分数据元素，并且所有标志位都处于原始状态：
 
-<div align="center"> <img src="../pictures/buffer_slice.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/buffer_slice.png"/> </div>
 
 
 使用示例如下：
@@ -405,7 +405,7 @@ fileInputStream.getChannel().read(buffers);
 
 此时 Channel 中的数据会依次写入到 Buffer01， Buffer02， Buffer03 上。Scatter 通常用于固定长度数据的处理，假设一个数据单元由 header，body，footer 三部分组成，并且每部分的长度都是固定的，此时通过 Scatter 操作，每一组数据的 header，body，footer 都会分别固定地写到 Buffer01， Buffer02， Buffer03 上，此时就可以对每个 Buffer 应用不同的处理逻辑：
 
-<div align="center"> <img src="../pictures/nio_scatter.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_scatter.png"/> </div>
 
 
 + **聚集 (gather)**：将多个 Buffer 中的数据依次写入到同一个 Channel 上。示例如下：
@@ -419,14 +419,14 @@ ByteBuffer[] buffers = new ByteBuffer[]{buffer01, buffer02, buffer03};
 fileInputStream.getChannel().read(buffers);
 ```
 
-<div align="center"> <img src="../pictures/nio_gather.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_gather.png"/> </div>
 
 
 ### 3.5 Pipe
 
 Java NIO 还提供了 Pipe 管道用于在不同线程之间传递数据：
 
-<div align="center"> <img src="../pictures/nio_pipe.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_pipe.png"/> </div>
 
 
 Pipe 管道可以通过 Pipe 类的静态方法 `open()` 来创建：
@@ -618,7 +618,7 @@ public abstract class SelectionKey {
 
 下面以一个群聊的聊天室为例，来展示 Java NIO 三大组件的综合使用，效果如下：
 
-<div align="center"> <img src="../pictures/nio_chat_group.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/nio_chat_group.png"/> </div>
 
 
 

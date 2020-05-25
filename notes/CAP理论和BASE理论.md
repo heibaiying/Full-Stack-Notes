@@ -31,7 +31,7 @@ CAP 理论强调：一个分布式系统不可能同时满足一致性（C：Con
 
 首先对于一个分布式系统而言，网络分区是不可避免的，不可能永远不出现网络故障，所以分区容错性 P 必须要保证。假设一个分布式系统中出现了网络分区，如下：
 
-<div align="center"> <img src="../pictures/cap_示例.png"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/cap_示例.png"/> </div>
 
 
 假设用户 1 向节点 1 上增加了 10 个数据，但节点 1 和节点 2 之间因为网络分区而无法进行数据同步，碰巧用户 2 此时发起了查询请求，此时有两种处理方案：
@@ -51,7 +51,7 @@ CAP 理论强调：一个分布式系统不可能同时满足一致性（C：Con
 + **保证 CP ，放弃 A**：这种情况下如果发生了网络分区故障，此时节点间的数据就无法同步。因此在故障修复前都需要放弃对外提供服务，直至网络恢复，数据到达一致为止。
 + **保证 AP ，放弃 C**：这种情况相当于放弃一致性。具体而言，是放弃数据的强一致性，但保证数据的最终一致性。因为不论是什么系统，数据最终都需要保持一致，否则整个系统就无法使用。在这种策略下，在某个短暂的时间窗口内会存在数据不一致的情况。
 
-<div align="center"> <img src="../pictures/cap理论.jpg"/> </div>
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/cap理论.jpg"/> </div>
 
 
 ## 二、BASE 理论

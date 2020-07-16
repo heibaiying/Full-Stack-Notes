@@ -39,7 +39,7 @@ OpenSSL 是一个开源的底层密码库，封装了所有的密码学算法，
 
 HTTPS （Hyper Text Transfer Protocol over SecureSocket Layer，超文本传输安全协议）是在 HTTP 的基础上通过 SSL/TLS 层来进行传输加密和身份认证，从而保证通讯的安全性。除此之外它的报文结构、请求方法等都完全沿用 HTTP 原有的模式，因此可以很方便地将原有 HTTP 服务转换为 HTTPS 服务。
 
-![http+tls](https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/http+tls.png)
+<div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/http+tls.png"/> </div>
 
 ## 二、数据安全
 

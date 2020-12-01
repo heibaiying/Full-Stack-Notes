@@ -512,7 +512,7 @@ JDK 9 之后为了适应模块化的发展，类加载器做了如下变化：
 ### 7.1 编译器分类
 
 + **前端编译器**：把 `*.java` 文件转变成 `.class` 文件的过程；如 JDK 的 Javac，Eclipse JDT 中的增量式编译器。
-+ **即使编译器**：常称为 JIT 编译器（Just In Time Complier），在运行期把字节码转变成本地机器码的过程；如 HotSpot 虚拟机中的 C1、C2 编译器，Graal 编译器。
++ **即时编译器**：常称为 JIT 编译器（Just In Time Complier），在运行期把字节码转变成本地机器码的过程；如 HotSpot 虚拟机中的 C1、C2 编译器，Graal 编译器。
 + **提前编译器**：直接把程序编译成目标机器指令集相关的二进制代码的过程。如 JDK 的 jaotc，GUN Compiler for the Java（GCJ），Excelsior JET 。
 
 ### 7.2 解释器与编译器

@@ -206,7 +206,7 @@ JDK 1.8 中另一个大的改进是引入了流，通过流、Lamda 表达式以
 使用静态方法 `Stream.of()` 由指定的值进行创建：
 
 ```java
-Stream<String> stream = Stream.of("a", "b ", "c", "d");
+Stream<String> stream = Stream.of("a", "b", "c", "d");
 ```
 
 **2. 由集合或数组创建**
@@ -214,14 +214,14 @@ Stream<String> stream = Stream.of("a", "b ", "c", "d");
 使用静态方法 `Arrays.stream()` 由指定的数组进行创建：
 
 ```java
-String[] strings={"a", "b ", "c", "d"};
+String[] strings={"a", "b", "c", "d"};
 Stream<String> stream = Arrays.stream(strings);
 ```
 
 调用集合类的 `stream()` 方法进行创建：
 
 ```shell
-List<String> strings = Arrays.asList("a", "b ", "c", "d");
+List<String> strings = Arrays.asList("a", "b", "c", "d");
 Stream<String> stream = strings.stream();
 ```
 

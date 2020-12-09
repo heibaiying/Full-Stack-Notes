@@ -148,7 +148,7 @@ public interface Function<T, R> {
 }
 ```
 
- **4. Predicate\<T>**：判断类型为 T 的变量是否满足特定的条件，如果满足则返回 true，否则返回 flase：
+ **4. Predicate\<T>**：判断类型为 T 的变量是否满足特定的条件，如果满足则返回 true，否则返回 false：
 
 ```java
 @FunctionalInterface

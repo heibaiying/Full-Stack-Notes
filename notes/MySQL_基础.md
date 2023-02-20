@@ -285,7 +285,7 @@ InnoDB 存储引擎完全支持 ACID 模型：
 
 **1.丢失更新**
 
-一个事务的更新操作被另外一个事务的更新操作锁覆盖，从而导致数据不一致：
+一个事务的更新操作被另外一个事务的更新操作所覆盖，从而导致数据不一致：
 
 <div align="center"> <img src="https://gitee.com/heibaiying/Full-Stack-Notes/raw/master/pictures/mysql-修改丢失.png"/> </div>
 
